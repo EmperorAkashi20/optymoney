@@ -18,7 +18,7 @@ Pub Packages used:
 6. pdf_flutter: ^1.1.4                                                                      Reading & writing PDFs
 7. path_provider: ^1.6.27                                                                   Providing file paths
 8. pdf: ^2.1.0                                                                              
-9 .modal_bottom_sheet: ^1.0.0+1                                                             #Used in the calculators part
+9 .modal_bottom_sheet: ^1.0.0+1                                                             Used in the calculators part
       
 Colors are the same from the website
 
