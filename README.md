@@ -24,3 +24,7 @@ Colors are the same from the website
 Color Scheme is Red and white which needs to be constant across the app
 
 Git Version Control is enabled
+
+Few tips before starting the work:
+    1. website: https://www.optymoneny.com
+    2. Install flutter mac from: https://flutter.dev/docs/get-started/install/macos 
