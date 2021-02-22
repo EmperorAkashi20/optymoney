@@ -27,4 +27,5 @@ Git Version Control is enabled
 
 Few tips before starting the work:
     1. website: https://www.optymoneny.com
-    2. Install flutter mac from: https://flutter.dev/docs/get-started/install/macos 
+    2. Install flutter mac from: https://flutter.dev/docs/get-started/install/macos
+    3. Flutter Documentation: https://flutter.dev/docs/get-started/codelab
