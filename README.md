@@ -4,13 +4,23 @@ Personal Financing App
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point Of optymoney application.
 
-A few resources to get you started if this is your first Flutter project:
+Few things that need to be noted before beginning:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Pub Packages used:
+      flutter_svg: ^0.18.0                                                                     #For using svg images
+      shared_preferences: ^0.5.12+4                                                            #Used accross the app
+      intro_screen_onboarding_flutter: ^0.1.5                                                  #Used for creating onBoarding
+      bottom_navy_bar: ^5.6.0                                                                  #Used for creating the Nav Bar
+      font_awesome_flutter: ^8.11.0                                                            #Used for adding FA Icons
+      pdf_flutter: ^1.1.4                                                                      #Reading & writing PDFs
+      path_provider: ^1.6.27                                                                   #Providing file paths
+      pdf: ^2.1.0                                                                              
+      modal_bottom_sheet: ^1.0.0+1                                                             #Used in the calculators part
+      
+Colors are the same from the website
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Color Scheme is Red and white which needs to be constant across the app
+
+Git Version Control is enabled
