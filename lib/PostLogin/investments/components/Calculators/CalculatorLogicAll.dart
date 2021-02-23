@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -49,6 +50,10 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                   CloseButton(),
                 ],
               ),
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
             ),
             TitleHeaderWithRichText(
                 text: "SIP Amount", richText: " (Minimum Rs. 500/-)"),
@@ -114,22 +119,26 @@ class _SipCalcFromState extends State<SipCalcFrom> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Compute',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {});
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -202,6 +211,10 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Car Loan Amount"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -223,26 +236,26 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check Car Loan',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(carLoanAmount.text) *
-                          int.parse(interestRate.text);
-                      emiAmount = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -316,6 +329,10 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Housing Loan Amount"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -337,26 +354,26 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check Car Loan',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(homeLoanAmount.text) *
-                          int.parse(interestRate.text);
-                      emiAmount = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -432,6 +449,10 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Housing Loan Amount"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -453,26 +474,26 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check Car Loan',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(personalLoanAmount.text) *
-                          int.parse(interestRate.text);
-                      emiAmount = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -547,6 +568,10 @@ class _SwpCalcFormState extends State<SwpCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Total Investment Amount"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -577,26 +602,26 @@ class _SwpCalcFormState extends State<SwpCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Compute',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(totalAmountInvested.text) *
-                          int.parse(tenure.text);
-                      valueAtTheEnd = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -658,6 +683,10 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                   CloseButton(),
                 ],
               ),
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
             ),
             TitleHeaderWithRichText(
                 text: "LumpSum Amount Invested", richText: " "),
@@ -723,26 +752,26 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Compute',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(lumpSumAmount.text) *
-                          int.parse(investedFor.text);
-                      amountInvested = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -819,6 +848,10 @@ class _HraCalcFromState extends State<HraCalcFrom> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeaderWithRichText(
                 text: "Basic Salary Received", richText: " "),
             FormFieldGlobal(
@@ -843,7 +876,7 @@ class _HraCalcFromState extends State<HraCalcFrom> {
               dataController: hraReceived,
             ),
             TitleHeaderWithRichText(
-              text: "Hctual Rent Paid",
+              text: "Actual Rent Paid",
               richText: " ",
             ),
             FormFieldGlobal(
@@ -887,26 +920,26 @@ class _HraCalcFromState extends State<HraCalcFrom> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Compute',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(basicSalaryReceived.text) *
-                          int.parse(hraReceived.text);
-                      hraExemption = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -982,6 +1015,10 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeaderWithRichText(
                 text: "PPF Interest Rate", richText: " (%)"),
             FormFieldGlobal(
@@ -1040,26 +1077,26 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(200),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Compute',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(totalAmountInvested.text) *
-                          int.parse(tenure.text);
-                      totalMaturityAmount = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1139,6 +1176,10 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Amount You Want To Achieve"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -1193,26 +1234,26 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(250),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check SIP Installment',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(amountYouWantToAchieve.text) *
-                          int.parse(withinNumberOfYears.text);
-                      monthlySipInvestmentNeeded = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1290,6 +1331,10 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                   CloseButton(),
                 ],
               ),
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
             ),
             TitleHeader(text: "Amount Invested"),
             FormFieldGlobal(
@@ -1375,26 +1420,28 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(250),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check Fixed Deposit',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(amountInvested.text) *
-                          int.parse(investedForNumberOf.text);
-                      maturityValue = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Expanded(
+                      child: Text('Compute',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500)),
+                    ),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1484,6 +1531,10 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Amount Invested"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -1535,26 +1586,26 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(250),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check SSY',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(amountInvested.text) *
-                          int.parse(interestRate.text);
-                      totalMaturityAmount = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1627,6 +1678,10 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeader(text: "Amount Invested Monthly"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -1648,26 +1703,30 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(250),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check RD',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(amountInvestedMonthly.text) *
-                          int.parse(investedForNoOfYears.text);
-                      maturityValue = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {
+                        int sum = int.parse(amountInvestedMonthly.text) *
+                            int.parse(investedForNoOfYears.text);
+                        maturityValue = sum.toString();
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1732,6 +1791,10 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
                 ],
               ),
             ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
             TitleHeaderWithRichText(text: "Current Age", richText: " (Years)"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.number,
@@ -1769,26 +1832,26 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Center(
-              child: Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(250),
-                child: RaisedButton(
-                  color: kPrimaryColor,
-                  child: Text('Check NPS',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800)),
-                  onPressed: () {
-                    setState(() {
-                      int sum = int.parse(currentAge.text) *
-                          int.parse(retirementAge.text);
-                      principalAmountInvested = sum.toString();
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
                   ),
                 ),
               ),
@@ -1815,3 +1878,223 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
 }
 
 //-------------------------------------------------------------------------------------NPS CALCULATOR------------------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------TAX CALCULATOR------------------------------------------------------------------------------------------------------------
+
+class TaxCalculator extends StatefulWidget {
+  @override
+  _TaxCalculatorState createState() => _TaxCalculatorState();
+}
+
+class _TaxCalculatorState extends State<TaxCalculator> {
+  var _options = ['0-59', '60-79', '>=80'];
+  var _currentItemSelected = '0-59';
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 19),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "Tax Calculator",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: kPrimaryColor,
+                    ),
+                  ),
+                  Spacer(),
+                  CloseButton(),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
+            TitleHeader(
+              text: "**Investment limit under Sec 80C Rs.1,50,000",
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            TitleHeader(
+              text: "How much are you investing annually in the following",
+            ),
+            TitleHeader(text: "Equity linked saving scheme(ELSS)"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Life insurance premium paid"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Sukanya Samriddhi Yojna"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "5 years fixed deposit"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "PPF investment"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Unit linked insurance plan"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Any other 80C"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Your annual salary"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.text,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Age"),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18),
+              child: Container(
+                height: getProportionateScreenHeight(50),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(
+                    width: 1.1,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: DropdownButton<String>(
+                    elevation: 0,
+                    items: _options.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Text(dropDownStringItem),
+                      );
+                    }).toList(),
+                    onChanged: (String newValueSelected) {
+                      _dropDownItemSelected(newValueSelected);
+                    },
+                    value: _currentItemSelected,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Divider(),
+            OutputTextForPopUp(),
+            TitleHeader(text: "Your current investments"),
+            GlobalOutputField(
+              outputValue: "",
+            ),
+            TitleHeader(text: "Further investment opportunity"),
+            GlobalOutputField(
+              outputValue: "",
+            ),
+            TitleHeader(text: "Tax saved through further investment"),
+            GlobalOutputField(
+              outputValue: "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _dropDownItemSelected(String newValueSelected) {
+    setState(() {
+      this._currentItemSelected = newValueSelected;
+    });
+  }
+}
+
+//-------------------------------------------------------------------------------------TAX CALCULATOR------------------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------OLD VS NEW CALCULATOR------------------------------------------------------------------------------------------------------------
+
+class OldVsNewTax extends StatefulWidget {
+  @override
+  _OldVsNewTaxState createState() => _OldVsNewTaxState();
+}
+
+class _OldVsNewTaxState extends State<OldVsNewTax> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 19),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "Old vs New Tax Regime Compare",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: kPrimaryColor,
+                    ),
+                  ),
+                  Spacer(),
+                  CloseButton(),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//-------------------------------------------------------------------------------------OLD VS NEW CALCULATOR------------------------------------------------------------------------------------------------------------

@@ -76,14 +76,17 @@ class OutputTextForPopUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Text(
-        "OUTPUT",
-        style: TextStyle(
-          fontSize: 19,
-          color: kPrimaryColor,
-          fontWeight: FontWeight.w900,
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          "OUTPUT",
+          style: TextStyle(
+            fontSize: 19,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );

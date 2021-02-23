@@ -62,7 +62,7 @@ class _CalculatorButtonsState extends State<CalculatorButtons> {
                 CalculatorTile(
                   letter: "T",
                   name: "Tax Calculator",
-                  //navigationRoute: () {},
+                  navigationRoute: TaxCalculator(),
                 ),
                 CalculatorTile(
                   letter: "E",
@@ -92,7 +92,7 @@ class _CalculatorButtonsState extends State<CalculatorButtons> {
                 CalculatorTile(
                   letter: "T",
                   name: "Tax Regime Compare",
-                  //navigationRoute: () {},
+                  navigationRoute: OldVsNewTax(),
                 ),
               ],
             ),
