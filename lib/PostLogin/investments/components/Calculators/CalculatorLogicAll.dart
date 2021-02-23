@@ -24,8 +24,22 @@ class _SipCalcFromState extends State<SipCalcFrom> {
   String amountInvested = "0";
   String futureValueOfInvestment = "0";
 
-  double returnRate = 0;
-  double inflationRateControl = 0;
+  var sipAmount = 0.0;
+  var noOfYrs = 0.0;
+  var r = 0.0;
+  var i = 0.0;
+  var returnRate = 0.0;
+  var inflationRateController = 0.0;
+  var investedAmount = 0.0;
+  var a = 0.0;
+  var b = 0.0;
+  var realReturn = 0.0;
+  var c = 0.0;
+  var nominalRate = 0.0;
+  var d = 0.0;
+  var nominalRate1 = 0.0;
+  var fv1 = 0.0;
+  var fvInvestment = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +147,26 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        sipAmount = double.tryParse(sip1Amount.text);
+                        noOfYrs = double.tryParse(investedFor.text);
+                        r = double.tryParse(expectedRateOfReturn.text);
+                        i = double.parse(inflationRate.text);
+                        returnRate = r / 100;
+                        inflationRateController = i / 100;
+                        investedAmount = sipAmount * (noOfYrs * 12);
+                        a = (1 + returnRate);
+                        b = (1 + inflationRateController);
+                        realReturn = ((a / b) - 1);
+                        c = pow((1 + realReturn), (1 / (noOfYrs * 12)));
+                        nominalRate = noOfYrs * (c - 1);
+                        d = pow((1 + nominalRate), (noOfYrs * 12));
+                        nominalRate1 = (1 + nominalRate);
+                        fv1 = sipAmount * (nominalRate1) / nominalRate;
+                        fvInvestment = (d * fv1) - fv1;
+                        double sum = sipAmount * noOfYrs * r * i;
+                        amountInvested = sum.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -151,11 +184,18 @@ class _SipCalcFromState extends State<SipCalcFrom> {
             ),
             TitleHeader(text: "Future Value Investment Of"),
             GlobalOutputField(
-              outputValue: "futureValueOfInvestment",
+              outputValue: amountInvested,
             ),
             SuggestionBox1(
-              suggestion:
-                  "If you invest ₹ ***** per month for *** years @ **% P.A expected rate of return, you will accumulate ₹ ***** at the end of the **th year.",
+              suggestion: "If you invest ₹" +
+                  sipAmount.toString() +
+                  " per month for " +
+                  noOfYrs.toString() +
+                  " years @ " +
+                  r.toString() +
+                  " % P.A expected rate of return, you will accumulate ₹ ***** at the end of the " +
+                  noOfYrs.toString() +
+                  " years.",
             ),
           ],
         ),
