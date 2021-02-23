@@ -32,6 +32,7 @@ dependencies:
   path_provider: ^1.6.27
   pdf: ^2.1.0
   modal_bottom_sheet: ^1.0.0+1
+  http: ^0.12.2
 
 
   cupertino_icons: ^1.0.0

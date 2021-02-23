@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -6,8 +10,40 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  var longitude;
+  var response;
+
+  void getData() async {
+    http.Response response = await http.get(
+        "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=3a7a0a85c0a7be0fea6363ecf6339bf5");
+    if (response.statusCode == 200) {
+      String data = response.body;
+      print(data);
+
+      longitude = jsonDecode(data)['coord']['lon'];
+      print(longitude);
+
+      var description = jsonDecode(data)['weather'][0]['description'];
+      print(description);
+    } else {
+      print(response.statusCode);
+    }
+  }
+
+  void testData() async {
+    http.Response responseNew =
+        await http.get("https://cat-fact.herokuapp.com");
+    print("########################");
+    print(responseNew.body);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    getData();
+    testData();
+    return Scaffold(
+      appBar: AppBar(),
+      drawer: AppDrawerMain(),
+    );
   }
 }
