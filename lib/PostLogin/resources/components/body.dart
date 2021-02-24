@@ -15,7 +15,7 @@ class _BodyState extends State<Body> {
 
   void getData() async {
     http.Response response = await http.get(
-        "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=3a7a0a85c0a7be0fea6363ecf6339bf5");
+        "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=");
     if (response.statusCode == 200) {
       String data = response.body;
       print(data);
