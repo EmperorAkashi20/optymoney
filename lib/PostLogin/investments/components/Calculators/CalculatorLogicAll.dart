@@ -39,7 +39,8 @@ class _SipCalcFromState extends State<SipCalcFrom> {
   var d = 0.0;
   var nominalRate1 = 0.0;
   var fv1 = 0.0;
-  var fvInvestment = 0.0;
+  var fvInvestmentDouble = 0.0;
+  var fvInvestmentInt = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -163,9 +164,9 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                         d = pow((1 + nominalRate), (noOfYrs * 12));
                         nominalRate1 = (1 + nominalRate);
                         fv1 = sipAmount * (nominalRate1) / nominalRate;
-                        fvInvestment = (d * fv1) - fv1;
-                        double sum = sipAmount * noOfYrs * r * i;
-                        amountInvested = sum.toString();
+                        fvInvestmentDouble = (d * fv1) - fv1;
+                        amountInvested = investedAmount.toString();
+                        fvInvestmentInt = fvInvestmentDouble.round();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -180,11 +181,11 @@ class _SipCalcFromState extends State<SipCalcFrom> {
             OutputTextForPopUp(),
             TitleHeader(text: "Amount Invested"),
             GlobalOutputField(
-              outputValue: "amountInvested",
+              outputValue: amountInvested,
             ),
             TitleHeader(text: "Future Value Investment Of"),
             GlobalOutputField(
-              outputValue: amountInvested,
+              outputValue: fvInvestmentInt.toString(),
             ),
             SuggestionBox1(
               suggestion: "If you invest ₹" +
@@ -226,6 +227,14 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
   String emiAmount = "0";
   String totalAmountPayable = "0";
   String interestAmount = "0";
+
+  var p = 0.0;
+  var r = 0.0;
+  var n = 0.0;
+  var emi = 0;
+  var totalPayAmt = 0;
+  var totalPayInt = 0.0;
+  var x = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +299,18 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        p = double.tryParse(carLoanAmount.text);
+                        r = double.tryParse(interestRate.text) / 100 / 12;
+                        n = double.tryParse(tenure.text) * 12;
+                        x = pow((1 + r), n);
+                        emi = ((p * x * r) / (x - 1)).round();
+                        totalPayAmt = ((emi * n)).round();
+                        totalPayInt = totalPayAmt - p;
+                        emiAmount = emi.toString();
+                        totalAmountPayable = totalPayAmt.toString();
+                        interestAmount = totalPayInt.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -344,6 +364,14 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
   String emiAmount = "0";
   String totalAmountPayable = "0";
   String interestAmount = "0";
+
+  var p = 0.0;
+  var r = 0.0;
+  var n = 0.0;
+  var emi = 0;
+  var totalPayAmt = 0;
+  var totalPayInt = 0.0;
+  var x = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +436,18 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        p = double.tryParse(homeLoanAmount.text);
+                        r = double.tryParse(interestRate.text) / 100 / 12;
+                        n = double.tryParse(tenure.text) * 12;
+                        x = pow((1 + r), n);
+                        emi = ((p * x * r) / (x - 1)).round();
+                        totalPayAmt = ((emi * n)).round();
+                        totalPayInt = totalPayAmt - p;
+                        emiAmount = emi.toString();
+                        totalAmountPayable = totalPayAmt.toString();
+                        interestAmount = totalPayInt.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -464,6 +503,14 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
   String emiAmount = "0";
   String totalAmountPayable = "0";
   String interestComponent = "0";
+
+  var p = 0.0;
+  var r = 0.0;
+  var n = 0.0;
+  var emi = 0;
+  var totalPayAmt = 0;
+  var totalPayInt = 0.0;
+  var x = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -528,7 +575,18 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        p = double.tryParse(personalLoanAmount.text);
+                        r = double.tryParse(interestRate.text) / 100 / 12;
+                        n = double.tryParse(tenure.text) * 12;
+                        x = pow((1 + r), n);
+                        emi = ((p * x * r) / (x - 1)).round();
+                        totalPayAmt = ((emi * n)).round();
+                        totalPayInt = totalPayAmt - p;
+                        emiAmount = emi.toString();
+                        totalAmountPayable = totalPayAmt.toString();
+                        interestComponent = totalPayInt.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -700,6 +758,18 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
   String amountInvested = "0";
   String futureValueOfInvestment = "0";
 
+  var requiredAmt = 0.0;
+  var noOfYrs = 0.0;
+  var r = 0.0;
+  var i = 0.0;
+  var returnRate = 0.0;
+  var inflationRateController = 0.0;
+  var a = 0.0;
+  var b = 0.0;
+  var realReturn = 0.0;
+  var fv = 0.0;
+  var fvInt = 0;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -806,7 +876,19 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        requiredAmt = double.tryParse(lumpSumAmount.text);
+                        noOfYrs = double.tryParse(investedFor.text);
+                        r = double.tryParse(expectedRateOfReturn.text);
+                        i = double.tryParse(inflationRate.text);
+                        returnRate = r / 100;
+                        inflationRateController = i / 100;
+                        a = 1 + returnRate;
+                        b = 1 + inflationRateController;
+                        realReturn = (a / b) - 1;
+                        fv = (requiredAmt * pow((1 + realReturn), (noOfYrs)));
+                        fvInt = fv.round();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -820,11 +902,11 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
             OutputTextForPopUp(),
             TitleHeader(text: "Amount Invested"),
             GlobalOutputField(
-              outputValue: amountInvested,
+              outputValue: requiredAmt.toString(),
             ),
             TitleHeader(text: "Future Value Of Investment"),
             GlobalOutputField(
-              outputValue: futureValueOfInvestment,
+              outputValue: fvInt.toString(),
             ),
             SuggestionBox1(
               suggestion:
@@ -863,6 +945,14 @@ class _HraCalcFromState extends State<HraCalcFrom> {
 
   String hraExemption = "0";
   String hraTaxable = "0";
+
+  var salRec = 0.0;
+  var da = 0.0;
+  var hraRec = 0.0;
+  var rentPaid = 0.0;
+  var city;
+  var metroNoMetro = 0.0;
+  var hraExemptions = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -974,7 +1064,28 @@ class _HraCalcFromState extends State<HraCalcFrom> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        salRec = double.tryParse(basicSalaryReceived.text);
+                        da = double.tryParse(dearnessAllowanceReceived.text);
+                        hraRec = double.tryParse(hraReceived.text);
+                        rentPaid = double.tryParse(actualRentPaid.text);
+                        city = _currentItemSelected;
+                        rentPaid = (rentPaid - ((salRec + da) * (10 / 100)));
+                        if (city == 'other') {
+                          metroNoMetro = ((salRec + da) * (40 / 100));
+                        } else {
+                          metroNoMetro = ((salRec + da) * (50 / 100));
+                        }
+                        if (hraRec < rentPaid && hraRec < metroNoMetro) {
+                          hraExemptions = hraRec;
+                        } else if (rentPaid < hraRec &&
+                            rentPaid < metroNoMetro) {
+                          hraExemptions = rentPaid;
+                        } else if (metroNoMetro < hraRec &&
+                            metroNoMetro < rentPaid) {
+                          hraExemptions = metroNoMetro;
+                        }
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
