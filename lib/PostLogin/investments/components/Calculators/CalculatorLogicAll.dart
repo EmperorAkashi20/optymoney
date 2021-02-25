@@ -936,7 +936,6 @@ class HraCalcFrom extends StatefulWidget {
 
 class _HraCalcFromState extends State<HraCalcFrom> {
   var _options = ['Delhi', 'Mumbai', 'Kolkata', 'Chennai', 'Other'];
-  var _currentItemSelected = 'Delhi';
 
   TextEditingController basicSalaryReceived = new TextEditingController();
   TextEditingController dearnessAllowanceReceived = new TextEditingController();
@@ -952,7 +951,8 @@ class _HraCalcFromState extends State<HraCalcFrom> {
   var rentPaid = 0.0;
   var city;
   var metroNoMetro = 0.0;
-  var hraExemptions = 0.0;
+  var _currentItemSelected = 'Delhi';
+  var hraTax = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -1069,22 +1069,26 @@ class _HraCalcFromState extends State<HraCalcFrom> {
                         da = double.tryParse(dearnessAllowanceReceived.text);
                         hraRec = double.tryParse(hraReceived.text);
                         rentPaid = double.tryParse(actualRentPaid.text);
-                        city = _currentItemSelected;
                         rentPaid = (rentPaid - ((salRec + da) * (10 / 100)));
-                        if (city == 'other') {
-                          metroNoMetro = ((salRec + da) * (40 / 100));
+                        city = _currentItemSelected;
+                        if (city == 'Other') {
+                          metroNoMetro = (((salRec + da)) * (40 / 100));
                         } else {
-                          metroNoMetro = ((salRec + da) * (50 / 100));
+                          metroNoMetro = (((salRec + da)) * (50 / 100));
                         }
+                        // var list = [hraReceived, rentPaid, metroNoMetro];
+                        // list.sort();
                         if (hraRec < rentPaid && hraRec < metroNoMetro) {
-                          hraExemptions = hraRec;
+                          hraExemption = hraRec.toString();
                         } else if (rentPaid < hraRec &&
                             rentPaid < metroNoMetro) {
-                          hraExemptions = rentPaid;
+                          hraExemption = rentPaid.toString();
                         } else if (metroNoMetro < hraRec &&
                             metroNoMetro < rentPaid) {
-                          hraExemptions = metroNoMetro;
+                          hraExemption = metroNoMetro.toString();
                         }
+                        hraTax = (hraRec - double.tryParse(hraExemption));
+                        hraTaxable = hraTax.toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -1142,6 +1146,13 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
   String totalInterestEarned = "0";
   String totalMaturityAmount = "0";
 
+  var principal = 0.0;
+  var rateType = 0.0;
+  var time = 0.0;
+  var ppfTotalMatAmt = 0.0;
+  var selected;
+  var amt = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -1172,10 +1183,8 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
             ),
             TitleHeaderWithRichText(
                 text: "PPF Interest Rate", richText: " (%)"),
-            FormFieldGlobal(
-              keyboardTypeGlobal: TextInputType.number,
-              hintText: "Rate Here",
-              dataController: ppfInterestRate,
+            GlobalOutputField(
+              outputValue: rateType.toString(),
             ),
             TitleHeaderWithRichText(
                 text: "Amount Invested", richText: " (Per Year)"),
@@ -1242,7 +1251,16 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        principal = double.tryParse(totalAmountInvested.text);
+                        time = double.tryParse(tenure.text);
+                        selected = _currentItemSelected;
+                        if (selected == 'End Of Period') {
+                          rateType = 7.6;
+                        } else if (selected == 'Beginning Of Period') {
+                          rateType = 7.8;
+                        }
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -1434,6 +1452,23 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
 //-------------------------------------------------------------------------------------SIP INSTALLMENT CALCULATOR------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------FIXED DEPOSIT CALCULATOR------------------------------------------------------------------------------------------------------------
+double calcTime(time) {
+  var timePeriod;
+  if (time == 1) {
+    timePeriod = "years";
+  } else if (time == 12) {
+    timePeriod = "months";
+  } else if (timePeriod == 365 || timePeriod == 366) {
+    timePeriod = "days";
+  }
+  return timePeriod;
+}
+
+double clcSimpleInt(principal, n, time, rate, aa) {
+  var rate2 = double.tryParse(rate) / 100;
+  var amountInterest = double.tryParse(principal) * (1 + (rate2 / aa) * time);
+  return amountInterest;
+}
 
 class FixedDepositCalcForm extends StatefulWidget {
   @override
@@ -1458,6 +1493,14 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
 
   String maturityValue = "0";
   String interestEarned = "0";
+
+  var principal = 0.0;
+  var rate = 0.0;
+  var time = 0.0;
+  var timePeriod = 0.0;
+  var intType;
+  var amt;
+  var totalInt;
 
   @override
   Widget build(BuildContext context) {
@@ -1587,7 +1630,22 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                               fontWeight: FontWeight.w500)),
                     ),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        intType = _currentItemSelected2;
+                        if (intType == 'Simple Interest') {
+                          amt = clcSimpleInt(
+                              principal, 1, time, rate, timePeriod);
+                        } else {
+                          amt = (principal *
+                              pow((1 + (rate / (intType * 100))),
+                                  (intType * time / timePeriod)));
+                        }
+                        amt = amt.round();
+                        totalInt = amt - principal.round();
+                        var showTime = calcTime(timePeriod);
+                        maturityValue = amt.toString();
+                        interestEarned = totalInt.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
