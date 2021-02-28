@@ -1260,6 +1260,8 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
                         } else if (selected == 'Beginning Of Period') {
                           rateType = 7.8;
                         }
+                        ppfTotalMatAmt = principal * time;
+                        totalInvestment = ppfTotalMatAmt.toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -1313,13 +1315,22 @@ class SipInstallmentCalcForm extends StatefulWidget {
 
 class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
   var _options = ['Low - 7%', 'Medium - 12%', 'High - 15%'];
-  var _currentItemSelected = 'Low - 7%';
+  var _currentItemSelected = 'High - 15%';
 
   TextEditingController amountYouWantToAchieve = new TextEditingController();
   TextEditingController withinNumberOfYears = new TextEditingController();
   TextEditingController rateOfReturn = new TextEditingController();
 
   String monthlySipInvestmentNeeded = "0";
+
+  var requiredAmount;
+  var noOfYrs;
+  var r;
+  var a;
+  var b;
+  var returnRate;
+  var nominalRate;
+  var sipAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -1395,10 +1406,8 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
               ),
             ),
             TitleHeaderWithRichText(text: "Rate Of Return", richText: " (%)"),
-            FormFieldGlobal(
-              keyboardTypeGlobal: TextInputType.number,
-              hintText: "Rate % Here",
-              dataController: rateOfReturn,
+            GlobalOutputField(
+              outputValue: _currentItemSelected,
             ),
             SizedBox(
               height: getProportionateScreenHeight(20),
@@ -1417,7 +1426,25 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        requiredAmount =
+                            double.tryParse(amountYouWantToAchieve.text);
+                        noOfYrs = double.tryParse(withinNumberOfYears.text);
+                        if (_currentItemSelected == 'Low - 7%') {
+                          r = 7;
+                        } else if (_currentItemSelected == 'Medium - 12%') {
+                          r = 12;
+                        } else if (_currentItemSelected == 'High - 15%') {
+                          r = 15;
+                        }
+                        returnRate = r / 100;
+                        a = pow((1 + returnRate), (1 / (noOfYrs * 12)));
+                        nominalRate = noOfYrs * (a - 1);
+                        b = (pow((1 + nominalRate), (noOfYrs * 12)));
+                        sipAmount =
+                            ((requiredAmount * nominalRate) / (b - 1)).round();
+                        monthlySipInvestmentNeeded = sipAmount.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
