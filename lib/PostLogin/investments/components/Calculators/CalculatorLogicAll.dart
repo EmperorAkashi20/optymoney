@@ -1479,23 +1479,6 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
 //-------------------------------------------------------------------------------------SIP INSTALLMENT CALCULATOR------------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------FIXED DEPOSIT CALCULATOR------------------------------------------------------------------------------------------------------------
-double calcTime(time) {
-  var timePeriod;
-  if (time == 1) {
-    timePeriod = "years";
-  } else if (time == 12) {
-    timePeriod = "months";
-  } else if (timePeriod == 365 || timePeriod == 366) {
-    timePeriod = "days";
-  }
-  return timePeriod;
-}
-
-double clcSimpleInt(principal, n, time, rate, aa) {
-  var rate2 = double.tryParse(rate) / 100;
-  var amountInterest = double.tryParse(principal) * (1 + (rate2 / aa) * time);
-  return amountInterest;
-}
 
 class FixedDepositCalcForm extends StatefulWidget {
   @override
@@ -1524,10 +1507,28 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
   var principal = 0.0;
   var rate = 0.0;
   var time = 0.0;
-  var timePeriod = 0.0;
+  var timePeriod;
   var intType;
   var amt;
   var totalInt;
+
+  double calcTime(time) {
+    var timePeriod;
+    if (time == 1) {
+      timePeriod = "years";
+    } else if (time == 12) {
+      timePeriod = "months";
+    } else if (timePeriod == 365 || timePeriod == 366) {
+      timePeriod = "days";
+    }
+    return timePeriod;
+  }
+
+  double clcSimpleInt(principal, n, time, rate, aa) {
+    var rate2 = double.tryParse(rate) / 100;
+    var amountInterest = double.tryParse(principal) * (1 + (rate2 / aa) * time);
+    return amountInterest;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1658,6 +1659,9 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                     ),
                     onPressed: () {
                       setState(() {
+                        principal = double.tryParse(amountInvested.text);
+                        time = double.tryParse(investedForNumberOf.text);
+                        rate = double.tryParse(interestRate.text);
                         intType = _currentItemSelected2;
                         if (intType == 'Simple Interest') {
                           amt = clcSimpleInt(
@@ -1743,6 +1747,27 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
   String maturityYear = "0";
   String totalMaturityAmount = "0";
 
+  var totalAmount;
+  var monthType;
+  var r;
+  var startYear;
+  var rate;
+  var result;
+  var maturityYearInt;
+
+  double ssyCal(amount, rate, interestType) {
+    var nper = 6;
+    var rate1 = rate / interestType;
+    var nper1 = 15 * interestType;
+    var k1 = (1 + rate1);
+    var rateMPow = pow((k1), (nper1));
+    var fvM = amount * (k1) / rate1;
+    var fvFinalM = (rateMPow * fvM) - fvM;
+    var rateMPow1 = pow((1 + rate), (nper));
+    var fv2M = rateMPow1 * fvFinalM;
+    return (fv2M);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -1817,8 +1842,10 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
             ),
             TitleHeader(text: "Investment Started At the Year Of"),
             FormFieldGlobal(
-                keyboardTypeGlobal: TextInputType.number,
-                hintText: "Year Here"),
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Year Here",
+              dataController: investmentStartedAtTheAgeOf,
+            ),
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
@@ -1836,7 +1863,26 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        totalAmount = double.tryParse(amountInvested.text);
+                        r = double.tryParse(interestRate.text);
+                        startYear =
+                            double.tryParse(investmentStartedAtTheAgeOf.text);
+                        rate = r / 100;
+                        maturityYearInt = (startYear + 15).round();
+                        maturityYear = maturityYearInt.toString();
+                        if (_currentItemSelected == 'Years') {
+                          monthType = 1;
+                        } else if (_currentItemSelected == 'Months') {
+                          monthType = 12;
+                        }
+                        if (monthType == "12") {
+                          result = ssyCal(totalAmount, rate, monthType);
+                        } else if (monthType == "1") {
+                          result = ssyCal(totalAmount, rate, monthType);
+                        }
+                        totalMaturityAmount = result.toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
