@@ -194,9 +194,14 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                   noOfYrs.toString() +
                   " years @ " +
                   r.toString() +
-                  " % P.A expected rate of return, you will accumulate ₹ ***** at the end of the " +
+                  " % P.A expected rate of return, you will accumulate ₹" +
+                  fvInvestmentInt.toString() +
+                  " at the end of the " +
                   noOfYrs.toString() +
                   " years.",
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),
@@ -340,7 +345,10 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
             ),
             SuggestionBox2(
               suggestion: "* Invest in SIP's to reach your car goal ",
-            )
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -477,7 +485,10 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
             ),
             SuggestionBox2(
               suggestion: "* Invest in SIP's to reach your house goal ",
-            )
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -617,7 +628,10 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
             SuggestionBox2(
               suggestion:
                   "* Invest in SIP's for emergency fund with instant withdraw option ",
-            )
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -729,6 +743,9 @@ class _SwpCalcFormState extends State<SwpCalcForm> {
             TitleHeader(text: "Value At The End Of Tenure"),
             GlobalOutputField(
               outputValue: valueAtTheEnd,
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),
@@ -909,8 +926,20 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
               outputValue: fvInt.toString(),
             ),
             SuggestionBox1(
-              suggestion:
-                  "If you invest ₹ ***** per month for *** years @ **% P.A expected rate of return, you will accumulate ₹ ***** at the end of the **th year.",
+              suggestion: "If you invest ₹" +
+                  requiredAmt.toString() +
+                  "per month for " +
+                  noOfYrs.toString() +
+                  "years @ " +
+                  r.toString() +
+                  "% P.A expected rate of return, you will accumulate ₹" +
+                  fvInt.toString() +
+                  " at the end of " +
+                  noOfYrs.toString() +
+                  " years.",
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),
@@ -1112,6 +1141,9 @@ class _HraCalcFromState extends State<HraCalcFrom> {
             SuggestionBox1(
               suggestion: "Invest in Tax saving mutual funds for saving TAX ",
             ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -1291,6 +1323,9 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
               suggestion:
                   "ELSS(Tax Saving MF) is also exempted like PPF and can generate better return then PPF ",
             ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -1462,6 +1497,9 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
             TitleHeader(text: "Monthly Investment Required"),
             GlobalOutputField(
               outputValue: monthlySipInvestmentNeeded,
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),
@@ -1702,7 +1740,10 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
             ),
             SuggestionBox2(
               suggestion: "Earn More then FD's by Investing MF's",
-            )
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -1908,6 +1949,9 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
               suggestion:
                   " Invest in top MF's for child education, child marriage and for bright future of child . ",
             ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -2047,7 +2091,10 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
               outputValue: maturityValue,
             ),
             SuggestionBox1(
-                suggestion: " Earn More then RD's by Investing MF's ")
+                suggestion: " Earn More then RD's by Investing MF's "),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
@@ -2205,6 +2252,9 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
             TitleHeader(text: "Pension Wealth Generated"),
             GlobalOutputField(
               outputValue: pensionWealthGenerated,
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),
@@ -2509,6 +2559,9 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             TitleHeader(text: "Tax saved through further investment"),
             GlobalOutputField(
               outputValue: taxSaved,
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
             ),
           ],
         ),

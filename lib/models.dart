@@ -154,7 +154,7 @@ class SuggestionBox1 extends StatelessWidget {
         width: double.infinity,
         child: Container(
           decoration: ShapeDecoration(
-            color: Colors.cyanAccent,
+            color: (Colors.cyanAccent).withOpacity(0.3),
             shape: Border.all(
               color: Colors.grey,
               width: 0.5,
@@ -206,7 +206,7 @@ class SuggestionBox2 extends StatelessWidget {
         width: double.infinity,
         child: Container(
           decoration: ShapeDecoration(
-            color: Colors.amberAccent,
+            color: Colors.yellow.withOpacity(0.3),
             shape: Border.all(
               color: Colors.grey,
               width: 0.5,
