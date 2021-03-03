@@ -2614,6 +2614,192 @@ class _OldVsNewTaxState extends State<OldVsNewTax> {
               thickness: 0.2,
               color: kPrimaryColor,
             ),
+            TitleHeaderWithRichText(
+              text: "Salary Income",
+              richText: " (Including all allowance/perks)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(
+              text: "Investment in 80D",
+              richText: " (Medical Insurance, Expenditure up to 75K)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Rental Income"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Leave Travel Allowance Claim"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(text: "80G Donation", richText: " (100%)"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(text: "80G Donation", richText: " (50%)"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Interest On House Loan"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(
+              text: "Investment in 80C",
+              richText: " (insurance/FD/PPF/MF/EPF/Equity)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Fixed Deposit Interest"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(
+              text: "Food Coupon",
+              richText: " (Tax Exempted)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "National Pension Scheme"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(30),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox(
+                  width: getProportionateScreenWidth(18),
+                ),
+                Text(
+                  "Other Details",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
+            TitleHeaderWithRichText(
+              text: "Rent Paid",
+              richText: " (Per Month)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Age"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(
+              text: "HRA Component in salary",
+              richText: " (Per Month)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            TitleHeaderWithRichText(
+              text: "Basic Salary",
+              richText: " (Per Month)",
+            ),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Amount Here",
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(30),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox(
+                  width: getProportionateScreenWidth(18),
+                ),
+                Text(
+                  "Personal Details",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+            Divider(
+              thickness: 0.2,
+              color: kPrimaryColor,
+            ),
+            TitleHeader(text: "Name*"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.name,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Email*"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.emailAddress,
+              hintText: "Amount Here",
+            ),
+            TitleHeader(text: "Phone Number*"),
+            FormFieldGlobal(
+              keyboardTypeGlobal: TextInputType.phone,
+              hintText: "Amount Here",
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 18.0, top: 30),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(150),
+                  child: FlatButton(
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: kPrimaryColor),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
           ],
         ),
       ),
