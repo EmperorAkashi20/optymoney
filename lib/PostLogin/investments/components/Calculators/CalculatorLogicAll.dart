@@ -228,13 +228,13 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
   String totalAmountPayable = "0";
   String interestAmount = "0";
 
-  var p = 0.0;
-  var r = 0.0;
-  var n = 0.0;
-  var emi = 0;
-  var totalPayAmt = 0;
-  var totalPayInt = 0.0;
-  var x = 0.0;
+  var p;
+  var r;
+  var n;
+  var emi;
+  var totalPayAmt;
+  var totalPayInt;
+  var x;
 
   @override
   Widget build(BuildContext context) {
@@ -304,12 +304,12 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                         r = double.tryParse(interestRate.text) / 100 / 12;
                         n = double.tryParse(tenure.text) * 12;
                         x = pow((1 + r), n);
-                        emi = ((p * x * r) / (x - 1)).round();
-                        totalPayAmt = ((emi * n)).round();
+                        emi = ((p * x * r) / (x - 1));
+                        totalPayAmt = ((emi * n));
                         totalPayInt = totalPayAmt - p;
-                        emiAmount = emi.toString();
-                        totalAmountPayable = totalPayAmt.toString();
-                        interestAmount = totalPayInt.toString();
+                        emiAmount = (emi.round()).toString();
+                        totalAmountPayable = (totalPayAmt.round()).toString();
+                        interestAmount = (totalPayInt.round()).toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -365,13 +365,13 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
   String totalAmountPayable = "0";
   String interestAmount = "0";
 
-  var p = 0.0;
-  var r = 0.0;
-  var n = 0.0;
-  var emi = 0;
-  var totalPayAmt = 0;
-  var totalPayInt = 0.0;
-  var x = 0.0;
+  var p;
+  var r;
+  var n;
+  var emi;
+  var totalPayAmt;
+  var totalPayInt;
+  var x;
 
   @override
   Widget build(BuildContext context) {
@@ -441,12 +441,12 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
                         r = double.tryParse(interestRate.text) / 100 / 12;
                         n = double.tryParse(tenure.text) * 12;
                         x = pow((1 + r), n);
-                        emi = ((p * x * r) / (x - 1)).round();
-                        totalPayAmt = ((emi * n)).round();
+                        emi = ((p * x * r) / (x - 1));
+                        totalPayAmt = ((emi * n));
                         totalPayInt = totalPayAmt - p;
-                        emiAmount = emi.toString();
-                        totalAmountPayable = totalPayAmt.toString();
-                        interestAmount = totalPayInt.toString();
+                        emiAmount = (emi.round()).toString();
+                        totalAmountPayable = (totalPayAmt.round()).toString();
+                        interestAmount = (totalPayInt.round()).toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -504,13 +504,13 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
   String totalAmountPayable = "0";
   String interestComponent = "0";
 
-  var p = 0.0;
-  var r = 0.0;
-  var n = 0.0;
-  var emi = 0;
-  var totalPayAmt = 0;
-  var totalPayInt = 0.0;
-  var x = 0.0;
+  var p;
+  var r;
+  var n;
+  var emi;
+  var totalPayAmt;
+  var totalPayInt;
+  var x;
 
   @override
   Widget build(BuildContext context) {
@@ -580,12 +580,12 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
                         r = double.tryParse(interestRate.text) / 100 / 12;
                         n = double.tryParse(tenure.text) * 12;
                         x = pow((1 + r), n);
-                        emi = ((p * x * r) / (x - 1)).round();
-                        totalPayAmt = ((emi * n)).round();
+                        emi = ((p * x * r) / (x - 1));
+                        totalPayAmt = ((emi * n));
                         totalPayInt = totalPayAmt - p;
-                        emiAmount = emi.toString();
-                        totalAmountPayable = totalPayAmt.toString();
-                        interestComponent = totalPayInt.toString();
+                        emiAmount = (emi.round()).toString();
+                        totalAmountPayable = (totalPayAmt.round()).toString();
+                        interestComponent = (totalPayInt.round()).toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -1146,12 +1146,12 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
   String totalInterestEarned = "0";
   String totalMaturityAmount = "0";
 
-  var principal = 0.0;
-  var rateType = 0.0;
-  var time = 0.0;
-  var ppfTotalMatAmt = 0.0;
+  var principal;
+  var rateType;
+  var time;
+  var ppfTotalMatAmt;
   var selected;
-  var amt = 0.0;
+  var amt;
 
   @override
   Widget build(BuildContext context) {
@@ -1504,19 +1504,19 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
   String maturityValue = "0";
   String interestEarned = "0";
 
-  var principal = 0.0;
-  var rate = 0.0;
-  var time = 0.0;
+  var principal;
+  var rate;
+  var time;
   var timePeriod;
   var intType;
   var amt;
   var totalInt;
 
-  double calcTime(time) {
+  double calcTime(time1) {
     var timePeriod;
-    if (time == 1) {
+    if (time1 == 1) {
       timePeriod = "years";
-    } else if (time == 12) {
+    } else if (time1 == 12) {
       timePeriod = "months";
     } else if (timePeriod == 365 || timePeriod == 366) {
       timePeriod = "days";
@@ -1524,9 +1524,9 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     return timePeriod;
   }
 
-  double clcSimpleInt(principal, n, time, rate, aa) {
-    var rate2 = double.tryParse(rate) / 100;
-    var amountInterest = double.tryParse(principal) * (1 + (rate2 / aa) * time);
+  double clcSimpleInt(principal1, n, time1, rate2, aa) {
+    var rate3 = rate2 / 100;
+    var amountInterest = (principal1) * (1 + (rate2 / aa) * time1);
     return amountInterest;
   }
 
@@ -1876,10 +1876,12 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
                         } else if (_currentItemSelected == 'Months') {
                           monthType = 12;
                         }
-                        if (monthType == "12") {
-                          result = ssyCal(totalAmount, rate, monthType);
-                        } else if (monthType == "1") {
-                          result = ssyCal(totalAmount, rate, monthType);
+                        if (monthType == 12) {
+                          result =
+                              (ssyCal(totalAmount, rate, monthType)).round();
+                        } else if (monthType == 1) {
+                          result =
+                              (ssyCal(totalAmount, rate, monthType)).round();
                         }
                         totalMaturityAmount = result.toString();
                       });
@@ -1935,6 +1937,25 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
   TextEditingController interestRate = new TextEditingController();
 
   String maturityValue = "0";
+
+  var monthlyInstallment;
+  var numberOfYears;
+  var rateOfInterest;
+  var numberOfMonths;
+  var amount;
+
+  double clcRecurrInt(monthlyInstallment1, numberOfMonths1, rateOfInterest1) {
+    var frequency = (numberOfMonths1 / 3).floor();
+    var accumulateMonthlyAmount = monthlyInstallment1 *
+        ((pow(rateOfInterest1 / 400 + 1, frequency) - 1) /
+            (1 - (pow(rateOfInterest1 / 400 + 1, (-1 / 3)))));
+
+    print(accumulateMonthlyAmount);
+    var finalInterestGain =
+        accumulateMonthlyAmount - monthlyInstallment * numberOfMonths;
+    var depositedAmount = monthlyInstallment * numberOfMonths;
+    return accumulateMonthlyAmount;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2000,9 +2021,15 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
                       setState(() {
-                        int sum = int.parse(amountInvestedMonthly.text) *
-                            int.parse(investedForNoOfYears.text);
-                        maturityValue = sum.toString();
+                        monthlyInstallment =
+                            double.tryParse(amountInvestedMonthly.text);
+                        numberOfYears =
+                            double.tryParse(investedForNoOfYears.text);
+                        rateOfInterest = double.tryParse(interestRate.text);
+                        numberOfMonths = numberOfYears * (12);
+                        amount = (clcRecurrInt(monthlyInstallment,
+                            numberOfMonths, rateOfInterest));
+                        maturityValue = (amount.round()).toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -2049,6 +2076,11 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
   String interestEarnedOnInvestment = "0";
   String pensionWealthGenerated = "0";
 
+  var currentAge1;
+  var retirementAge1;
+  var numberOfYears;
+  var amount;
+  var r;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -2128,7 +2160,29 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        currentAge1 = double.tryParse(currentAge.text);
+                        retirementAge1 = double.tryParse(retirementAge.text);
+                        numberOfYears =
+                            double.tryParse(totalInvestingPeriod.text);
+                        amount =
+                            double.tryParse(monthlyContributionToBeDone.text);
+                        r = double.tryParse(expectedRateOfReturn.text);
+                        var returnRate = (r / (1200));
+                        var prinAmtInv = amount * numberOfYears * 12;
+                        var d = pow((1 + returnRate), (numberOfYears * 12));
+                        var returnRate1 = (1 + returnRate);
+                        var fv1 = amount / returnRate;
+                        var fvInvestment = (d * fv1) - fv1;
+                        var intEarOnInvest = fvInvestment - prinAmtInv;
+
+                        principalAmountInvested =
+                            (prinAmtInv.round()).toString();
+                        interestEarnedOnInvestment =
+                            (intEarOnInvest.round()).toString();
+                        pensionWealthGenerated =
+                            (fvInvestment.round()).toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -2169,8 +2223,24 @@ class TaxCalculator extends StatefulWidget {
 }
 
 class _TaxCalculatorState extends State<TaxCalculator> {
+  TextEditingController currentAge = new TextEditingController();
+  TextEditingController elss = new TextEditingController();
+  TextEditingController lic = new TextEditingController();
+  TextEditingController ssy = new TextEditingController();
+  TextEditingController fd = new TextEditingController();
+  TextEditingController ppf = new TextEditingController();
+  TextEditingController insurance = new TextEditingController();
+  TextEditingController otherAmt = new TextEditingController();
+  TextEditingController salary = new TextEditingController();
+
   var _options = ['0-59', '60-79', '>=80'];
   var _currentItemSelected = '0-59';
+
+  String yourCurrentInvestments = "0";
+  String furtherInvestmentOpportunity = "0";
+  String taxSaved = "0";
+
+  var age;
 
   @override
   Widget build(BuildContext context) {
@@ -2211,43 +2281,51 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             ),
             TitleHeader(text: "Equity linked saving scheme(ELSS)"),
             FormFieldGlobal(
-              keyboardTypeGlobal: TextInputType.text,
+              keyboardTypeGlobal: TextInputType.number,
               hintText: "Amount Here",
+              dataController: elss,
             ),
             TitleHeader(text: "Life insurance premium paid"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: lic,
             ),
             TitleHeader(text: "Sukanya Samriddhi Yojna"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: ssy,
             ),
             TitleHeader(text: "5 years fixed deposit"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: fd,
             ),
             TitleHeader(text: "PPF investment"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: ppf,
             ),
             TitleHeader(text: "Unit linked insurance plan"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: insurance,
             ),
             TitleHeader(text: "Any other 80C"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: otherAmt,
             ),
             TitleHeader(text: "Your annual salary"),
             FormFieldGlobal(
               keyboardTypeGlobal: TextInputType.text,
               hintText: "Amount Here",
+              dataController: salary,
             ),
             TitleHeader(text: "Age"),
             Padding(
@@ -2297,7 +2375,118 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                             fontSize: 20,
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
-                      setState(() {});
+                      setState(() {
+                        if (_currentItemSelected == '0-59') {
+                          age = 'normal';
+                        } else if (_currentItemSelected == '60-79') {
+                          age = 'old';
+                        } else if (_currentItemSelected == '>=80') {
+                          age = 'seniorCitizen';
+                        }
+                        var elss1 = double.tryParse(elss.text);
+                        var lic1 = double.tryParse(lic.text);
+                        var ssy1 = double.tryParse(ssy.text);
+                        var fd1 = double.tryParse(fd.text);
+                        var ppf1 = double.tryParse(ppf.text);
+                        var insurance1 = double.tryParse(insurance.text);
+                        var otherAmt1 = double.tryParse(otherAmt.text);
+                        var salary1 = double.tryParse(salary.text);
+                        var totalInvest = (elss1 +
+                            lic1 +
+                            ssy1 +
+                            fd1 +
+                            ppf1 +
+                            insurance1 +
+                            otherAmt1);
+                        var remainingSalary = salary1 - totalInvest;
+                        var tax = 0.0;
+                        var furInvest;
+                        var taxSavedFromFurInv;
+                        if (totalInvest > 150000) {
+                          furInvest = 0;
+                        } else {
+                          furInvest = 150000 - totalInvest;
+                        }
+                        if (age == "normal") {
+                          if (remainingSalary > 250000 &&
+                              remainingSalary <= 500000) {
+                            tax = ((remainingSalary - 250000) * 5 / 100);
+                          }
+                          if (remainingSalary > 500000 &&
+                              remainingSalary <= 1000000) {
+                            tax =
+                                12500 + ((remainingSalary - 500000) * 20 / 100);
+                          }
+                          if (remainingSalary > 1000000) {
+                            tax = (12500 + 100000) +
+                                ((remainingSalary - 500000) * 30 / 100);
+                          }
+
+                          if (salary1 <= 250000) {
+                            taxSavedFromFurInv = (furInvest * 0 / 100);
+                          }
+                          if (salary1 > 250000 && salary1 <= 500000) {
+                            taxSavedFromFurInv = (furInvest * 5 / 100);
+                          }
+                          if (salary1 > 500000 && salary1 <= 1000000) {
+                            taxSavedFromFurInv = (furInvest * 20 / 100);
+                          }
+                          if (salary1 > 1000000) {
+                            taxSavedFromFurInv = (furInvest * 30 / 100);
+                          }
+                        } else if (age == "old") {
+                          if (remainingSalary > 300000 &&
+                              remainingSalary <= 500000) {
+                            tax = ((remainingSalary - 300000) * 5 / 100);
+                          }
+                          if (remainingSalary > 500000 &&
+                              remainingSalary <= 1000000) {
+                            tax =
+                                10000 + ((remainingSalary - 500000) * 20 / 100);
+                          }
+                          if (remainingSalary > 1000000) {
+                            tax = (10000 + 100000) +
+                                ((remainingSalary - 500000) * 30 / 100);
+                          }
+
+                          if (salary1 <= 300000) {
+                            taxSavedFromFurInv = (furInvest * 0 / 100);
+                          }
+                          if (salary1 > 300000 && salary1 <= 500000) {
+                            taxSavedFromFurInv = (furInvest * 5 / 100);
+                          }
+                          if (salary1 > 500000 && salary1 <= 1000000) {
+                            taxSavedFromFurInv = (furInvest * 20 / 100);
+                          }
+                          if (salary1 > 1000000) {
+                            taxSavedFromFurInv = (furInvest * 30 / 100);
+                          }
+                        } else if (age == "seniorCitizen") {
+                          if (remainingSalary > 500000 &&
+                              remainingSalary <= 1000000) {
+                            tax = (remainingSalary - 500000) * 20 / 100;
+                          }
+                          if (remainingSalary > 1000000) {
+                            tax = (100000) +
+                                ((remainingSalary - 500000) * 30 / 100);
+                          }
+
+                          if (salary1 <= 500000) {
+                            taxSavedFromFurInv = (furInvest * 0 / 100);
+                          }
+                          if (salary1 > 500000 && salary1 <= 1000000) {
+                            taxSavedFromFurInv = (furInvest * 20 / 100);
+                          }
+                          if (salary1 > 1000000) {
+                            taxSavedFromFurInv = (furInvest * 30 / 100);
+                          }
+                        }
+                        yourCurrentInvestments =
+                            (totalInvest.round()).toString();
+                        furtherInvestmentOpportunity =
+                            (furInvest.round()).toString();
+                        taxSaved = (taxSavedFromFurInv.round()).toString();
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -2311,15 +2500,15 @@ class _TaxCalculatorState extends State<TaxCalculator> {
             OutputTextForPopUp(),
             TitleHeader(text: "Your current investments"),
             GlobalOutputField(
-              outputValue: "",
+              outputValue: yourCurrentInvestments,
             ),
             TitleHeader(text: "Further investment opportunity"),
             GlobalOutputField(
-              outputValue: "",
+              outputValue: furtherInvestmentOpportunity,
             ),
             TitleHeader(text: "Tax saved through further investment"),
             GlobalOutputField(
-              outputValue: "",
+              outputValue: taxSaved,
             ),
           ],
         ),

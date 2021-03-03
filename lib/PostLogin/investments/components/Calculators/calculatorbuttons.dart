@@ -109,10 +109,10 @@ class _CalculatorButtonsState extends State<CalculatorButtons> {
                   name: "NPS Calculator",
                   navigationRoute: NpsCalcForm(),
                 ),
-                CalculatorTile(
-                  letter: "S",
-                  name: "SWP Calculator",
-                  navigationRoute: SwpCalcForm(),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                  ),
                 ),
               ],
             ),
