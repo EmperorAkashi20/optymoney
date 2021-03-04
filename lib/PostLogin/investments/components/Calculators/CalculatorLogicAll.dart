@@ -16,6 +16,17 @@ class _SipCalcFromState extends State<SipCalcFrom> {
   var _options = ['Yes', 'No'];
   var _currentItemSelected = 'Yes';
 
+  bool enableNow = true;
+
+  bool enabledOrNotEnabled() {
+    if (_currentItemSelected == 'No') {
+      enableNow = false;
+    } else if (_currentItemSelected == 'Yes') {
+      enableNow = true;
+    }
+    return enableNow;
+  }
+
   TextEditingController sip1Amount = new TextEditingController();
   TextEditingController investedFor = new TextEditingController();
   TextEditingController expectedRateOfReturn = new TextEditingController();
@@ -127,7 +138,7 @@ class _SipCalcFromState extends State<SipCalcFrom> {
             ),
             TitleHeaderWithRichText(text: "Inflation Rate", richText: " (%)"),
             FormFieldGlobal(
-              enabledOrNot: true,
+              enabledOrNot: enabledOrNotEnabled(),
               keyboardTypeGlobal: TextInputType.number,
               hintText: "Rate % Here",
               dataController: inflationRate,
@@ -776,6 +787,17 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
   var _options = ['Yes', 'No'];
   var _currentItemSelected = 'Yes';
 
+  bool enableNow = true;
+
+  bool enabledOrNotEnabled() {
+    if (_currentItemSelected == 'No') {
+      enableNow = false;
+    } else if (_currentItemSelected == 'Yes') {
+      enableNow = true;
+    }
+    return enableNow;
+  }
+
   TextEditingController lumpSumAmount = new TextEditingController();
   TextEditingController investedFor = new TextEditingController();
   TextEditingController expectedRateOfReturn = new TextEditingController();
@@ -884,6 +906,7 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
               keyboardTypeGlobal: TextInputType.number,
               hintText: "Rate % Here",
               dataController: inflationRate,
+              enabledOrNot: enabledOrNotEnabled(),
             ),
             SizedBox(
               height: getProportionateScreenHeight(20),
@@ -915,7 +938,6 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                         requiredAmt = double.tryParse(lumpSumAmount.text);
                         noOfYrs = double.tryParse(investedFor.text);
                         r = double.tryParse(expectedRateOfReturn.text);
-                        i = double.tryParse(inflationRate.text);
                         returnRate = r / 100;
                         inflationRateController = i / 100;
                         a = 1 + returnRate;
@@ -1792,8 +1814,15 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
               outputValue: interestEarned,
             ),
             SuggestionBox1(
-              suggestion:
-                  "If you invest Rs.***** per month for *** @ % P.A expected rate of return, you will accumulate Rs. **** at the end of the **.",
+              suggestion: "If you invest Rs" +
+                  principal.toString() +
+                  " per month for " +
+                  time.toString() +
+                  " years @ " +
+                  rate3.toString() +
+                  "% P.A expected rate of return, you will accumulate Rs." +
+                  maturityValue +
+                  " at the end of the Period.",
             ),
             SuggestionBox2(
               suggestion: "Earn More then FD's by Investing MF's",
