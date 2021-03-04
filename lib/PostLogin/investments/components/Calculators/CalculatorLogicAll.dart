@@ -1184,6 +1184,23 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
   var ppfTotalMatAmt;
   var selected;
   var amt;
+  var totalInvestment1;
+  var interestEarned;
+
+  double clcPPF(principalVal, intRate, years) {
+    var amt = 0.00;
+    for (var i = 1; i <= years; i++) {
+      var show = '';
+      if (i >= 1 && i <= 15) {
+        amt = (amt + principalVal);
+      }
+      if (intRate == 7.6 && i == years) {
+      } else {
+        amt = amt + (amt * intRate) / 100;
+      }
+    }
+    return amt;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1292,8 +1309,16 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
                         } else if (selected == 'Beginning Of Period') {
                           rateType = 7.8;
                         }
-                        ppfTotalMatAmt = principal * time;
-                        totalInvestment = ppfTotalMatAmt.toString();
+                        if (rateType == 7.6) {
+                          ppfTotalMatAmt = clcPPF(principal, rateType, time);
+                        } else if (rateType == 7.8) {
+                          ppfTotalMatAmt = clcPPF(principal, rateType, time);
+                        }
+                        totalInvestment1 = (principal * time);
+                        interestEarned = ppfTotalMatAmt - totalInvestment1;
+                        totalMaturityAmount = ppfTotalMatAmt.round().toString();
+                        totalInvestment = totalInvestment1.round().toString();
+                        totalInterestEarned = interestEarned.round().toString();
                       });
                     },
                     shape: RoundedRectangleBorder(
@@ -1543,7 +1568,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
   String interestEarned = "0";
 
   var principal;
-  var rate;
+  var rate3 = 0.0;
   var time;
   var timePeriod;
   var intType;
@@ -1562,9 +1587,21 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     return timePeriod;
   }
 
-  double clcSimpleInt(principal1, n, time1, rate2, aa) {
-    var rate3 = rate2 / 100;
-    var amountInterest = (principal1) * (1 + (rate2 / aa) * time1);
+  int calcTime1(time1) {
+    var timePeriod;
+    if (time1 == "Years") {
+      timePeriod = 1;
+    } else if (time1 == "Months") {
+      timePeriod = 12;
+    } else if (time1 == "Days" || time1 == "Days") {
+      timePeriod = 365;
+    }
+    return timePeriod;
+  }
+
+  double clcSimpleInt(principal1, n, time1, rate, aa) {
+    var rate2 = rate / 100;
+    var amountInterest = principal1 * (1 + (rate2 / aa * time1));
     return amountInterest;
   }
 
@@ -1642,8 +1679,10 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
             ),
             TitleHeaderWithRichText(text: "Interest Rate", richText: " (%)"),
             FormFieldGlobal(
-                keyboardTypeGlobal: TextInputType.number,
-                hintText: "Rate % Here"),
+              keyboardTypeGlobal: TextInputType.number,
+              hintText: "Rate % Here",
+              dataController: interestRate,
+            ),
             TitleHeader(text: "Frequency"),
             Padding(
               padding: const EdgeInsets.only(left: 18.0, right: 18.0),
@@ -1688,27 +1727,27 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                   height: getProportionateScreenHeight(50),
                   width: getProportionateScreenWidth(150),
                   child: FlatButton(
-                    child: Expanded(
-                      child: Text('Compute',
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500)),
-                    ),
+                    child: Text('Compute',
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500)),
                     onPressed: () {
                       setState(() {
                         principal = double.tryParse(amountInvested.text);
                         time = double.tryParse(investedForNumberOf.text);
-                        rate = double.tryParse(interestRate.text);
+                        rate3 = double.tryParse(interestRate.text);
                         intType = _currentItemSelected2;
+                        var timePeriod3 = calcTime1(_currentItemSelected);
                         if (intType == 'Simple Interest') {
                           amt = clcSimpleInt(
-                              principal, 1, time, rate, timePeriod);
+                              principal, 1, time, rate3, timePeriod3);
                         } else {
                           amt = (principal *
-                              pow((1 + (rate / (intType * 100))),
-                                  (intType * time / timePeriod)));
+                              pow((1 + (rate3 / (intType * 100))),
+                                  (intType * time / timePeriod3)));
                         }
+                        print(amt);
                         amt = amt.round();
                         totalInt = amt - principal.round();
                         var showTime = calcTime(timePeriod);
