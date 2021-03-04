@@ -10,11 +10,13 @@ class FormFieldGlobal extends StatelessWidget {
     @required this.keyboardTypeGlobal,
     @required this.hintText,
     this.dataController,
+    this.enabledOrNot,
   }) : super(key: key);
 
   final TextInputType keyboardTypeGlobal;
   final String hintText;
   final TextEditingController dataController;
+  final bool enabledOrNot;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class FormFieldGlobal extends StatelessWidget {
       child: Container(
         height: getProportionateScreenHeight(50),
         child: TextFormField(
+          enabled: enabledOrNot,
           controller: dataController,
           keyboardType: keyboardTypeGlobal,
           decoration: InputDecoration(

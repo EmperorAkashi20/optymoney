@@ -127,6 +127,7 @@ class _SipCalcFromState extends State<SipCalcFrom> {
             ),
             TitleHeaderWithRichText(text: "Inflation Rate", richText: " (%)"),
             FormFieldGlobal(
+              enabledOrNot: true,
               keyboardTypeGlobal: TextInputType.number,
               hintText: "Rate % Here",
               dataController: inflationRate,
@@ -149,12 +150,20 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
                       setState(() {
+                        if (_currentItemSelected == 'No') {
+                          i = 0;
+                          inflationRateController = 0;
+                        } else if (_currentItemSelected == 'Yes') {
+                          i = double.tryParse(inflationRate.text);
+                        }
+                        if (inflationRate.text.isEmpty) {
+                          i = 0;
+                        }
                         sipAmount = double.tryParse(sip1Amount.text);
                         noOfYrs = double.tryParse(investedFor.text);
                         r = double.tryParse(expectedRateOfReturn.text);
-                        i = double.parse(inflationRate.text);
-                        returnRate = r / 100;
                         inflationRateController = i / 100;
+                        returnRate = r / 100;
                         investedAmount = sipAmount * (noOfYrs * 12);
                         a = (1 + returnRate);
                         b = (1 + inflationRateController);
@@ -894,6 +903,15 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                             fontWeight: FontWeight.w500)),
                     onPressed: () {
                       setState(() {
+                        if (_currentItemSelected == 'No') {
+                          i = 0;
+                          inflationRateController = 0;
+                        } else if (_currentItemSelected == 'Yes') {
+                          i = double.tryParse(inflationRate.text);
+                        }
+                        if (inflationRate.text.isEmpty) {
+                          i = 0;
+                        }
                         requiredAmt = double.tryParse(lumpSumAmount.text);
                         noOfYrs = double.tryParse(investedFor.text);
                         r = double.tryParse(expectedRateOfReturn.text);
