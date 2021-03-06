@@ -28,9 +28,7 @@ dependencies:
   intro_screen_onboarding_flutter: ^0.1.5
   bottom_navy_bar: ^5.6.0
   font_awesome_flutter: ^8.11.0
-  pdf_flutter: ^1.1.4
   path_provider: ^1.6.27
-  pdf: ^2.1.0
   modal_bottom_sheet: ^1.0.0+1
   http: ^0.12.2
 

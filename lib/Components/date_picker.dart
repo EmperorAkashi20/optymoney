@@ -34,7 +34,7 @@ class _DatePickerState extends State<DatePicker> {
             child: Text(
               'Select date',
               style:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             color: Colors.greenAccent,
           ),
