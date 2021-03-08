@@ -7,8 +7,8 @@ import 'constants.dart';
 class FormFieldGlobal extends StatelessWidget {
   const FormFieldGlobal({
     Key key,
-    @required this.keyboardTypeGlobal,
-    @required this.hintText,
+    this.keyboardTypeGlobal,
+    this.hintText,
     this.dataController,
     this.enabledOrNot,
   }) : super(key: key);

@@ -77,13 +77,13 @@ class _DashBoardDataState extends State<DashBoardData>
             ),
           ),
           new Container(
-            height: 700,
+            height: 300,
             child: new TabBarView(
               controller: _controller,
               children: <Widget>[
-                Center(child: Text("ABC")),
-                Center(child: Text("ABC")),
-                Center(child: Text("ABC")),
+                Center(child: Text("The Content will be live soon...")),
+                Center(child: Text("The Content will be live soon...")),
+                Center(child: Text("The Content will be live soon...")),
               ],
             ),
           ),

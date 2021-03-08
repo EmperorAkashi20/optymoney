@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants.dart';
 
@@ -57,18 +56,4 @@ AppBarTheme appBarTheme() {
       headline6: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
     ),
   );
-}
-
-class DarkThemePreference {
-  static const THEME_STATUS = "THEMESTATUS";
-
-  setDarkTheme(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(THEME_STATUS, value);
-  }
-
-  Future<bool> getTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(THEME_STATUS) ?? false;
-  }
 }

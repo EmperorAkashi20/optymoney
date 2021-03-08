@@ -34,7 +34,7 @@ class _BodyState extends State<Body> {
         drawer: AppDrawerMain(),
         body: TabBarView(
           children: [
-            Icon(Icons.dashboard_sharp),
+            Center(child: Text("The Content will be live soon...")),
             CalculatorButtons(),
             LifeGoalsButtons(),
           ],

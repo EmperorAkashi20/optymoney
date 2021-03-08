@@ -159,8 +159,8 @@ class CalculatorTile extends StatelessWidget {
             side: BorderSide(color: kPrimaryColor),
           ),
           child: Container(
-            height: getProportionateScreenHeight(100),
-            width: getProportionateScreenWidth(100),
+            height: getProportionateScreenHeight(130),
+            width: getProportionateScreenWidth(130),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
