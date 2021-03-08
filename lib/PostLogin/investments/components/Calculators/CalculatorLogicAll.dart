@@ -2684,7 +2684,7 @@ class _OldVsNewTaxState extends State<OldVsNewTax> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "Old vs New Tax Regime Compare",
+                    "Old vs New Tax Compare",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,

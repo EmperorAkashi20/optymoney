@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/size_config.dart';
 
 import '../../constants.dart';
 
@@ -29,22 +30,23 @@ class _DashBoardDataState extends State<DashBoardData>
         children: <Widget>[
           Container(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TabBarConstants(
-                    icon: FaIcon(FontAwesomeIcons.arrowAltCircleUp),
+                    icon:
+                        FaIcon(FontAwesomeIcons.arrowAltCircleUp), //size: 15),
                     title: "Profit/Loss",
                     initialAmount: "0.0",
                   ),
                   TabBarConstants(
-                    icon: FaIcon(FontAwesomeIcons.piggyBank),
+                    icon: FaIcon(FontAwesomeIcons.piggyBank), //size: 15),
                     title: "Invested Value",
                     initialAmount: "0.0",
                   ),
                   TabBarConstants(
-                    icon: FaIcon(FontAwesomeIcons.filePowerpoint),
+                    icon: FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
                     title: "Present Value",
                     initialAmount: "0.0",
                   )
@@ -232,7 +234,7 @@ class TabBarConstants extends StatelessWidget {
     return Row(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(5.0),
           child: Container(
             child: icon,
           ),
@@ -242,14 +244,14 @@ class TabBarConstants extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
             Text(
               initialAmount,
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -282,6 +284,7 @@ class TabBarMenuItem extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           title,
+          textAlign: TextAlign.center,
         ),
       ),
     );

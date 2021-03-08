@@ -65,7 +65,7 @@ class InvestmentTabs extends StatelessWidget {
         ),
         child: Align(
           alignment: Alignment.center,
-          child: Text(title),
+          child: Text(title, textAlign: TextAlign.center),
         ),
       ),
     );
