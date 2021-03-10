@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
+import 'package:optymoney/sign_up_screen/sign_up_screen.dart';
 import 'package:optymoney/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../constants.dart';
 
@@ -12,6 +16,12 @@ class DashBoardData extends StatefulWidget {
 class _DashBoardDataState extends State<DashBoardData>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  final _auth = FirebaseAuth.instance;
+
+  void getCurrentUser() async {
+    final user = _auth.currentUser;
+    print(user);
+  }
 
   @override
   void initState() {
@@ -96,9 +106,16 @@ class _DashBoardDataState extends State<DashBoardData>
 }
 
 class AppDrawerMain extends StatelessWidget {
-  const AppDrawerMain({
+  AppDrawerMain({
     Key key,
   }) : super(key: key);
+
+  final _auth = FirebaseAuth.instance;
+
+  void getCurrentUser() async {
+    final user = _auth.currentUser;
+    print(user);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +155,7 @@ class AppDrawerMain extends StatelessWidget {
             ),
           ),
           AppDrawerListTIle(
-            title: "Item 1",
+            title: "Profile",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
@@ -147,7 +164,7 @@ class AppDrawerMain extends StatelessWidget {
             },
           ),
           AppDrawerListTIle(
-            title: "Item 2",
+            title: "Bank Accounts",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
@@ -156,7 +173,7 @@ class AppDrawerMain extends StatelessWidget {
             },
           ),
           AppDrawerListTIle(
-            title: "Item 3",
+            title: "Orders",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
@@ -165,7 +182,7 @@ class AppDrawerMain extends StatelessWidget {
             },
           ),
           AppDrawerListTIle(
-            title: "Item 4",
+            title: "Settings",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
@@ -174,12 +191,13 @@ class AppDrawerMain extends StatelessWidget {
             },
           ),
           AppDrawerListTIle(
-            title: "Item 5",
+            title: "Logout",
             icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
+              FontAwesomeIcons.signOutAlt,
             ),
             navigationRoute: () {
-              Navigator.pop(context);
+              _auth.signOut();
+              Navigator.pushNamed(context, SignInScreen.routeName);
             },
           ),
         ],

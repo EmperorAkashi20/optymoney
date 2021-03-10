@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
-
-
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
   String email;
   String password;
@@ -52,11 +55,20 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState.validate()) {
+                _fireStore.collection('UserEmail').add({'email': email});
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                try {
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
+                  if (newUser != null) {
+                    Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                  }
+                } catch (e) {
+                  print(e);
+                }
               }
             },
           ),

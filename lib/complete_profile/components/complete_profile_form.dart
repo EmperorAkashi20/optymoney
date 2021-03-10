@@ -1,12 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/otp/otp_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
-
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class CompleteProfileForm extends StatefulWidget {
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
+  final _firestore = FirebaseFirestore.instance;
   final List<String> errors = [];
   String firstName;
   String lastName;
@@ -54,6 +56,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () {
               if (_formKey.currentState.validate()) {
+                DatabaseReference _testRef =
+                    FirebaseDatabase.instance.reference().child("test");
+                _testRef.set(firstName);
                 Navigator.pushNamed(context, OtpScreen.routeName);
               }
             },
@@ -86,7 +91,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
-        CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
       ),
     );
   }

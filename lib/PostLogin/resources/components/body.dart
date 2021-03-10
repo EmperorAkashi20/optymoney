@@ -9,41 +9,29 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
+var response;
+
 class _BodyState extends State<Body> {
-  var longitude;
-  var response;
-
   void getData() async {
-    http.Response response = await http.get(
-        "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=");
+    var url =
+        Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
+    http.Response response = await http.get(url);
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      String data = response.body;
-      print(data);
-
-      longitude = jsonDecode(data)['coord']['lon'];
-      print(longitude);
-
-      var description = jsonDecode(data)['weather'][0]['description'];
-      print(description);
-    } else {
-      print(response.statusCode);
+      print(response.body);
     }
-  }
-
-  void testData() async {
-    http.Response responseNew =
-        await http.get("https://cat-fact.herokuapp.com");
-    print("########################");
-    print(responseNew.body);
   }
 
   @override
   Widget build(BuildContext context) {
     getData();
-    testData();
+    //testData();
     return Scaffold(
       appBar: AppBar(),
       drawer: AppDrawerMain(),
+      body: Container(
+        child: Center(child: Text("The Content will be live soon")),
+      ),
     );
   }
 }

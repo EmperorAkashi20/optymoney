@@ -3,6 +3,8 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -12,8 +14,12 @@ class SignForm extends StatefulWidget {
   _SignFormState createState() => _SignFormState();
 }
 
+enum authProblems { UserNotFound, PasswordNotValid, NetworkError }
+
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
+  bool showSpinner = false;
+  final _auth = FirebaseAuth.instance;
   String email;
   String password;
   bool remember = false;
@@ -70,11 +76,55 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+                  if (user != null) {
+                    Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                  }
+                } catch (e) {
+                  authProblems errorType;
+                  switch (e.message) {
+                    case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+                      errorType = authProblems.UserNotFound;
+                      break;
+                    case 'The password is invalid or the user does not have a password.':
+                      errorType = authProblems.PasswordNotValid;
+                      break;
+                    case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+                      errorType = authProblems.NetworkError;
+                      break;
+                    // ...
+                    default:
+                      print('Case ${e.message} is not yet implemented');
+                  }
+                  print('The error is $errorType');
+                  if (errorType != authProblems.UserNotFound &&
+                      errorType != authProblems.PasswordNotValid) {
+                    Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                    return "";
+                  }
+                  if (errorType == authProblems.PasswordNotValid) {
+                    addError(error: kPasswordNotValidError);
+                    return "";
+                  }
+                  if (errorType == authProblems.UserNotFound) {
+                    addError(error: kNoUserError);
+                    return "";
+                  }
+                  if (errorType != authProblems.UserNotFound) {
+                    removeError(error: kNoUserError);
+                    return "";
+                  }
+                  if (errorType != authProblems.PasswordNotValid) {
+                    removeError(error: kPasswordNotValidError);
+                    return "";
+                  }
+                }
               }
             },
           ),
