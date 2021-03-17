@@ -14,19 +14,19 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
-  bool remember = false;
-  final List<String> errors = [];
+  String? email;
+  String? password;
+  bool? remember = false;
+  final List<String?> errors = [];
 
-  void addError({String error}) {
+  void addError({String? error}) {
     if (!errors.contains(error))
       setState(() {
         errors.add(error);
       });
   }
 
-  void removeError({String error}) {
+  void removeError({String? error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
@@ -71,8 +71,8 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 Navigator.pushNamed(context, PostLoginStartsHere.routeName);
               }
@@ -96,7 +96,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
         } else if (value.length < 8) {
@@ -129,7 +129,7 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           addError(error: kEmailNullError);
           return "";
         } else if (!emailValidatorRegExp.hasMatch(value)) {

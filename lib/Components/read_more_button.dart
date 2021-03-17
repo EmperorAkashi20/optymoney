@@ -4,10 +4,10 @@ import '../size_config.dart';
 
 class ReadMoreButton extends StatelessWidget {
   const ReadMoreButton({
-    Key key,
+    Key? key,
     this.press,
   }) : super(key: key);
-  final Function press;
+  final Function? press;
 
   @override                                       //Pop Up Dialog Box
   Widget build(BuildContext context) {

@@ -125,15 +125,15 @@ class _CalculatorButtonsState extends State<CalculatorButtons> {
 
 class CalculatorTile extends StatelessWidget {
   const CalculatorTile({
-    @required this.letter,
-    @required this.name,
+    required this.letter,
+    required this.name,
     this.navigationRoute,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String letter;
   final String name;
-  final Widget navigationRoute;
+  final Widget? navigationRoute;
 
   @override
   Widget build(BuildContext context) {

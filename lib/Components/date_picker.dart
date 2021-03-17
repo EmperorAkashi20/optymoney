@@ -11,7 +11,7 @@ class _DatePickerState extends State<DatePicker> {
   DateTime selectedDate = DateTime.now();
 
   _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(1900),

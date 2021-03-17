@@ -11,11 +11,11 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   var longitude;
-  var response;
+  late var response;
 
   void getData() async {
-    http.Response response = await http.get(
-        "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=");
+    // http.Response response = await http.get(
+    //     "http://api.openweathermap.org/data/2.5/weather?lat=35&lon=39&appid=");
     if (response.statusCode == 200) {
       String data = response.body;
       print(data);
@@ -30,17 +30,10 @@ class _BodyState extends State<Body> {
     }
   }
 
-  void testData() async {
-    http.Response responseNew =
-        await http.get("https://cat-fact.herokuapp.com");
-    print("########################");
-    print(responseNew.body);
-  }
-
   @override
   Widget build(BuildContext context) {
     getData();
-    testData();
+    //testData();
     return Scaffold(
       appBar: AppBar(),
       drawer: AppDrawerMain(),

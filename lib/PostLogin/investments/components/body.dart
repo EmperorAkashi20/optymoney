@@ -46,8 +46,8 @@ class _BodyState extends State<Body> {
 
 class InvestmentTabs extends StatelessWidget {
   const InvestmentTabs({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   final String title;

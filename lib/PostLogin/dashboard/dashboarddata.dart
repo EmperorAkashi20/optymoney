@@ -11,7 +11,7 @@ class DashBoardData extends StatefulWidget {
 
 class _DashBoardDataState extends State<DashBoardData>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class _DashBoardDataState extends State<DashBoardData>
 
 class AppDrawerMain extends StatelessWidget {
   const AppDrawerMain({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -190,15 +190,15 @@ class AppDrawerMain extends StatelessWidget {
 
 class AppDrawerListTIle extends StatelessWidget {
   const AppDrawerListTIle({
-    Key key,
-    @required this.title,
-    @required this.icon,
+    Key? key,
+    required this.title,
+    required this.icon,
     this.navigationRoute,
   }) : super(key: key);
 
   final String title;
   final Widget icon;
-  final Function navigationRoute;
+  final Function? navigationRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -212,17 +212,17 @@ class AppDrawerListTIle extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
-      onTap: navigationRoute,
+      onTap: navigationRoute as void Function()?,
     );
   }
 }
 
 class TabBarConstants extends StatelessWidget {
   const TabBarConstants({
-    Key key,
-    @required this.title,
-    @required this.initialAmount,
-    @required this.icon,
+    Key? key,
+    required this.title,
+    required this.initialAmount,
+    required this.icon,
   }) : super(key: key);
 
   final String title;
@@ -264,8 +264,8 @@ class TabBarConstants extends StatelessWidget {
 
 class TabBarMenuItem extends StatelessWidget {
   const TabBarMenuItem({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   final String title;

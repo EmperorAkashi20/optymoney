@@ -15,11 +15,11 @@ enum Selector { Yes, No }
 
 class _BodyState extends State<Body> {
   DateTime selectedDate = DateTime.now();
-  Selector _selector = Selector.No;
-  File file;
+  Selector? _selector = Selector.No;
+  File? file;
 
   _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1900),
@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
         builder: (context, child) {
           return Theme(
             data: ThemeData.dark(),
-            child: child,
+            child: child!,
           );
         });
     if (picked != null && picked != selectedDate)
@@ -203,7 +203,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.No,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });
@@ -215,7 +215,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.Yes,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });
@@ -232,7 +232,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.No,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });
@@ -244,7 +244,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.Yes,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });
@@ -263,7 +263,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.No,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });
@@ -275,7 +275,7 @@ class _BodyState extends State<Body> {
                         leading: Radio(
                           value: Selector.Yes,
                           groupValue: _selector,
-                          onChanged: (Selector value) {
+                          onChanged: (Selector? value) {
                             setState(() {
                               _selector = value;
                             });

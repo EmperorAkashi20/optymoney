@@ -99,12 +99,12 @@ class _LifeGoalsButtonsState extends State<LifeGoalsButtons> {
 
 class LifeGoalsButtonTile extends StatelessWidget {
   const LifeGoalsButtonTile({
-    Key key,
-    @required this.image,
-    @required this.title,
-    @required this.navigationRoute,
-    @required this.imageHeight,
-    @required this.imageWidth,
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.navigationRoute,
+    required this.imageHeight,
+    required this.imageWidth,
   }) : super(key: key);
 
   final String image;
@@ -119,7 +119,7 @@ class LifeGoalsButtonTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: FlatButton(
-          onPressed: navigationRoute,
+          onPressed: navigationRoute as void Function()?,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(color: kPrimaryColor),

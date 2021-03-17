@@ -6,17 +6,17 @@ import 'constants.dart';
 
 class FormFieldGlobal extends StatelessWidget {
   const FormFieldGlobal({
-    Key key,
+    Key? key,
     this.keyboardTypeGlobal,
     this.hintText,
     this.dataController,
     this.enabledOrNot,
   }) : super(key: key);
 
-  final TextInputType keyboardTypeGlobal;
-  final String hintText;
-  final TextEditingController dataController;
-  final bool enabledOrNot;
+  final TextInputType? keyboardTypeGlobal;
+  final String? hintText;
+  final TextEditingController? dataController;
+  final bool? enabledOrNot;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +52,8 @@ class FormFieldGlobal extends StatelessWidget {
 
 class TitleHeader extends StatelessWidget {
   const TitleHeader({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
   }) : super(key: key);
 
   final String text;
@@ -75,7 +75,7 @@ class TitleHeader extends StatelessWidget {
 
 class OutputTextForPopUp extends StatelessWidget {
   const OutputTextForPopUp({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -99,11 +99,11 @@ class OutputTextForPopUp extends StatelessWidget {
 
 class GlobalOutputField extends StatelessWidget {
   const GlobalOutputField({
-    Key key,
+    Key? key,
     this.outputValue,
   }) : super(key: key);
 
-  final String outputValue;
+  final String? outputValue;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,7 @@ class GlobalOutputField extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                outputValue,
+                outputValue!,
                 style: TextStyle(fontSize: 15.0),
               ),
             ),
@@ -143,11 +143,11 @@ class GlobalOutputField extends StatelessWidget {
 
 class SuggestionBox1 extends StatelessWidget {
   const SuggestionBox1({
-    Key key,
+    Key? key,
     this.suggestion,
   }) : super(key: key);
 
-  final String suggestion;
+  final String? suggestion;
 
   @override
   Widget build(BuildContext context) {
@@ -193,13 +193,13 @@ class SuggestionBox1 extends StatelessWidget {
 
 class SuggestionBox2 extends StatelessWidget {
   const SuggestionBox2({
-    Key key,
+    Key? key,
     this.suggestion,
     this.suggestion1,
   }) : super(key: key);
 
-  final String suggestion;
-  final String suggestion1;
+  final String? suggestion;
+  final String? suggestion1;
 
   @override
   Widget build(BuildContext context) {
@@ -245,9 +245,9 @@ class SuggestionBox2 extends StatelessWidget {
 
 class TitleHeaderWithRichText extends StatelessWidget {
   const TitleHeaderWithRichText({
-    Key key,
-    @required this.text,
-    @required this.richText,
+    Key? key,
+    required this.text,
+    required this.richText,
   }) : super(key: key);
 
   final String text;

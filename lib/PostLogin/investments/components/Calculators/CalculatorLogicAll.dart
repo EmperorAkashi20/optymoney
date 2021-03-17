@@ -14,7 +14,7 @@ class SipCalcFrom extends StatefulWidget {
 
 class _SipCalcFromState extends State<SipCalcFrom> {
   var _options = ['Yes', 'No'];
-  var _currentItemSelected = 'Yes';
+  String? _currentItemSelected = 'Yes';
 
   bool enableNow = true;
 
@@ -35,10 +35,10 @@ class _SipCalcFromState extends State<SipCalcFrom> {
   String amountInvested = "0";
   String futureValueOfInvestment = "0";
 
-  var sipAmount = 0.0;
-  var noOfYrs = 0.0;
-  var r = 0.0;
-  var i = 0.0;
+  double? sipAmount = 0.0;
+  double? noOfYrs = 0.0;
+  double? r = 0.0;
+  double? i = 0.0;
   var returnRate = 0.0;
   var inflationRateController = 0.0;
   var investedAmount = 0.0;
@@ -128,7 +128,7 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -173,17 +173,17 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                         sipAmount = double.tryParse(sip1Amount.text);
                         noOfYrs = double.tryParse(investedFor.text);
                         r = double.tryParse(expectedRateOfReturn.text);
-                        inflationRateController = i / 100;
-                        returnRate = r / 100;
-                        investedAmount = sipAmount * (noOfYrs * 12);
+                        inflationRateController = i! / 100;
+                        returnRate = r! / 100;
+                        investedAmount = sipAmount! * (noOfYrs! * 12);
                         a = (1 + returnRate);
                         b = (1 + inflationRateController);
                         realReturn = ((a / b) - 1);
-                        c = pow((1 + realReturn), (1 / (noOfYrs * 12)));
-                        nominalRate = noOfYrs * (c - 1);
-                        d = pow((1 + nominalRate), (noOfYrs * 12));
+                        c = pow((1 + realReturn), (1 / (noOfYrs! * 12))) as double;
+                        nominalRate = noOfYrs! * (c - 1);
+                        d = pow((1 + nominalRate), (noOfYrs! * 12)) as double;
                         nominalRate1 = (1 + nominalRate);
-                        fv1 = sipAmount * (nominalRate1) / nominalRate;
+                        fv1 = sipAmount! * (nominalRate1) / nominalRate;
                         fvInvestmentDouble = (d * fv1) - fv1;
                         amountInvested = investedAmount.toString();
                         fvInvestmentInt = fvInvestmentDouble.round();
@@ -229,7 +229,7 @@ class _SipCalcFromState extends State<SipCalcFrom> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -254,12 +254,12 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
   String interestAmount = "0";
 
   var p;
-  var r;
-  var n;
+  late var r;
+  late var n;
   var emi;
   var totalPayAmt;
   var totalPayInt;
-  var x;
+  late var x;
 
   @override
   Widget build(BuildContext context) {
@@ -326,8 +326,8 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                     onPressed: () {
                       setState(() {
                         p = double.tryParse(carLoanAmount.text);
-                        r = double.tryParse(interestRate.text) / 100 / 12;
-                        n = double.tryParse(tenure.text) * 12;
+                        r = double.tryParse(interestRate.text)! / 100 / 12;
+                        n = double.tryParse(tenure.text)! * 12;
                         x = pow((1 + r), n);
                         emi = ((p * x * r) / (x - 1));
                         totalPayAmt = ((emi * n));
@@ -394,12 +394,12 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
   String interestAmount = "0";
 
   var p;
-  var r;
-  var n;
+  late var r;
+  late var n;
   var emi;
   var totalPayAmt;
   var totalPayInt;
-  var x;
+  late var x;
 
   @override
   Widget build(BuildContext context) {
@@ -466,8 +466,8 @@ class _EmiHomeLoanCalcFormState extends State<EmiHomeLoanCalcForm> {
                     onPressed: () {
                       setState(() {
                         p = double.tryParse(homeLoanAmount.text);
-                        r = double.tryParse(interestRate.text) / 100 / 12;
-                        n = double.tryParse(tenure.text) * 12;
+                        r = double.tryParse(interestRate.text)! / 100 / 12;
+                        n = double.tryParse(tenure.text)! * 12;
                         x = pow((1 + r), n);
                         emi = ((p * x * r) / (x - 1));
                         totalPayAmt = ((emi * n));
@@ -536,12 +536,12 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
   String interestComponent = "0";
 
   var p;
-  var r;
-  var n;
+  late var r;
+  late var n;
   var emi;
   var totalPayAmt;
   var totalPayInt;
-  var x;
+  late var x;
 
   @override
   Widget build(BuildContext context) {
@@ -608,8 +608,8 @@ class _EmiPersonalLoanCalcFormState extends State<EmiPersonalLoanCalcForm> {
                     onPressed: () {
                       setState(() {
                         p = double.tryParse(personalLoanAmount.text);
-                        r = double.tryParse(interestRate.text) / 100 / 12;
-                        n = double.tryParse(tenure.text) * 12;
+                        r = double.tryParse(interestRate.text)! / 100 / 12;
+                        n = double.tryParse(tenure.text)! * 12;
                         x = pow((1 + r), n);
                         emi = ((p * x * r) / (x - 1));
                         totalPayAmt = ((emi * n));
@@ -785,7 +785,7 @@ class LumpSumCalcFrom extends StatefulWidget {
 
 class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
   var _options = ['Yes', 'No'];
-  var _currentItemSelected = 'Yes';
+  String? _currentItemSelected = 'Yes';
 
   bool enableNow = true;
 
@@ -806,10 +806,10 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
   String amountInvested = "0";
   String futureValueOfInvestment = "0";
 
-  var requiredAmt = 0.0;
-  var noOfYrs = 0.0;
-  var r = 0.0;
-  var i = 0.0;
+  double? requiredAmt = 0.0;
+  double? noOfYrs = 0.0;
+  double? r = 0.0;
+  double? i = 0.0;
   var returnRate = 0.0;
   var inflationRateController = 0.0;
   var a = 0.0;
@@ -893,7 +893,7 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -938,12 +938,12 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
                         requiredAmt = double.tryParse(lumpSumAmount.text);
                         noOfYrs = double.tryParse(investedFor.text);
                         r = double.tryParse(expectedRateOfReturn.text);
-                        returnRate = r / 100;
-                        inflationRateController = i / 100;
+                        returnRate = r! / 100;
+                        inflationRateController = i! / 100;
                         a = 1 + returnRate;
                         b = 1 + inflationRateController;
                         realReturn = (a / b) - 1;
-                        fv = (requiredAmt * pow((1 + realReturn), (noOfYrs)));
+                        fv = (requiredAmt! * pow((1 + realReturn), noOfYrs!));
                         fvInt = fv.round();
                       });
                     },
@@ -987,7 +987,7 @@ class _LumpSumCalcFromState extends State<LumpSumCalcFrom> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -1014,13 +1014,13 @@ class _HraCalcFromState extends State<HraCalcFrom> {
   String hraExemption = "0";
   String hraTaxable = "0";
 
-  var salRec = 0.0;
-  var da = 0.0;
-  var hraRec = 0.0;
-  var rentPaid = 0.0;
+  double? salRec = 0.0;
+  double? da = 0.0;
+  double? hraRec = 0.0;
+  double? rentPaid = 0.0;
   var city;
   var metroNoMetro = 0.0;
-  var _currentItemSelected = 'Delhi';
+  String? _currentItemSelected = 'Delhi';
   var hraTax = 0.0;
 
   @override
@@ -1108,7 +1108,7 @@ class _HraCalcFromState extends State<HraCalcFrom> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -1138,25 +1138,25 @@ class _HraCalcFromState extends State<HraCalcFrom> {
                         da = double.tryParse(dearnessAllowanceReceived.text);
                         hraRec = double.tryParse(hraReceived.text);
                         rentPaid = double.tryParse(actualRentPaid.text);
-                        rentPaid = (rentPaid - ((salRec + da) * (10 / 100)));
+                        rentPaid = (rentPaid! - ((salRec! + da!) * (10 / 100)));
                         city = _currentItemSelected;
                         if (city == 'Other') {
-                          metroNoMetro = (((salRec + da)) * (40 / 100));
+                          metroNoMetro = ((salRec! + da!) * (40 / 100));
                         } else {
-                          metroNoMetro = (((salRec + da)) * (50 / 100));
+                          metroNoMetro = ((salRec! + da!) * (50 / 100));
                         }
                         // var list = [hraReceived, rentPaid, metroNoMetro];
                         // list.sort();
-                        if (hraRec < rentPaid && hraRec < metroNoMetro) {
+                        if (hraRec! < rentPaid! && hraRec! < metroNoMetro) {
                           hraExemption = hraRec.toString();
-                        } else if (rentPaid < hraRec &&
-                            rentPaid < metroNoMetro) {
+                        } else if (rentPaid! < hraRec! &&
+                            rentPaid! < metroNoMetro) {
                           hraExemption = rentPaid.toString();
-                        } else if (metroNoMetro < hraRec &&
-                            metroNoMetro < rentPaid) {
+                        } else if (metroNoMetro < hraRec! &&
+                            metroNoMetro < rentPaid!) {
                           hraExemption = metroNoMetro.toString();
                         }
-                        hraTax = (hraRec - double.tryParse(hraExemption));
+                        hraTax = (hraRec! - double.tryParse(hraExemption)!);
                         hraTaxable = hraTax.toString();
                       });
                     },
@@ -1190,7 +1190,7 @@ class _HraCalcFromState extends State<HraCalcFrom> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -1208,7 +1208,7 @@ class PpfCalcFrom extends StatefulWidget {
 
 class _PpfCalcFromState extends State<PpfCalcFrom> {
   var _options = ['End Of Period', 'Beginning Of Period'];
-  var _currentItemSelected = 'End Of Period';
+  String? _currentItemSelected = 'End Of Period';
 
   TextEditingController totalAmountInvested = new TextEditingController();
   TextEditingController ppfInterestRate = new TextEditingController();
@@ -1221,7 +1221,7 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
   var principal;
   var rateType;
   var time;
-  var ppfTotalMatAmt;
+  late var ppfTotalMatAmt;
   var selected;
   var amt;
   var totalInvestment1;
@@ -1315,7 +1315,7 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -1397,7 +1397,7 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -1415,7 +1415,7 @@ class SipInstallmentCalcForm extends StatefulWidget {
 
 class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
   var _options = ['Low - 7%', 'Medium - 12%', 'High - 15%'];
-  var _currentItemSelected = 'High - 15%';
+  String? _currentItemSelected = 'High - 15%';
 
   TextEditingController amountYouWantToAchieve = new TextEditingController();
   TextEditingController withinNumberOfYears = new TextEditingController();
@@ -1425,9 +1425,9 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
 
   var requiredAmount;
   var noOfYrs;
-  var r;
-  var a;
-  var b;
+  late var r;
+  late var a;
+  late var b;
   var returnRate;
   var nominalRate;
   var sipAmount;
@@ -1497,7 +1497,7 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -1572,7 +1572,7 @@ class _SipInstallmentCalcFormState extends State<SipInstallmentCalcForm> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -1590,7 +1590,7 @@ class FixedDepositCalcForm extends StatefulWidget {
 
 class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
   var _options = ['Years', 'Months', 'Days'];
-  var _currentItemSelected = 'Years';
+  String? _currentItemSelected = 'Years';
   var _options2 = [
     'Simple Interest',
     'Monthly',
@@ -1598,7 +1598,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     'Half Yearly',
     'Annually'
   ];
-  var _currentItemSelected2 = 'Simple Interest';
+  String? _currentItemSelected2 = 'Simple Interest';
 
   TextEditingController amountInvested = new TextEditingController();
   TextEditingController investedForNumberOf = new TextEditingController();
@@ -1608,14 +1608,14 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
   String interestEarned = "0";
 
   var principal;
-  var rate3 = 0.0;
+  double? rate3 = 0.0;
   var time;
   var timePeriod;
   var intType;
   var amt;
   var totalInt;
 
-  double calcTime(time1) {
+  double? calcTime(time1) {
     var timePeriod;
     if (time1 == 1) {
       timePeriod = "years";
@@ -1627,7 +1627,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     return timePeriod;
   }
 
-  int calcTime1(time1) {
+  int? calcTime1(time1) {
     var timePeriod;
     if (time1 == "Years") {
       timePeriod = 1;
@@ -1639,7 +1639,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     return timePeriod;
   }
 
-  double clcSimpleInt(principal1, n, time1, rate, aa) {
+  double? clcSimpleInt(principal1, n, time1, rate, aa) {
     var rate2 = rate / 100;
     var amountInterest = principal1 * (1 + (rate2 / aa * time1));
     return amountInterest;
@@ -1709,7 +1709,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -1748,7 +1748,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected2) {
+                    onChanged: (String? newValueSelected2) {
                       _dropDownItemSelected2(newValueSelected2);
                     },
                     value: _currentItemSelected2,
@@ -1784,7 +1784,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                               principal, 1, time, rate3, timePeriod3);
                         } else {
                           amt = (principal *
-                              pow((1 + (rate3 / (intType * 100))),
+                              pow((1 + (rate3! / (intType * 100))),
                                   (intType * time / timePeriod3)));
                         }
                         print(amt);
@@ -1836,13 +1836,13 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
   }
 
-  void _dropDownItemSelected2(String newValueSelected2) {
+  void _dropDownItemSelected2(String? newValueSelected2) {
     setState(() {
       this._currentItemSelected2 = newValueSelected2;
     });
@@ -1864,7 +1864,7 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
     'Years',
     'Months',
   ];
-  var _currentItemSelected = 'Years';
+  String? _currentItemSelected = 'Years';
 
   TextEditingController amountInvested = new TextEditingController();
   TextEditingController interestRate = new TextEditingController();
@@ -1892,7 +1892,7 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
     var fvFinalM = (rateMPow * fvM) - fvM;
     var rateMPow1 = pow((1 + rate), (nper));
     var fv2M = rateMPow1 * fvFinalM;
-    return (fv2M);
+    return fv2M as double;
   }
 
   @override
@@ -1953,7 +1953,7 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -2044,7 +2044,7 @@ class _SukanyaSamriddhiCalcFormState extends State<SukanyaSamriddhiCalcForm> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
@@ -2072,7 +2072,7 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
   var numberOfYears;
   var rateOfInterest;
   var numberOfMonths;
-  var amount;
+  late var amount;
 
   double clcRecurrInt(monthlyInstallment1, numberOfMonths1, rateOfInterest1) {
     var frequency = (numberOfMonths1 / 3).floor();
@@ -2370,7 +2370,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   TextEditingController salary = new TextEditingController();
 
   var _options = ['0-59', '60-79', '>=80'];
-  var _currentItemSelected = '0-59';
+  String? _currentItemSelected = '0-59';
 
   String yourCurrentInvestments = "0";
   String furtherInvestmentOpportunity = "0";
@@ -2489,7 +2489,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                         child: Text(dropDownStringItem),
                       );
                     }).toList(),
-                    onChanged: (String newValueSelected) {
+                    onChanged: (String? newValueSelected) {
                       _dropDownItemSelected(newValueSelected);
                     },
                     value: _currentItemSelected,
@@ -2519,14 +2519,14 @@ class _TaxCalculatorState extends State<TaxCalculator> {
                         } else if (_currentItemSelected == '>=80') {
                           age = 'seniorCitizen';
                         }
-                        var elss1 = double.tryParse(elss.text);
-                        var lic1 = double.tryParse(lic.text);
-                        var ssy1 = double.tryParse(ssy.text);
-                        var fd1 = double.tryParse(fd.text);
-                        var ppf1 = double.tryParse(ppf.text);
-                        var insurance1 = double.tryParse(insurance.text);
-                        var otherAmt1 = double.tryParse(otherAmt.text);
-                        var salary1 = double.tryParse(salary.text);
+                        var elss1 = double.tryParse(elss.text)!;
+                        var lic1 = double.tryParse(lic.text)!;
+                        var ssy1 = double.tryParse(ssy.text)!;
+                        var fd1 = double.tryParse(fd.text)!;
+                        var ppf1 = double.tryParse(ppf.text)!;
+                        var insurance1 = double.tryParse(insurance.text)!;
+                        var otherAmt1 = double.tryParse(otherAmt.text)!;
+                        var salary1 = double.tryParse(salary.text)!;
                         var totalInvest = (elss1 +
                             lic1 +
                             ssy1 +
@@ -2655,7 +2655,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
     );
   }
 
-  void _dropDownItemSelected(String newValueSelected) {
+  void _dropDownItemSelected(String? newValueSelected) {
     setState(() {
       this._currentItemSelected = newValueSelected;
     });
