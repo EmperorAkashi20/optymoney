@@ -1230,7 +1230,7 @@ class _PpfCalcFromState extends State<PpfCalcFrom> {
   double clcPPF(principalVal, intRate, years) {
     var amt = 0.00;
     for (var i = 1; i <= years; i++) {
-      var show = '';
+      // var show = '';
       if (i >= 1 && i <= 15) {
         amt = (amt + principalVal);
       }
@@ -1790,7 +1790,7 @@ class _FixedDepositCalcFormState extends State<FixedDepositCalcForm> {
                         print(amt);
                         amt = amt.round();
                         totalInt = amt - principal.round();
-                        var showTime = calcTime(timePeriod);
+                        // var showTime = calcTime(timePeriod);
                         maturityValue = amt.toString();
                         interestEarned = totalInt.toString();
                       });
@@ -2081,9 +2081,9 @@ class _RecurringDepositCalcFormState extends State<RecurringDepositCalcForm> {
             (1 - (pow(rateOfInterest1 / 400 + 1, (-1 / 3)))));
 
     print(accumulateMonthlyAmount);
-    var finalInterestGain =
-        accumulateMonthlyAmount - monthlyInstallment * numberOfMonths;
-    var depositedAmount = monthlyInstallment * numberOfMonths;
+    // var finalInterestGain =
+    //     accumulateMonthlyAmount - monthlyInstallment * numberOfMonths;
+    // var depositedAmount = monthlyInstallment * numberOfMonths;
     return accumulateMonthlyAmount;
   }
 
@@ -2304,7 +2304,7 @@ class _NpsCalcFormState extends State<NpsCalcForm> {
                         var returnRate = (r / (1200));
                         var prinAmtInv = amount * numberOfYears * 12;
                         var d = pow((1 + returnRate), (numberOfYears * 12));
-                        var returnRate1 = (1 + returnRate);
+                        // var returnRate1 = (1 + returnRate);
                         var fv1 = amount / returnRate;
                         var fvInvestment = (d * fv1) - fv1;
                         var intEarOnInvest = fvInvestment - prinAmtInv;
