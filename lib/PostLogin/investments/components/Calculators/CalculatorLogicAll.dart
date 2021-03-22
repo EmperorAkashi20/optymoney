@@ -153,7 +153,7 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                 child: Container(
                   height: getProportionateScreenHeight(50),
                   width: getProportionateScreenWidth(150),
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text('Compute',
                         style: TextStyle(
                             color: kPrimaryColor,
@@ -179,7 +179,8 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                         a = (1 + returnRate);
                         b = (1 + inflationRateController);
                         realReturn = ((a / b) - 1);
-                        c = pow((1 + realReturn), (1 / (noOfYrs! * 12))) as double;
+                        c = pow((1 + realReturn), (1 / (noOfYrs! * 12)))
+                            as double;
                         nominalRate = noOfYrs! * (c - 1);
                         d = pow((1 + nominalRate), (noOfYrs! * 12)) as double;
                         nominalRate1 = (1 + nominalRate);
@@ -189,10 +190,15 @@ class _SipCalcFromState extends State<SipCalcFrom> {
                         fvInvestmentInt = fvInvestmentDouble.round();
                       });
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: kPrimaryColor),
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: kPrimaryColor),
+                      ),
                     ),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(10.0),
+                    //   side: BorderSide(color: kPrimaryColor),
                   ),
                 ),
               ),
@@ -317,7 +323,7 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                 child: Container(
                   height: getProportionateScreenHeight(50),
                   width: getProportionateScreenWidth(150),
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text('Compute',
                         style: TextStyle(
                             color: kPrimaryColor,
@@ -337,10 +343,16 @@ class _EmiCarLoanCalcFormState extends State<EmiCarLoanCalcForm> {
                         interestAmount = (totalPayInt.round()).toString();
                       });
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: kPrimaryColor),
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: kPrimaryColor),
+                      ),
                     ),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(10.0),
+                    //   side: BorderSide(color: kPrimaryColor),
+                    // ),
                   ),
                 ),
               ),
