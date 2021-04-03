@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
@@ -7,15 +10,39 @@ import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import '../../constants.dart';
 import '../../size_config.dart';
 
+makePostRequest() async {
+
+  var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doLogin&subaction=loginSubmit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {'email': SignForm.email, 'passwd': SignForm.password};
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  int statusCode = response.statusCode;
+  String responseBody = response.body;
+  print(statusCode);
+  print(responseBody);
+  print(response);
+  print(SignForm.email);
+}
+
 class SignForm extends StatefulWidget {
+  static String? email;
+  static String? password;
+
   @override
   _SignFormState createState() => _SignFormState();
 }
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
   bool? remember = false;
   final List<String?> errors = [];
 
@@ -71,6 +98,7 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () {
+              makePostRequest();
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
@@ -86,11 +114,11 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => SignForm.password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 2) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -99,7 +127,7 @@ class _SignFormState extends State<SignForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 2) {
           addError(error: kShortPassError);
           return "";
         }
@@ -119,7 +147,7 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => SignForm.email = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);

@@ -1,8 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
+import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
+import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
+
+makePostRequest() async {
+
+  var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doSignup&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {'name': CompleteProfileForm.firstName, 'email': SignUpForm.email, 'mobile': CompleteProfileForm.phoneNumber, 'otp': "", 'reg_passwd': SignUpForm.password, 'repasswd': SignUpForm.confirmPassword};
+  print(CompleteProfileForm.phoneNumber);
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  int statusCode = response.statusCode;
+  String responseBody = response.body;
+  print(statusCode);
+  print(responseBody);
+  print(response);
+}
 
 
 class OtpForm extends StatefulWidget {
@@ -140,7 +168,9 @@ class _OtpFormState extends State<OtpForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
             text: "Continue",
-            press: () {},
+            press: () {
+              makePostRequest();
+            },
           )
         ],
       ),
