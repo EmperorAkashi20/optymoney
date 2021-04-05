@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "600162965927",
+    "project_id": "optymoney-c8d9d",
+    "storage_bucket": "optymoney-c8d9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600162965927:android:2b3de5ec647b09eb65fe82",
+        "android_client_info": {
+          "package_name": "com.devmantra.optymoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600162965927-svov1kghaa0f99jmv5lr7qippjfj5s1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI4uH2ijygFVo1gZTKprmZp9WS6A7j2go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600162965927-svov1kghaa0f99jmv5lr7qippjfj5s1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

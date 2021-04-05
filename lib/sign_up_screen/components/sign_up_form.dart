@@ -5,10 +5,9 @@ import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
 
+
 import '../../constants.dart';
 import '../../size_config.dart';
-
-
 
 class SignUpForm extends StatefulWidget {
   static String? email;
@@ -57,7 +56,6 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
                 Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               }
             },

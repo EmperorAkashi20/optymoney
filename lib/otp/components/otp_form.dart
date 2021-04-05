@@ -13,8 +13,10 @@ makePostRequest() async {
 
   var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doSignup&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {'name': CompleteProfileForm.firstName, 'email': SignUpForm.email, 'mobile': CompleteProfileForm.phoneNumber, 'otp': "", 'reg_passwd': SignUpForm.password, 'repasswd': SignUpForm.confirmPassword};
+  Map<String, dynamic> body = {'name': CompleteProfileForm.firstName, 'email': SignUpForm.email, 'mobile': CompleteProfileForm.phoneNumber, 'otp': OtpForm.otp, 'reg_passwd': SignUpForm.password, 'repasswd': SignUpForm.confirmPassword};
   print(CompleteProfileForm.phoneNumber);
+  print(SignUpForm.email);
+  print(OtpForm.otp);
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
@@ -34,6 +36,8 @@ makePostRequest() async {
 
 
 class OtpForm extends StatefulWidget {
+  static var otp;
+
   const OtpForm({
     Key? key,
   }) : super(key: key);
@@ -43,6 +47,12 @@ class OtpForm extends StatefulWidget {
 }
 
 class _OtpFormState extends State<OtpForm> {
+  static TextEditingController nodeOne = TextEditingController();
+  static TextEditingController nodeTwo = TextEditingController();
+  static TextEditingController nodeThree = TextEditingController();
+  static TextEditingController nodeFour = TextEditingController();
+  static TextEditingController nodeFive = TextEditingController();
+  //static TextEditingController nodeSix = TextEditingController();
   FocusNode? pin2FocusNode;
   FocusNode? pin3FocusNode;
   FocusNode? pin4FocusNode;
@@ -91,6 +101,7 @@ class _OtpFormState extends State<OtpForm> {
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
+                  controller: nodeOne,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) {
@@ -105,6 +116,7 @@ class _OtpFormState extends State<OtpForm> {
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
+                  controller: nodeTwo,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) => nextField(value, pin3FocusNode),
@@ -117,6 +129,7 @@ class _OtpFormState extends State<OtpForm> {
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
+                  controller: nodeThree,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) => nextField(value, pin4FocusNode),
@@ -129,6 +142,7 @@ class _OtpFormState extends State<OtpForm> {
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
+                  controller: nodeFour,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) => nextField(value, pin5FocusNode),
@@ -141,34 +155,48 @@ class _OtpFormState extends State<OtpForm> {
                   obscureText: true,
                   style: TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin6FocusNode),
-                ),
-              ),
-              SizedBox(
-                width: getProportionateScreenWidth(40),
-                child: TextFormField(
-                  focusNode: pin6FocusNode,
-                  obscureText: true,
-                  style: TextStyle(fontSize: 24),
-                  keyboardType: TextInputType.number,
+                  controller: nodeFive,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) {
                     if (value.length == 1) {
-                      pin6FocusNode!.unfocus();
-                      // Then you need to check is the code is correct or not
+                      pin5FocusNode!.unfocus();
+                      // Then you need to check if the code is correct or not
                     }
                   },
                 ),
               ),
+              // SizedBox(
+              //   width: getProportionateScreenWidth(40),
+              //   child: TextFormField(
+              //     focusNode: pin6FocusNode,
+              //     obscureText: true,
+              //     style: TextStyle(fontSize: 24),
+              //     keyboardType: TextInputType.number,
+              //     controller: nodeSix,
+              //     textAlign: TextAlign.center,
+              //     decoration: otpInputDecoration,
+              //     onChanged: (value) {
+              //       if (value.length == 1) {
+              //         pin6FocusNode!.unfocus();
+              //         // Then you need to check if the code is correct or not
+              //       }
+              //     },
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
             text: "Continue",
             press: () {
+              var a = nodeOne.text;
+              var b = nodeTwo.text;
+              var c = nodeThree.text;
+              var d = nodeFour.text;
+              var e = nodeFive.text;
+              //var f = nodeSix.text;
+              OtpForm.otp = a+b+c+d+e;
               makePostRequest();
             },
           )

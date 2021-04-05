@@ -5,7 +5,8 @@ import 'package:optymoney/routes.dart';
 import 'Components/custom_suffix_icon.dart';
 import 'onboardingscreen/onboardingscreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {

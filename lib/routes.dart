@@ -3,6 +3,7 @@ import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
 import 'package:optymoney/onboardingscreen/onboardingscreen.dart';
 import 'package:optymoney/otp/otp_screen.dart';
+import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
 import 'package:optymoney/sign_up_screen/sign_up_screen.dart';
 import 'package:optymoney/testpage.dart';
 
@@ -15,4 +16,5 @@ final Map<String, WidgetBuilder> routes = {
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OtpScreen.routeName: (context) => OtpScreen(),
   PostLoginStartsHere.routeName: (context) => PostLoginStartsHere(),
+  SignInScreen.routeName: (context) => SignInScreen(),
 };

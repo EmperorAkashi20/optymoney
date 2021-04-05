@@ -40,8 +40,11 @@ sendOtpRequest() async {
 class CompleteProfileForm extends StatefulWidget {
   static String? firstName;
   static String? lastName;
-  static String? phoneNumber;
+  //static String? phoneNumber;
   static String? address;
+  static var phoneNumber;
+  static TextEditingController name = new TextEditingController();
+  static TextEditingController phone = new TextEditingController();
 
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
@@ -50,6 +53,7 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
+
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -84,7 +88,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () {
               sendOtpRequest();
+              CompleteProfileForm.phoneNumber = (CompleteProfileForm.phone.text);
               if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 Navigator.pushNamed(context, OtpScreen.routeName);
               }
             },
@@ -124,8 +130,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
+      controller: CompleteProfileForm.phone,
       keyboardType: TextInputType.number,
-      onSaved: (newValue) => CompleteProfileForm.phoneNumber = newValue,
+      onSaved: (newValue) => CompleteProfileForm.phone, //= newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
