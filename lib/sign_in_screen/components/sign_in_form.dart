@@ -29,12 +29,6 @@ makePostRequest() async {
     encoding: encoding,
   );
 
-  //var jsonData = response.body;
-  //var parsedJson = json.decode(jsonData);
-  //print(parsedJson);
-  //SignForm.message = parsedJson['message'];
-  //print(SignForm.message);
-
   SignForm.statusCode = response.statusCode;
   SignForm.responseBody = response.body;
   print(SignForm.statusCode);
@@ -117,8 +111,8 @@ class _SignFormState extends State<SignForm> {
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
-                makePostRequest();
                 _formKey.currentState!.save();
+                makePostRequest();
                 if (SignForm.message == "LOGIN_SUCCESS") {
                   removeError(error: kNoUserError);
                   removeError(error: kNoUserError1);

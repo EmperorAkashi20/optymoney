@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
 import 'package:optymoney/onboardingscreen/onboardingscreen.dart';
@@ -17,4 +18,5 @@ final Map<String, WidgetBuilder> routes = {
   OtpScreen.routeName: (context) => OtpScreen(),
   PostLoginStartsHere.routeName: (context) => PostLoginStartsHere(),
   SignInScreen.routeName: (context) => SignInScreen(),
+  PinSetupScreen.routeName: (context) => PinSetupScreen(),
 };

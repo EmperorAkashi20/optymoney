@@ -12,10 +12,13 @@ import '../../constants.dart';
 import '../../size_config.dart';
 
 sendOtpRequest() async {
-
-  var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doSendOTP');
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=doSendOTP');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {'email': SignUpForm.email, 'mobile': CompleteProfileForm.phoneNumber};
+  Map<String, dynamic> body = {
+    'email': SignUpForm.email,
+    'mobile': CompleteProfileForm.phoneNumber
+  };
   print(SignUpForm.email);
   print(CompleteProfileForm.phoneNumber);
   print(CompleteProfileForm.firstName);
@@ -54,7 +57,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
 
-
   void addError({String? error}) {
     if (!errors.contains(error))
       setState(() {
@@ -87,10 +89,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           DefaultButton(
             text: "continue",
             press: () {
-              sendOtpRequest();
-              CompleteProfileForm.phoneNumber = (CompleteProfileForm.phone.text);
+              CompleteProfileForm.phoneNumber =
+                  (CompleteProfileForm.phone.text);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
+                sendOtpRequest();
                 Navigator.pushNamed(context, OtpScreen.routeName);
               }
             },
@@ -123,7 +126,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon:
-        CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
       ),
     );
   }

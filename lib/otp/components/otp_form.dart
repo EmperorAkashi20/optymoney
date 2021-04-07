@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,7 +13,7 @@ import '../../size_config.dart';
 
 makePostRequest() async {
   var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=doSignup&subaction=submit');
+      'https://optymoney.com/ajax-request/ajax_response.php?action=doSignupFromApp&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
     'name': CompleteProfileForm.firstName,
@@ -36,15 +37,17 @@ makePostRequest() async {
   );
 
   int statusCode = response.statusCode;
-  String responseBody = response.body;
+  OtpForm.responseBody = (response.body);
+  OtpForm.compareNow = (response.body).compareTo("REGISTER_DONE");
+  print(OtpForm.compareNow);
   print(statusCode);
-  print(responseBody);
-  print(response);
+  print(OtpForm.responseBody);
 }
 
 class OtpForm extends StatefulWidget {
   static var otp;
-
+  static var responseBody;
+  static var compareNow;
   const OtpForm({
     Key? key,
   }) : super(key: key);
@@ -205,6 +208,12 @@ class _OtpFormState extends State<OtpForm> {
               //var f = nodeSix.text;
               OtpForm.otp = a + b + c + d + e;
               makePostRequest();
+              if (OtpForm.compareNow == -1) {
+                print("COOL");
+                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+              } else {
+                print("SHITS");
+              }
             },
           )
         ],
