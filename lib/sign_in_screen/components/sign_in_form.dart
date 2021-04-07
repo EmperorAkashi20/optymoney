@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -11,10 +12,13 @@ import '../../constants.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
-
-  var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doLogin&subaction=loginSubmit');
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=doLoginApp&subaction=loginSubmit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {'email': SignForm.email, 'passwd': SignForm.password};
+  Map<String, dynamic> body = {
+    'email': SignForm.email,
+    'passwd': SignForm.password
+  };
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
@@ -25,17 +29,31 @@ makePostRequest() async {
     encoding: encoding,
   );
 
-  int statusCode = response.statusCode;
-  String responseBody = response.body;
-  print(statusCode);
-  print(responseBody);
-  print(response);
+  //var jsonData = response.body;
+  //var parsedJson = json.decode(jsonData);
+  //print(parsedJson);
+  //SignForm.message = parsedJson['message'];
+  //print(SignForm.message);
+
+  SignForm.statusCode = response.statusCode;
+  SignForm.responseBody = response.body;
+  print(SignForm.statusCode);
+  print(SignForm.responseBody);
   print(SignForm.email);
+  var jsonData = SignForm.responseBody;
+  print(jsonData);
+  var parsedJson = json.decode(jsonData);
+  print(parsedJson);
+  SignForm.message = parsedJson['message'].toString();
+  print(SignForm.message);
 }
 
 class SignForm extends StatefulWidget {
   static String? email;
   static String? password;
+  static var responseBody;
+  static var statusCode;
+  static var message;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -98,11 +116,18 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              makePostRequest();
               if (_formKey.currentState!.validate()) {
+                makePostRequest();
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                if (SignForm.message == "LOGIN_SUCCESS") {
+                  removeError(error: kNoUserError);
+                  removeError(error: kNoUserError1);
+                  removeError(error: kSignUp);
+                  Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                } else if (SignForm.message == "LOGIN_FAILED") {
+                  addError(error: kNoUserError1);
+                  addError(error: kSignUp);
+                }
               }
             },
           ),

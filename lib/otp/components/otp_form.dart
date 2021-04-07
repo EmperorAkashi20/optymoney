@@ -5,15 +5,23 @@ import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
-
-  var url = Uri.parse('https://optymoney.com/ajax-request/ajax_response.php?action=doSignup&subaction=submit');
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=doSignup&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {'name': CompleteProfileForm.firstName, 'email': SignUpForm.email, 'mobile': CompleteProfileForm.phoneNumber, 'otp': OtpForm.otp, 'reg_passwd': SignUpForm.password, 'repasswd': SignUpForm.confirmPassword};
+  Map<String, dynamic> body = {
+    'name': CompleteProfileForm.firstName,
+    'email': SignUpForm.email,
+    'mobile': CompleteProfileForm.phoneNumber,
+    'otp': OtpForm.otp,
+    'reg_passwd': SignUpForm.password,
+    'repasswd': SignUpForm.confirmPassword
+  };
   print(CompleteProfileForm.phoneNumber);
   print(SignUpForm.email);
   print(OtpForm.otp);
@@ -33,7 +41,6 @@ makePostRequest() async {
   print(responseBody);
   print(response);
 }
-
 
 class OtpForm extends StatefulWidget {
   static var otp;
@@ -196,7 +203,7 @@ class _OtpFormState extends State<OtpForm> {
               var d = nodeFour.text;
               var e = nodeFive.text;
               //var f = nodeSix.text;
-              OtpForm.otp = a+b+c+d+e;
+              OtpForm.otp = a + b + c + d + e;
               makePostRequest();
             },
           )
