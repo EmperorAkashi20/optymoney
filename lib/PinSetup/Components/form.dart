@@ -3,29 +3,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
-import 'package:optymoney/PinSetup/pinsetupscreen.dart';
-import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
-import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/otp/components/otp_form.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
   var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=doSignupFromApp&subaction=submit');
+      'https://optymoney.com/ajax-request/ajax_response.php?action=savePin&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
-    'name': CompleteProfileForm.firstName,
-    'email': SignUpForm.email,
-    'mobile': CompleteProfileForm.phoneNumber,
-    'otp': OtpForm.otp,
-    'reg_passwd': SignUpForm.password,
-    'repasswd': SignUpForm.confirmPassword
+    'userid': OtpForm.status,
+    'mpin': PinForm.mpin,
   };
-  print(CompleteProfileForm.phoneNumber);
-  print(SignUpForm.email);
-  print(OtpForm.otp);
+  print(PinForm.mpin);
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
@@ -37,38 +29,31 @@ makePostRequest() async {
   );
 
   int statusCode = response.statusCode;
-  OtpForm.responseBody = (response.body);
+  PinForm.responseBody = (response.body);
   print(statusCode);
-  print(OtpForm.responseBody);
-  var jsonData = OtpForm.responseBody;
-  print(jsonData);
-  var parsedJson = json.decode(jsonData);
-  print(parsedJson);
-  OtpForm.status = parsedJson['status'].toString();
-  print(OtpForm.status);
-  OtpForm.compareNow = parsedJson['message'].toString();
-  print(OtpForm.compareNow);
+  print(PinForm.responseBody);
+  PinForm.userId = OtpForm.status;
+  print(PinForm.userId);
 }
 
-class OtpForm extends StatefulWidget {
-  static var otp;
+class PinForm extends StatefulWidget {
+  static var mpin;
   static var responseBody;
-  static var compareNow;
-  static String? status;
-  const OtpForm({
+  static var userId;
+  const PinForm({
     Key? key,
   }) : super(key: key);
 
   @override
-  _OtpFormState createState() => _OtpFormState();
+  _PinFormState createState() => _PinFormState();
 }
 
-class _OtpFormState extends State<OtpForm> {
+class _PinFormState extends State<PinForm> {
   static TextEditingController nodeOne = TextEditingController();
   static TextEditingController nodeTwo = TextEditingController();
   static TextEditingController nodeThree = TextEditingController();
   static TextEditingController nodeFour = TextEditingController();
-  static TextEditingController nodeFive = TextEditingController();
+  //static TextEditingController nodeFive = TextEditingController();
   //static TextEditingController nodeSix = TextEditingController();
   FocusNode? pin2FocusNode;
   FocusNode? pin3FocusNode;
@@ -112,7 +97,7 @@ class _OtpFormState extends State<OtpForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: getProportionateScreenWidth(50),
+                width: getProportionateScreenWidth(60),
                 child: TextFormField(
                   autofocus: true,
                   obscureText: true,
@@ -127,7 +112,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(50),
+                width: getProportionateScreenWidth(60),
                 child: TextFormField(
                   focusNode: pin2FocusNode,
                   obscureText: true,
@@ -140,7 +125,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(50),
+                width: getProportionateScreenWidth(60),
                 child: TextFormField(
                   focusNode: pin3FocusNode,
                   obscureText: true,
@@ -153,7 +138,7 @@ class _OtpFormState extends State<OtpForm> {
                 ),
               ),
               SizedBox(
-                width: getProportionateScreenWidth(50),
+                width: getProportionateScreenWidth(60),
                 child: TextFormField(
                   focusNode: pin4FocusNode,
                   obscureText: true,
@@ -162,27 +147,32 @@ class _OtpFormState extends State<OtpForm> {
                   controller: nodeFour,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin5FocusNode),
-                ),
-              ),
-              SizedBox(
-                width: getProportionateScreenWidth(50),
-                child: TextFormField(
-                  focusNode: pin5FocusNode,
-                  obscureText: true,
-                  style: TextStyle(fontSize: 24),
-                  keyboardType: TextInputType.number,
-                  controller: nodeFive,
-                  textAlign: TextAlign.center,
-                  decoration: otpInputDecoration,
                   onChanged: (value) {
                     if (value.length == 1) {
-                      pin5FocusNode!.unfocus();
+                      pin4FocusNode!.unfocus();
                       // Then you need to check if the code is correct or not
                     }
                   },
                 ),
               ),
+              // SizedBox(
+              //   width: getProportionateScreenWidth(40),
+              //   child: TextFormField(
+              //     focusNode: pin5FocusNode,
+              //     obscureText: true,
+              //     style: TextStyle(fontSize: 24),
+              //     keyboardType: TextInputType.number,
+              //     controller: nodeFive,
+              //     textAlign: TextAlign.center,
+              //     decoration: otpInputDecoration,
+              //     onChanged: (value) {
+              //       if (value.length == 1) {
+              //         pin5FocusNode!.unfocus();
+              //         // Then you need to check if the code is correct or not
+              //       }
+              //     },
+              //   ),
+              // ),
               // SizedBox(
               //   width: getProportionateScreenWidth(40),
               //   child: TextFormField(
@@ -211,15 +201,14 @@ class _OtpFormState extends State<OtpForm> {
               var b = nodeTwo.text;
               var c = nodeThree.text;
               var d = nodeFour.text;
-              var e = nodeFive.text;
+              //var e = nodeFive.text;
               //var f = nodeSix.text;
-              OtpForm.otp = a + b + c + d + e;
+              PinForm.mpin = a + b + c + d;
               makePostRequest();
-              if (OtpForm.compareNow == 'REGISTER_SUCCESS') {
-                print("COOL");
-                Navigator.pushNamed(context, PinSetupScreen.routeName);
+              if (PinForm.responseBody != 1) {
+                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
               } else {
-                print("SHITS");
+                print("error");
               }
             },
           )

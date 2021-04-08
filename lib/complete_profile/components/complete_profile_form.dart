@@ -19,10 +19,6 @@ sendOtpRequest() async {
     'email': SignUpForm.email,
     'mobile': CompleteProfileForm.phoneNumber
   };
-  print(SignUpForm.email);
-  print(CompleteProfileForm.phoneNumber);
-  print(CompleteProfileForm.firstName);
-  print(CompleteProfileForm.lastName);
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
