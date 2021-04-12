@@ -7,6 +7,7 @@ import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/otp/otp_screen.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -30,10 +31,9 @@ sendOtpRequest() async {
   );
 
   int statusCode = response.statusCode;
-  String responseBody = response.body;
+  CompleteProfileForm.responseBody = response.body.toString();
   print(statusCode);
-  print(responseBody);
-  print(response);
+  print(CompleteProfileForm.responseBody);
 }
 
 class CompleteProfileForm extends StatefulWidget {
@@ -42,6 +42,7 @@ class CompleteProfileForm extends StatefulWidget {
   //static String? phoneNumber;
   static String? address;
   static var phoneNumber;
+  static String? responseBody;
   static TextEditingController name = new TextEditingController();
   static TextEditingController phone = new TextEditingController();
 
@@ -89,8 +90,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   (CompleteProfileForm.phone.text);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                sendOtpRequest();
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                if (CompleteProfileForm.responseBody == 'EMAIL_EXISTS') {
+                  print("ouch");
+                } else {
+                  //_showToast();
+                  Navigator.pushNamed(context, OtpScreen.routeName);
+                  sendOtpRequest();
+                }
               }
             },
           ),
@@ -195,5 +201,52 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
+  }
+
+  late FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
+  _showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.greenAccent,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check),
+          SizedBox(
+            width: 12.0,
+          ),
+          Text("This is a Custom Toast"),
+        ],
+      ),
+    );
+
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
+
+    // Custom Toast Position
+    fToast.showToast(
+        child: toast,
+        toastDuration: Duration(seconds: 2),
+        positionedToastBuilder: (context, child) {
+          return Positioned(
+            child: child,
+            top: 16.0,
+            left: 16.0,
+          );
+        });
   }
 }
