@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -13,7 +11,7 @@ class Body extends StatelessWidget {
       width: double.infinity,
       child: Padding(
         padding:
-        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -22,7 +20,7 @@ class Body extends StatelessWidget {
                 "OTP Verification",
                 style: headingStyle,
               ),
-              Text("Check your Phone For OTP"),
+              Text("Check your Phone or email For OTP"),
               buildTimer(),
               OtpForm(),
               SizedBox(height: SizeConfig.screenHeight * 0.1),

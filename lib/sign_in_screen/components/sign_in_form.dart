@@ -109,10 +109,11 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 makePostRequest();
+                await Future.delayed(Duration(seconds: 2));
                 if (SignForm.message == "LOGIN_SUCCESS") {
                   removeError(error: kNoUserError);
                   removeError(error: kNoUserError1);

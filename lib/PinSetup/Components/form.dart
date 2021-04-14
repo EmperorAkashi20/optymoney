@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
-import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/otp/components/otp_form.dart';
 import 'package:flutter/widgets.dart';
 
@@ -197,7 +197,7 @@ class _PinFormState extends State<PinForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               var a = nodeOne.text;
               var b = nodeTwo.text;
               var c = nodeThree.text;
@@ -207,7 +207,7 @@ class _PinFormState extends State<PinForm> {
               PinForm.mpin = a + b + c + d;
               makePostRequest();
               if (PinForm.responseBody != 1) {
-                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                Navigator.pushNamed(context, UserInfoScreen.routeName);
               } else {
                 print("error");
               }

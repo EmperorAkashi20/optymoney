@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
 import 'package:optymoney/onboardingscreen/onboardingscreen.dart';
 import 'package:optymoney/otp/otp_screen.dart';
@@ -19,4 +20,5 @@ final Map<String, WidgetBuilder> routes = {
   PostLoginStartsHere.routeName: (context) => PostLoginStartsHere(),
   SignInScreen.routeName: (context) => SignInScreen(),
   PinSetupScreen.routeName: (context) => PinSetupScreen(),
+  UserInfoScreen.routeName: (context) => UserInfoScreen(),
 };

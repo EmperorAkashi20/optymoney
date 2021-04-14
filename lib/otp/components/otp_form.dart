@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
+import 'package:optymoney/DataBaseHelper/DatabaseHelper.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -206,7 +206,7 @@ class _OtpFormState extends State<OtpForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               var a = nodeOne.text;
               var b = nodeTwo.text;
               var c = nodeThree.text;
@@ -215,9 +215,11 @@ class _OtpFormState extends State<OtpForm> {
               //var f = nodeSix.text;
               OtpForm.otp = a + b + c + d + e;
               makePostRequest();
+              await Future.delayed(Duration(seconds: 2));
               if (OtpForm.compareNow == 'REGISTER_SUCCESS') {
                 print("COOL");
                 Navigator.pushNamed(context, PinSetupScreen.routeName);
+                openDatabase();
               } else {
                 print("SHITS");
               }
