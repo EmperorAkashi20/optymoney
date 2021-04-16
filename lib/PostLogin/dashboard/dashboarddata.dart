@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
 
@@ -78,11 +80,11 @@ class _DashBoardDataState extends State<DashBoardData>
             ),
           ),
           new Container(
-            height: 300,
+            height: 700,
             child: new TabBarView(
               controller: _controller,
               children: <Widget>[
-                Center(child: Text("The Content will be live soon...")),
+                Portfolio(),
                 Center(child: Text("The Content will be live soon...")),
                 Center(child: Text("The Content will be live soon...")),
               ],
@@ -113,21 +115,23 @@ class AppDrawerMain extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: Colors.blueGrey,
                   radius: 25,
-                  child: Text(
-                    "R",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
+                  child: Center(
+                    child: Text(
+                      SignForm.letter,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
                 Text(
-                  "Rishabh Sethia",
+                  SignForm.name,
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "work.rishabhsethia@gmail.com",
+                  SignForm.email1,
                   style: TextStyle(color: Colors.white),
                 ),
               ],
