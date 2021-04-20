@@ -35,6 +35,7 @@ makePostRequest() async {
   print(PinForm.responseBody);
   PinForm.userId = OtpForm.status;
   print(PinForm.userId);
+  print(OtpForm.status);
 }
 
 class PinForm extends StatefulWidget {
@@ -205,7 +206,7 @@ class _PinFormState extends State<PinForm> {
               //var e = nodeFive.text;
               //var f = nodeSix.text;
               PinForm.mpin = a + b + c + d;
-              makePostRequest();
+              await makePostRequest();
               if (PinForm.responseBody != 1) {
                 Navigator.pushNamed(context, UserInfoScreen.routeName);
               } else {

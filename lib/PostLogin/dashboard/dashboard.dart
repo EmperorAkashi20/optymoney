@@ -7,6 +7,7 @@ import 'package:optymoney/PostLogin/investments/investments.dart';
 import 'package:optymoney/PostLogin/resources/resources.dart';
 import 'package:optymoney/PostLogin/settings/settings.dart';
 import 'package:optymoney/constants.dart';
+import 'package:optymoney/size_config.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _DashBoardState extends State<DashBoard> {
     return Scaffold(
       body: pageList[currentIndex],
       bottomNavigationBar: BottomNavyBar(
+        //containerHeight: getProportionateScreenHeight(10),
         selectedIndex: currentIndex,
         curve: Curves.bounceInOut,
         onItemSelected: (index) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -6,7 +7,7 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
-import 'package:optymoney/otp/components/otp_form.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -35,69 +36,85 @@ makePostRequest() async {
   var jsonData = SignForm.responseBody;
 
   var parsedJson = json.decode(jsonData);
-  var parsedToken = json.decode(parsedJson['token']);
-  //print(parsedJson);
-  print('token');
-  // print(parsedToken);
-  var pan1 = parsedToken['caTAX_pan_number'].toString();
-  SignForm.pan = pan1;
-  print(SignForm.pan);
-  var userId1 = parsedToken['caTAX_user_id'].toString();
-  SignForm.userId = userId1;
-  print(SignForm.userId);
+  SignForm.status = parsedJson['status'].toString();
+  print(SignForm.status);
   SignForm.message = parsedJson['message'].toString();
   print(SignForm.message);
-  SignForm.name = parsedToken['caTAX_user_name'].toString();
-  print(SignForm.name);
-  SignForm.email1 = parsedToken['caTAX_email_id'].toString();
-  print(SignForm.email1);
-  //print('${SignForm.name[0]}');
-  SignForm.letter = SignForm.name[0];
-  print(SignForm.letter);
+  if (SignForm.status != '0') {
+    SignForm.parsedToken = json.decode(parsedJson['token']);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("isLoggedIn", true);
+    //print(parsedJson);
+    // print('token');
+    // print(parsedToken);
+    var pan1 = SignForm.parsedToken['caTAX_pan_number'].toString();
+    SignForm.pan = pan1;
+    // print(SignForm.pan);
+    var userId1 = SignForm.parsedToken['caTAX_user_id'].toString();
+    SignForm.userId = userId1;
+    // print(SignForm.userId);
+
+    SignForm.name = SignForm.parsedToken['caTAX_user_name'].toString();
+    // print(SignForm.name);
+    SignForm.email1 = SignForm.parsedToken['caTAX_email_id'].toString();
+    // print(SignForm.email1);
+    //print('${SignForm.name[0]}');
+    SignForm.letter = SignForm.name[0];
+    // print(SignForm.letter);
+    //
+  } else {
+    print("cool");
+  }
 }
 
-// makePortfolioRequest() async {
-//   var url = Uri.parse(
-//       'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
-//   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-//   Map<String, dynamic> body = {
-//     'uid': SignForm.userId,
-//     'pan': SignForm.pan,
-//   };
-//   //String jsonBody = json.encode(body);
-//   final encoding = Encoding.getByName('utf-8');
+final api = makePostRequest();
+void dispose() {
+  api.client.close();
+  dispose();
+}
 
-//   Response response = await post(
-//     url,
-//     headers: headers,
-//     body: body,
-//     encoding: encoding,
-//   );
+makePortfolioRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'uid': SignForm.userId,
+    'pan': SignForm.pan,
+  };
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
 
-//   SignForm.portfolioCode = response.statusCode;
-//   SignForm.portfolioBody = response.body;
-//   print(SignForm.userId);
-//   print(SignForm.portfolioBody);
-//   print(SignForm.pan);
-//   var jsonData = SignForm.portfolioBody;
-//   print(jsonData);
-//   SignForm.parsedJson = json.decode(jsonData);
-//   print('test');
-//   print(SignForm.parsedJson);
-//   SignForm.parsedJson.forEach((foliodata) {
-//     if (foliodata["all_units"] != 0) {
-//       print(foliodata["isin"]);
-//       SignForm.folioDataNum++;
-//       SignForm.isin = foliodata["isin"];
-//       SignForm.schemeName = foliodata["fr_scheme_name"];
-//       SignForm.schemeCode = foliodata["fr_scheme_code"];
-//       SignForm.purchasePrice = foliodata["purchase_price"];
-//       //SignForm.
-//       print(SignForm.purchasePrice);
-//       print(SignForm.folioDataNum);
-//     }
-//   });
-// }
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  SignForm.portfolioCode = response.statusCode;
+  SignForm.portfolioBody = response.body;
+  print(SignForm.userId);
+  print(SignForm.portfolioBody);
+  print(SignForm.pan);
+  var jsonData = SignForm.portfolioBody;
+  print(jsonData);
+  SignForm.parsedJson = json.decode(jsonData);
+  print('test');
+  print(SignForm.parsedJson);
+  SignForm.parsedJson.forEach((foliodata) {
+    if (foliodata["all_units"] != 0) {
+      print(foliodata["isin"]);
+      //SignForm.folioDataNum++;
+      SignForm.isin = foliodata["isin"];
+      SignForm.schemeName = foliodata["fr_scheme_name"];
+      SignForm.schemeCode = foliodata["fr_scheme_code"];
+      SignForm.purchasePrice = foliodata["purchase_price"];
+      //SignForm.
+      print(SignForm.purchasePrice);
+      //print(SignForm.folioDataNum);
+    }
+  });
+}
 
 class SignForm extends StatefulWidget {
   static String? email;
@@ -111,6 +128,15 @@ class SignForm extends StatefulWidget {
   static var name;
   static var email1;
   static var letter;
+  static var parsedToken;
+  static var status;
+  static var portfolioCode;
+  static var portfolioBody;
+  static var folioDataNum;
+  static var isin;
+  static var schemeName;
+  static var schemeCode;
+  static var purchasePrice;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -133,6 +159,15 @@ class _SignFormState extends State<SignForm> {
       setState(() {
         errors.remove(error);
       });
+  }
+
+  String? userId;
+
+  getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('UserId');
+    });
   }
 
   @override
@@ -175,26 +210,35 @@ class _SignFormState extends State<SignForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                _onLoading();
-                await makePostRequest();
-                CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                  strokeWidth: 3,
+                Container(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        CircularProgressIndicator.adaptive(),
+                        Text("PLease wait"),
+                      ],
+                    ),
+                  ),
                 );
+
+                await makePostRequest();
                 if (SignForm.message == "LOGIN_SUCCESS") {
                   removeError(error: kNoUserError);
                   removeError(error: kNoUserError1);
                   removeError(error: kSignUp);
-                  setState(() {
+
+                  //await makePortfolioRequest();
+                  setState(() async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('UserId', SignForm.userId);
                     Navigator.pushNamed(context, PostLoginStartsHere.routeName);
                   });
-                  //await Future.delayed(Duration(seconds: 8));
-
-                  //_onLoading();
-                  // Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-                } else if (SignForm.message == "LOGIN_FAILED") {
-                  addError(error: kNoUserError1);
-                  addError(error: kSignUp);
+                } else if (SignForm.status == '0') {
+                  setState(() {
+                    addError(error: kNoUserError1);
+                    addError(error: kSignUp);
+                  });
                 }
               }
             },
@@ -286,8 +330,6 @@ class _SignFormState extends State<SignForm> {
         );
       },
     );
-    new Future.delayed(new Duration(seconds: 3), () {
-      //pop dialog
-    });
+    new Future.delayed(new Duration(seconds: 3), () {});
   }
 }

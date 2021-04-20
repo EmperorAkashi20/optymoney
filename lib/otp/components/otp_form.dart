@@ -214,12 +214,12 @@ class _OtpFormState extends State<OtpForm> {
               var e = nodeFive.text;
               //var f = nodeSix.text;
               OtpForm.otp = a + b + c + d + e;
-              makePostRequest();
-              await Future.delayed(Duration(seconds: 2));
+              await makePostRequest();
+              //await Future.delayed(Duration(seconds: 2));
               if (OtpForm.compareNow == 'REGISTER_SUCCESS') {
                 print("COOL");
                 Navigator.pushNamed(context, PinSetupScreen.routeName);
-                openDatabase();
+                //openDatabase();
               } else {
                 print("SHITS");
               }

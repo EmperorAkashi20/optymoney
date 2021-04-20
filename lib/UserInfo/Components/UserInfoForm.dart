@@ -12,31 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../constants.dart';
 import '../../size_config.dart';
 
-sendOtpRequest() async {
-  var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=doSendOTP');
-  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {
-    'email': SignUpForm.email,
-    'mobile': CompleteProfileForm.phoneNumber
-  };
-  //String jsonBody = json.encode(body);
-  final encoding = Encoding.getByName('utf-8');
-
-  Response response = await post(
-    url,
-    headers: headers,
-    body: body,
-    encoding: encoding,
-  );
-
-  int statusCode = response.statusCode;
-  CompleteProfileForm.responseBody = response.body.toString();
-  print(statusCode);
-  print(CompleteProfileForm.responseBody);
-}
-
-class CompleteProfileForm extends StatefulWidget {
+class UserInfoForm extends StatefulWidget {
   static String? firstName;
   static String? lastName;
   //static String? phoneNumber;
@@ -47,10 +23,10 @@ class CompleteProfileForm extends StatefulWidget {
   static TextEditingController phone = new TextEditingController();
 
   @override
-  _CompleteProfileFormState createState() => _CompleteProfileFormState();
+  _UserInfoFormState createState() => _UserInfoFormState();
 }
 
-class _CompleteProfileFormState extends State<CompleteProfileForm> {
+class _UserInfoFormState extends State<UserInfoForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
 
@@ -85,17 +61,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () async {
-              CompleteProfileForm.phoneNumber =
-                  (CompleteProfileForm.phone.text);
+            press: () {
+              UserInfoForm.phoneNumber = (UserInfoForm.phone.text);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                if (CompleteProfileForm.responseBody == 'EMAIL_EXISTS') {
+                if (UserInfoForm.responseBody == 'EMAIL_EXISTS') {
                   print("ouch");
                 } else {
                   //_showToast();
-                  await sendOtpRequest();
                   Navigator.pushNamed(context, OtpScreen.routeName);
+                  //sendOtpRequest();
                 }
               }
             },
@@ -107,7 +82,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.address = newValue,
+      onSaved: (newValue) => UserInfoForm.address = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kAddressNullError);
@@ -135,9 +110,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
-      controller: CompleteProfileForm.phone,
+      controller: UserInfoForm.phone,
       keyboardType: TextInputType.number,
-      onSaved: (newValue) => CompleteProfileForm.phone, //= newValue,
+      onSaved: (newValue) => UserInfoForm.phone, //= newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
@@ -164,7 +139,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.lastName = newValue,
+      onSaved: (newValue) => UserInfoForm.lastName = newValue,
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -178,7 +153,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.firstName = newValue,
+      onSaved: (newValue) => UserInfoForm.firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);

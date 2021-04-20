@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
+import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
+import 'package:optymoney/size_config.dart';
 
 import '../../constants.dart';
 
@@ -39,17 +42,17 @@ class _DashBoardDataState extends State<DashBoardData>
                     icon:
                         FaIcon(FontAwesomeIcons.arrowAltCircleUp), //size: 15),
                     title: "Profit/Loss",
-                    initialAmount: "0.0",
+                    initialAmount: "₹0.0",
                   ),
                   TabBarConstants(
                     icon: FaIcon(FontAwesomeIcons.piggyBank), //size: 15),
                     title: "Invested Value",
-                    initialAmount: "0.0",
+                    initialAmount: ("₹" + Body.purchasePrice.toString()),
                   ),
                   TabBarConstants(
                     icon: FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
                     title: "Present Value",
-                    initialAmount: "0.0",
+                    initialAmount: "₹0.0",
                   )
                 ],
               ),
@@ -80,7 +83,7 @@ class _DashBoardDataState extends State<DashBoardData>
             ),
           ),
           new Container(
-            height: 700,
+            height: getProportionateScreenHeight(540),
             child: new TabBarView(
               controller: _controller,
               children: <Widget>[
@@ -141,50 +144,52 @@ class AppDrawerMain extends StatelessWidget {
             ),
           ),
           AppDrawerListTIle(
-            title: "Item 1",
+            title: "Logout",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
             navigationRoute: () {
+              //dispose();
               Navigator.pop(context);
+              Navigator.pushNamed(context, SignInScreen.routeName);
             },
           ),
-          AppDrawerListTIle(
-            title: "Item 2",
-            icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
-            ),
-            navigationRoute: () {
-              Navigator.pop(context);
-            },
-          ),
-          AppDrawerListTIle(
-            title: "Item 3",
-            icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
-            ),
-            navigationRoute: () {
-              Navigator.pop(context);
-            },
-          ),
-          AppDrawerListTIle(
-            title: "Item 4",
-            icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
-            ),
-            navigationRoute: () {
-              Navigator.pop(context);
-            },
-          ),
-          AppDrawerListTIle(
-            title: "Item 5",
-            icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
-            ),
-            navigationRoute: () {
-              Navigator.pop(context);
-            },
-          ),
+          // AppDrawerListTIle(
+          //   title: "Item 2",
+          //   icon: FaIcon(
+          //     FontAwesomeIcons.stopwatch,
+          //   ),
+          //   navigationRoute: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          // AppDrawerListTIle(
+          //   title: "Item 3",
+          //   icon: FaIcon(
+          //     FontAwesomeIcons.stopwatch,
+          //   ),
+          //   navigationRoute: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          // AppDrawerListTIle(
+          //   title: "Item 4",
+          //   icon: FaIcon(
+          //     FontAwesomeIcons.stopwatch,
+          //   ),
+          //   navigationRoute: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          // AppDrawerListTIle(
+          //   title: "Item 5",
+          //   icon: FaIcon(
+          //     FontAwesomeIcons.stopwatch,
+          //   ),
+          //   navigationRoute: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
         ],
       ),
     );
