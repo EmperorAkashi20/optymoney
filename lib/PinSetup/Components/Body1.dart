@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/constants.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:optymoney/size_config.dart';
@@ -21,13 +22,13 @@ class _BodyState extends State<Body> {
           AnimatedTextKit(
             animatedTexts: [
               RotateAnimatedText(
-                  'Just a few more details\nbefore we get you started',
+                  'Welcome Aboard,\nWe are thrilled to have you here',
                   textStyle: TextStyle(
                       color: kTextColor,
                       fontSize: 26,
                       fontWeight: FontWeight.w900)),
               RotateAnimatedText(
-                  'We require this to\nto optimize your experience',
+                  'Please consider completion of your profile\nWe need this to optimize your experience',
                   textStyle: TextStyle(
                       color: kTextColor,
                       fontSize: 26,
@@ -52,7 +53,10 @@ class _BodyState extends State<Body> {
                         width: 56,
                         height: 56,
                         child: Icon(Icons.arrow_forward)),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, PostLoginStartsHere.routeName);
+                    },
                   ),
                 ),
               ),

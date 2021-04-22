@@ -1,26 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
-import 'package:optymoney/otp/otp_screen.dart';
-import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
+import 'package:optymoney/OtherDetails/OtherDetails.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
 
 class UserInfoForm extends StatefulWidget {
-  static String? firstName;
-  static String? lastName;
-  //static String? phoneNumber;
-  static String? address;
-  static var phoneNumber;
-  static String? responseBody;
-  static TextEditingController name = new TextEditingController();
-  static TextEditingController phone = new TextEditingController();
+  static String? pan;
+  static String? aadhar;
+  static String? nominee;
+  static String? relation;
 
   @override
   _UserInfoFormState createState() => _UserInfoFormState();
@@ -50,28 +42,25 @@ class _UserInfoFormState extends State<UserInfoForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildFirstNameFormField(),
+          buildAadharFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildLastNameFormField(),
+          buildPanFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildPhoneNumberFormField(),
+          buildNomineeFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField(),
+          buildRelationFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: "continue",
+            text: "Next",
             press: () {
-              UserInfoForm.phoneNumber = (UserInfoForm.phone.text);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                if (UserInfoForm.responseBody == 'EMAIL_EXISTS') {
-                  print("ouch");
-                } else {
-                  //_showToast();
-                  Navigator.pushNamed(context, OtpScreen.routeName);
-                  //sendOtpRequest();
-                }
+
+                //_showToast();
+                Navigator.pushNamed(context, OtherDetailsScreen.routeName);
+                //sendOtpRequest();
+
               }
             },
           ),
@@ -80,69 +69,79 @@ class _UserInfoFormState extends State<UserInfoForm> {
     );
   }
 
-  TextFormField buildAddressFormField() {
+  TextFormField buildPanFormField() {
     return TextFormField(
-      onSaved: (newValue) => UserInfoForm.address = newValue,
+      onSaved: (newValue) => UserInfoForm.pan = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
+          removeError(error: kEmptyFieldError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kAddressNullError);
+          addError(error: kEmptyFieldError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Address",
-        hintText: "Enter your phone address",
+        labelText: "PAN Number",
+        hintText: "AAAAAAAAA",
         // If  you are using latest version of flutter then label text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon:
-            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/credit-card.svg"),
       ),
     );
   }
 
-  TextFormField buildPhoneNumberFormField() {
+  TextFormField buildAadharFormField() {
     return TextFormField(
-      controller: UserInfoForm.phone,
-      keyboardType: TextInputType.number,
-      onSaved: (newValue) => UserInfoForm.phone, //= newValue,
+      onSaved: (newValue) => UserInfoForm.aadhar = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kPhoneNumberNullError);
+          removeError(error: kEmptyFieldError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kPhoneNumberNullError);
+          addError(error: kEmptyFieldError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Phone Number",
-        hintText: "Enter your phone number",
+        labelText: "AADHAR Number",
+        hintText: "XXXX XXXX XXXX",
         // If  you are using latest version of flutter then label text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/credit-card.svg"),
       ),
     );
   }
 
-  TextFormField buildLastNameFormField() {
+  TextFormField buildNomineeFormField() {
     return TextFormField(
-      onSaved: (newValue) => UserInfoForm.lastName = newValue,
+      onSaved: (newValue) => UserInfoForm.nominee = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kEmptyFieldError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kEmptyFieldError);
+          return "";
+        }
+        return null;
+      },
       decoration: InputDecoration(
-        labelText: "Last Name",
-        hintText: "Enter your last name",
+        labelText: "Nominee Name",
+        hintText: "Please enter the name",
         // If  you are using latest version of flutter then label text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -151,25 +150,25 @@ class _UserInfoFormState extends State<UserInfoForm> {
     );
   }
 
-  TextFormField buildFirstNameFormField() {
+  TextFormField buildRelationFormField() {
     return TextFormField(
-      onSaved: (newValue) => UserInfoForm.firstName = newValue,
+      onSaved: (newValue) => UserInfoForm.relation = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: kEmptyFieldError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: kEmptyFieldError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "First Name",
-        hintText: "Enter your first name",
+        labelText: "Relation With Nominee",
+        hintText: "Please enter Your relation",
         // If  you are using latest version of flutter then label text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -177,6 +176,35 @@ class _UserInfoFormState extends State<UserInfoForm> {
       ),
     );
   }
+
+  // TextFormField buildPhoneNumberFormField() {
+  //   return TextFormField(
+  //     controller: UserInfoForm.phone,
+  //     keyboardType: TextInputType.number,
+  //     onSaved: (newValue) => UserInfoForm.phone, //= newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kPhoneNumberNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kPhoneNumberNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Phone Number",
+  //       hintText: "Enter your phone number",
+  //       // If  you are using latest version of flutter then label text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+  //     ),
+  //   );
+  // }
 
   late FToast fToast;
 

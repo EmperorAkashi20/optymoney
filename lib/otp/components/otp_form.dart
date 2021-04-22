@@ -6,6 +6,7 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/DataBaseHelper/DatabaseHelper.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
 
 import '../../constants.dart';
@@ -46,6 +47,7 @@ makePostRequest() async {
   print(parsedJson);
   OtpForm.status = parsedJson['status'].toString();
   print(OtpForm.status);
+  SignForm.userIdGlobal = OtpForm.status;
   OtpForm.compareNow = parsedJson['message'].toString();
   print(OtpForm.compareNow);
 }

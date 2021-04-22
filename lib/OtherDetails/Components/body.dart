@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:optymoney/UserInfo/Components/UserInfoForm.dart';
+import 'package:optymoney/OtherDetails/Components/OtherDetails.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
 
-class UserInfo extends StatelessWidget {
+class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +23,7 @@ class UserInfo extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                UserInfoForm(),
+                OtherDetailsForm(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
               ],
             ),

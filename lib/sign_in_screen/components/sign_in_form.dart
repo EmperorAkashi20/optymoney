@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -52,6 +51,7 @@ makePostRequest() async {
     // print(SignForm.pan);
     var userId1 = SignForm.parsedToken['caTAX_user_id'].toString();
     SignForm.userId = userId1;
+    SignForm.userIdGlobal = SignForm.userId;
     // print(SignForm.userId);
 
     SignForm.name = SignForm.parsedToken['caTAX_user_name'].toString();
@@ -137,6 +137,7 @@ class SignForm extends StatefulWidget {
   static var schemeName;
   static var schemeCode;
   static var purchasePrice;
+  static var userIdGlobal;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -226,14 +227,8 @@ class _SignFormState extends State<SignForm> {
                   removeError(error: kNoUserError);
                   removeError(error: kNoUserError1);
                   removeError(error: kSignUp);
-
                   //await makePortfolioRequest();
-                  setState(() async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('UserId', SignForm.userId);
-                    Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-                  });
+                  Navigator.pushNamed(context, PostLoginStartsHere.routeName);
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);
@@ -312,24 +307,5 @@ class _SignFormState extends State<SignForm> {
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
-  }
-
-  void _onLoading() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: new Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new CircularProgressIndicator(),
-              new Text("Loading"),
-            ],
-          ),
-        );
-      },
-    );
-    new Future.delayed(new Duration(seconds: 3), () {});
   }
 }

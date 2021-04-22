@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
-import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/UserInfo/Components/ProfileComplete.dart';
+import 'package:optymoney/UserInfo/Components/UserInfo.dart';
+import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
 import 'package:optymoney/size_config.dart';
 
@@ -120,7 +123,7 @@ class AppDrawerMain extends StatelessWidget {
                   radius: 25,
                   child: Center(
                     child: Text(
-                      SignForm.letter,
+                      Body.custLetter,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -130,11 +133,11 @@ class AppDrawerMain extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  SignForm.name,
+                  Body.custName,
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(
-                  SignForm.email1,
+                  Body.emailId,
                   style: TextStyle(color: Colors.white),
                 ),
               ],
@@ -144,25 +147,30 @@ class AppDrawerMain extends StatelessWidget {
             ),
           ),
           AppDrawerListTIle(
-            title: "Logout",
+            title: "Dashboard",
             icon: FaIcon(
               FontAwesomeIcons.stopwatch,
             ),
             navigationRoute: () {
-              //dispose();
               Navigator.pop(context);
-              Navigator.pushNamed(context, SignInScreen.routeName);
+              Navigator.pushNamed(context, PostLoginStartsHere.routeName);
             },
           ),
-          // AppDrawerListTIle(
-          //   title: "Item 2",
-          //   icon: FaIcon(
-          //     FontAwesomeIcons.stopwatch,
-          //   ),
-          //   navigationRoute: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
+          AppDrawerListTIle(
+            title: "Profile",
+            icon: FaIcon(
+              FontAwesomeIcons.stopwatch,
+            ),
+            navigationRoute: () {
+              Navigator.pop(context);
+              if (Body.custPan == 'null') {
+                Navigator.pushNamed(context, UserInfoScreen.routeName);
+              } else {
+                Navigator.pushNamed(context, ProfileComplete.routeName);
+              }
+            },
+          ),
+
           // AppDrawerListTIle(
           //   title: "Item 3",
           //   icon: FaIcon(

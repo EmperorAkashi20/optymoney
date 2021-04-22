@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
+import 'package:optymoney/OtherDetails/OtherDetails.dart';
+import 'package:optymoney/PinSetup/Components/finalscreen.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/UserInfo/Components/ProfileComplete.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
 import 'package:optymoney/onboardingscreen/onboardingscreen.dart';
@@ -23,4 +26,7 @@ final Map<String, WidgetBuilder> routes = {
   PinSetupScreen.routeName: (context) => PinSetupScreen(),
   UserInfoScreen.routeName: (context) => UserInfoScreen(),
   Portfolio.routeName: (context) => Portfolio(),
+  FinalScreen.routeName: (context) => FinalScreen(),
+  OtherDetailsScreen.routeName: (context) => OtherDetailsScreen(),
+  ProfileComplete.routeName: (context) => ProfileComplete(),
 };

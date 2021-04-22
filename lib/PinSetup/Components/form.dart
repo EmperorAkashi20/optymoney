@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
-import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
+import 'package:optymoney/PinSetup/Components/finalscreen.dart';
 import 'package:optymoney/otp/components/otp_form.dart';
 import 'package:flutter/widgets.dart';
 
@@ -208,7 +208,7 @@ class _PinFormState extends State<PinForm> {
               PinForm.mpin = a + b + c + d;
               await makePostRequest();
               if (PinForm.responseBody != 1) {
-                Navigator.pushNamed(context, UserInfoScreen.routeName);
+                Navigator.pushNamed(context, FinalScreen.routeName);
               } else {
                 print("error");
               }

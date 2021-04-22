@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optymoney/UserInfo/Components/Body.dart';
+import 'package:optymoney/UserInfo/Components/UserInfo.dart';
 
 class UserInfoScreen extends StatelessWidget {
   static String routeName = "/UserInfo";
@@ -7,7 +7,7 @@ class UserInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Body(),
+      body: UserInfo(),
     );
   }
 }

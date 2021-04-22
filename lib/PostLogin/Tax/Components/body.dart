@@ -16,7 +16,6 @@ enum Selector { Yes, No }
 class _BodyState extends State<Body> {
   DateTime selectedDate = DateTime.now();
   Selector? _selector = Selector.No;
-  File? file;
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(

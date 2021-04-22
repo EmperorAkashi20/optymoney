@@ -40,6 +40,7 @@ const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 const String kNoUserError = "No User Found";
 const String kPasswordNotValidError = "Please Check Your Password";
+const String kEmptyFieldError = "Please complete all details";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:

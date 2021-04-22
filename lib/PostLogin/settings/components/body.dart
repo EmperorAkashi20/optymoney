@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -29,11 +30,11 @@ class _BodyState extends State<Body> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Rishabh Sethia",
+                        SignForm.name,
                         style: TextStyle(fontWeight: FontWeight.w800),
                       ),
                       Text(
-                        "rishabhsethiadsce@gmail.com",
+                        SignForm.email1,
                         style: TextStyle(fontWeight: FontWeight.w800),
                       ),
                     ],
@@ -42,7 +43,7 @@ class _BodyState extends State<Body> {
                     radius: 25,
                     backgroundColor: Colors.blueGrey,
                     child: Text(
-                      "R",
+                      SignForm.letter,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
