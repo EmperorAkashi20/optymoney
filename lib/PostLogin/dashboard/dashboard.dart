@@ -7,7 +7,6 @@ import 'package:optymoney/PostLogin/investments/investments.dart';
 import 'package:optymoney/PostLogin/resources/resources.dart';
 import 'package:optymoney/PostLogin/settings/settings.dart';
 import 'package:optymoney/constants.dart';
-import 'package:optymoney/size_config.dart';
 
 class DashBoard extends StatefulWidget {
   @override

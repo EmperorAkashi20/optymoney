@@ -102,17 +102,17 @@ makePortfolioRequest() async {
   print('test');
   print(SignForm.parsedJson);
   SignForm.parsedJson.forEach((foliodata) {
-    if (foliodata["all_units"] != 0) {
-      print(foliodata["isin"]);
-      //SignForm.folioDataNum++;
-      SignForm.isin = foliodata["isin"];
-      SignForm.schemeName = foliodata["fr_scheme_name"];
-      SignForm.schemeCode = foliodata["fr_scheme_code"];
-      SignForm.purchasePrice = foliodata["purchase_price"];
-      //SignForm.
-      print(SignForm.purchasePrice);
-      //print(SignForm.folioDataNum);
-    }
+    // if (foliodata["all_units"] != 0) {
+    //   print(foliodata["isin"]);
+    //   //SignForm.folioDataNum++;
+    //   SignForm.isin = foliodata["isin"];
+    //   SignForm.schemeName = foliodata["fr_scheme_name"];
+    //   SignForm.schemeCode = foliodata["fr_scheme_code"];
+    //   SignForm.purchasePrice = foliodata["purchase_price"];
+    //   //SignForm.
+    //   print(SignForm.purchasePrice);
+    //   //print(SignForm.folioDataNum);
+    // }
   });
 }
 
@@ -138,6 +138,15 @@ class SignForm extends StatefulWidget {
   static var schemeCode;
   static var purchasePrice;
   static var userIdGlobal;
+  static var userBday;
+  static var userAddress1;
+  static var userAddress2;
+  static var userAddress3;
+  static var userMobile;
+  static var userCity;
+  static var userState;
+  static var userPinCode;
+  static var userCountry;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -228,11 +237,13 @@ class _SignFormState extends State<SignForm> {
                   removeError(error: kNoUserError1);
                   removeError(error: kSignUp);
                   //await makePortfolioRequest();
+                  _formKey.currentState!.reset();
                   Navigator.pushNamed(context, PostLoginStartsHere.routeName);
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);
                     addError(error: kSignUp);
+                    _formKey.currentState!.reset();
                   });
                 }
               }

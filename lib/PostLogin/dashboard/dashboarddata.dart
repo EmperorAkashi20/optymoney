@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
@@ -166,7 +167,7 @@ class AppDrawerMain extends StatelessWidget {
               if (Body.custPan == 'null') {
                 Navigator.pushNamed(context, UserInfoScreen.routeName);
               } else {
-                Navigator.pushNamed(context, ProfileComplete.routeName);
+                Navigator.pushNamed(context, DisplayUserInfoScreen.routeName);
               }
             },
           ),

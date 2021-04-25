@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
+import 'package:optymoney/constants.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
+import 'package:optymoney/size_config.dart';
 
 makeUserRequest() async {
   var url = Uri.parse(
@@ -31,20 +33,39 @@ makeUserRequest() async {
 
   var parsedJson = json.decode(jsonData);
   Body.userId = parsedJson['pk_user_id'].toString();
-  print(Body.userId);
+  // print(Body.userId);
   Body.emailId = parsedJson['login_id'].toString();
-  print(Body.emailId);
+  // print(Body.emailId);
   Body.custId = parsedJson['fr_customer_id'].toString();
-  print(Body.custId);
+  // print(Body.custId);
   Body.custName = parsedJson['cust_name'].toString();
-  print(Body.custName);
+  // print(Body.custName);
   Body.custPan = parsedJson['pan_number'].toString();
-  print(Body.custPan);
+  // print(Body.custPan);
   Body.custLetter = Body.custName[0].toUpperCase();
-  print(Body.custLetter);
+  // print(Body.custLetter);
+  Body.custBday = parsedJson['dob'].toString();
+  // print(Body.custBday);
+  Body.custAddress1 = parsedJson['address1'].toString();
+  Body.custAddress2 = parsedJson['address2'].toString();
+  Body.custAddress3 = parsedJson['address3'].toString();
+  Body.custMobile = parsedJson['contact_no'].toString();
+  Body.custState = parsedJson['state'].toString();
+  Body.custCity = parsedJson['city'].toString();
+  Body.custPinCode = parsedJson['pincode'].toString();
+  Body.custCountry = parsedJson['country'].toString();
   SignForm.email1 = Body.emailId;
   SignForm.name = Body.custName;
   SignForm.letter = Body.custLetter;
+  SignForm.userBday = Body.custBday;
+  SignForm.userAddress1 = Body.custAddress1;
+  SignForm.userAddress2 = Body.custAddress2;
+  SignForm.userAddress3 = Body.custAddress3;
+  SignForm.userMobile = Body.custMobile;
+  SignForm.userState = Body.custState;
+  SignForm.userCity = Body.custCity;
+  SignForm.userPinCode = Body.custPinCode;
+  SignForm.userCountry = Body.custCountry;
 }
 
 class Body extends StatefulWidget {
@@ -57,6 +78,15 @@ class Body extends StatefulWidget {
   static var custName;
   static var custPan;
   static var custLetter;
+  static var custBday;
+  static var custAddress1;
+  static var custAddress2;
+  static var custAddress3;
+  static var custMobile;
+  static var custState;
+  static var custCity;
+  static var custPinCode;
+  static var custCountry;
 
   @override
   _BodyState createState() => _BodyState();
@@ -181,9 +211,9 @@ class _BodyState extends State<Body> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                      left: 15.0,
-                      right: 15,
-                      top: 10,
+                      left: 3.0,
+                      right: 3,
+                      top: 5,
                     ),
                     child: Card(
                       elevation: 5,
@@ -193,12 +223,192 @@ class _BodyState extends State<Body> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Expanded(
+                                  flex: 8,
                                   child: Text(
                                     snapshot.data[index].fr_scheme_name,
-                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.login,
+                                      color: Colors.blueGrey,
+                                    ),
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Dialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Container(
+                                                height:
+                                                    getProportionateScreenHeight(
+                                                        450),
+                                                width:
+                                                    getProportionateScreenWidth(
+                                                        350),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      snapshot.data[index]
+                                                          .fr_scheme_name,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        DataDisplayScheme(
+                                                          data1: "ISIN",
+                                                          data2: snapshot
+                                                              .data[index].isin,
+                                                        ),
+                                                        DataDisplayScheme(
+                                                          data1: "Scheme Code",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .bse_scheme_code
+                                                              .toString(),
+                                                        ),
+                                                        DataDisplayScheme(
+                                                          data1: "Scheme Type",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .scheme_type
+                                                              .toString(),
+                                                        ),
+                                                        DataDisplayScheme(
+                                                          data1:
+                                                              "Purchase Price",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .purchase_price
+                                                              .toString(),
+                                                        ),
+                                                        DataDisplayScheme(
+                                                          data1: "Total Units",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .all_units
+                                                              .toString(),
+                                                        ),
+                                                        DataDisplayScheme(
+                                                          data1:
+                                                              "Current Amount",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .sch_amount
+                                                              .toString(),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      //Buying and Selling Buttons
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .blueAccent,
+                                                                borderRadius: BorderRadius.only(
+                                                                    bottomLeft:
+                                                                        Radius.circular(
+                                                                            15))),
+                                                            height:
+                                                                getProportionateScreenHeight(
+                                                                    40),
+                                                            width:
+                                                                getProportionateScreenWidth(
+                                                                    140),
+                                                            child: TextButton(
+                                                              onPressed: () {},
+                                                              child: Text(
+                                                                "BUY",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  kPrimaryColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                            ),
+                                                            height:
+                                                                getProportionateScreenHeight(
+                                                                    40),
+                                                            width:
+                                                                getProportionateScreenWidth(
+                                                                    140),
+                                                            child: TextButton(
+                                                              onPressed: () {},
+                                                              child: Text(
+                                                                "SELL",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    },
                                   ),
                                 ),
                               ],
@@ -206,24 +416,64 @@ class _BodyState extends State<Body> {
                             SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                    child:
-                                        Text(snapshot.data[index].scheme_type)),
-                                Expanded(
-                                    child: Text(snapshot.data[index].all_units
-                                        .toString())),
-                                Expanded(
-                                  child: Text(snapshot.data[index].sch_amount
-                                      .toString()),
+                              children: <Widget>[
+                                Text(
+                                  "Purchase Price",
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
                                 ),
-                                Expanded(
-                                  child: Text(snapshot
-                                      .data[index].purchase_price
-                                      .toString()),
+                                Text(
+                                  snapshot.data[index].purchase_price
+                                      .toString(),
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ],
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Current Total Value",
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data[index].sch_amount.toString(),
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     Expanded(
+                            //         child:
+                            //             Text(snapshot.data[index].scheme_type)),
+                            //     Expanded(
+                            //         child: Text(snapshot.data[index].all_units
+                            //             .toString())),
+                            //     Expanded(
+                            //       child: Text(snapshot.data[index].sch_amount
+                            //           .toString()),
+                            //     ),
+                            //     Expanded(
+                            //       child: Text(snapshot
+                            //           .data[index].purchase_price
+                            //           .toString()),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -234,6 +484,45 @@ class _BodyState extends State<Body> {
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class DataDisplayScheme extends StatelessWidget {
+  const DataDisplayScheme({
+    Key? key,
+    required this.data1,
+    required this.data2,
+  }) : super(key: key);
+
+  final String data1;
+  final String data2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            data1,
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            data2,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }

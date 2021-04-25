@@ -15,7 +15,7 @@ import '../../size_config.dart';
 
 makeUserRequest() async {
   var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=settinginfo&subaction=submit');
+      'https://optymoney.com/ajax-request/ajax_response.php?action=settinginfoapp&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
     'cust_name': SignForm.name,

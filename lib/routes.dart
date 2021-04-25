@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/OtherDetails/OtherDetails.dart';
 import 'package:optymoney/PinSetup/Components/finalscreen.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
@@ -29,4 +30,5 @@ final Map<String, WidgetBuilder> routes = {
   FinalScreen.routeName: (context) => FinalScreen(),
   OtherDetailsScreen.routeName: (context) => OtherDetailsScreen(),
   ProfileComplete.routeName: (context) => ProfileComplete(),
+  DisplayUserInfoScreen.routeName: (context) => DisplayUserInfoScreen(),
 };

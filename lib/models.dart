@@ -50,6 +50,54 @@ class FormFieldGlobal extends StatelessWidget {
   }
 }
 
+class FormFieldDisplayProfile extends StatelessWidget {
+  const FormFieldDisplayProfile({
+    Key? key,
+    this.keyboardTypeGlobal,
+    this.hintText,
+    this.dataController,
+    this.enabledOrNot,
+    this.stringColor,
+  }) : super(key: key);
+
+  final TextInputType? keyboardTypeGlobal;
+  final String? hintText;
+  final TextEditingController? dataController;
+  final bool? enabledOrNot;
+  final Color? stringColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+      child: Container(
+        height: getProportionateScreenHeight(50),
+        child: TextFormField(
+          enabled: enabledOrNot,
+          controller: dataController,
+          keyboardType: keyboardTypeGlobal,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey, width: 1.1),
+            ),
+            hintText: hintText,
+            hintStyle: TextStyle(
+                fontSize: 15.0,
+                color: stringColor,
+                fontWeight: FontWeight.w100),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.teal,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class TitleHeader extends StatelessWidget {
   const TitleHeader({
     Key? key,
