@@ -145,11 +145,7 @@ class _BodyState extends State<Body> {
       print(sch['amount']);
       print(sch['all_units']);
       print(sch['nav_price']);
-      print("present value");
-      //print(x);
       Body.purPrice = Body.purPrice + sch['amount'].toDouble();
-      //print("object");
-
       //print(scheme.sch_amount);
       if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
         // sch++;
