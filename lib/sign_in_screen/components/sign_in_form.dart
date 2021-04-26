@@ -102,23 +102,27 @@ makePortfolioRequest() async {
   print('test');
   print(SignForm.parsedJson);
   SignForm.parsedJson.forEach((foliodata) {
-    // if (foliodata["all_units"] != 0) {
-    //   print(foliodata["isin"]);
-    //   //SignForm.folioDataNum++;
-    //   SignForm.isin = foliodata["isin"];
-    //   SignForm.schemeName = foliodata["fr_scheme_name"];
-    //   SignForm.schemeCode = foliodata["fr_scheme_code"];
-    //   SignForm.purchasePrice = foliodata["purchase_price"];
-    //   //SignForm.
-    //   print(SignForm.purchasePrice);
-    //   //print(SignForm.folioDataNum);
-    // }
+    if (foliodata["all_units"] != 0) {
+      print(foliodata["isin"]);
+      //SignForm.folioDataNum++;
+      SignForm.isin = foliodata["isin"];
+      SignForm.schemeName = foliodata["fr_scheme_name"];
+      SignForm.schemeCode = foliodata["fr_scheme_code"];
+      SignForm.purchasePrice = foliodata['amount'];
+
+      //SignForm.
+
+      SignForm.investedValue = SignForm.investedValue + SignForm.purchasePrice;
+
+      //print(SignForm.folioDataNum);
+    }
   });
 }
 
 class SignForm extends StatefulWidget {
   static String? email;
   static String? password;
+  static var investedValue = 0.0;
   static var responseBody;
   static var statusCode;
   static var message;

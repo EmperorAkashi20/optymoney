@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -124,40 +125,41 @@ class _BodyState extends State<Body> {
     print(len);
     List<Scheme> schemes = [];
     Body.purPrice = 0.0;
-    // Body.allUnits = 0.0;
+    //Body.presentVal = 0.0;
     print("1");
     for (var sch in jsonData) {
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
       // this.purchase_price, this.scheme_type, this.amount, this.all_units);
-      var x = sch['nav_price'];
-      print(x);
+
       Scheme scheme = Scheme(
           sch['isin'],
           sch['folio'],
           sch['bse_scheme_code'],
           sch['fr_scheme_name'],
           sch['purchase_price'],
-          x.toDouble(),
+          sch['nav_price'], // sch['nav_price'],
           sch['scheme_type'],
           sch['amount'].toDouble(),
           sch['all_units'].toDouble());
-      print(scheme.toString());
-      // Body.amount = sch['amount'];
-      // Body.allUnits = sch['all_units'];
-      // print(sch['amount']);
-      // print(sch['all_units']);
-      // //print(sch['nav_price'].toString());
-      // Body.purPrice = Body.purPrice + sch['amount'].toDouble();
-      // //print("object");
+      // print(scheme.toString());
+      //
+      if (sch['all_units'] != 0) {
+        print(sch['amount']);
+        print(sch['all_units']);
+        print(sch['nav_price']);
+      }
 
-      // //print(scheme.sch_amount);
-      // if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
-      //   // sch++;
-      // } else {
-      //   schemes.add(scheme);
-      // }
-      print(sch['nav_price']);
+      //print(scheme.sch_amount);
+      if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
+        // sch++;
+      } else {
+        schemes.add(scheme);
+        Body.presentVal =
+            Body.presentVal + (sch['nav_price'] * sch['all_units']);
+        Body.purPrice = Body.purPrice + sch['amount'].toDouble();
+      }
     }
+    print(Body.presentVal);
     Body.profitLoss = Body.presentVal - Body.purPrice;
     return schemes;
   }
@@ -166,6 +168,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     makeUserRequest();
+    //makePortfolioRequest();
   }
 
   @override
@@ -351,6 +354,13 @@ class _BodyState extends State<Body> {
                                                               .sch_amount
                                                               .toString(),
                                                         ),
+                                                        DataDisplayScheme(
+                                                          data1: "Nav Amount",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .nav_price
+                                                              .toString(),
+                                                        ),
                                                       ],
                                                     ),
                                                     Row(
@@ -468,7 +478,26 @@ class _BodyState extends State<Body> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Current Total Value",
+                                  "Investment",
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data[index].sch_amount.toString(),
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Present Value",
                                   style: TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 15,
@@ -564,7 +593,7 @@ class Scheme {
   final String bse_scheme_code;
   final String fr_scheme_name;
   var purchase_price;
-  final double nav_price;
+  var nav_price;
   final double sch_amount;
   final double all_units;
   final String scheme_type;
