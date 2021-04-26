@@ -242,6 +242,9 @@ class _SignFormState extends State<SignForm> {
                   removeError(error: kSignUp);
                   //await makePortfolioRequest();
                   _formKey.currentState!.reset();
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setBool("isLoggedIn", true);
                   Navigator.pushNamed(context, PostLoginStartsHere.routeName);
                 } else if (SignForm.status == '0') {
                   setState(() {

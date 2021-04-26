@@ -142,7 +142,7 @@ class _BodyState extends State<Body> {
           sch['scheme_type'],
           sch['amount'].toDouble(),
           sch['all_units'].toDouble(),
-          x);
+          x.toDouble());
       print(sch['amount']);
       print(sch['all_units']);
       print(sch['nav_price']);
@@ -478,25 +478,6 @@ class _BodyState extends State<Body> {
                               children: <Widget>[
                                 Text(
                                   "Investment",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Text(
-                                  snapshot.data[index].sch_amount.toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Present Value",
                                   style: TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 15,

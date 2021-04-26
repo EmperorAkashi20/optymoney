@@ -30,29 +30,47 @@ class _DashBoardDataState extends State<DashBoardData>
       drawer: AppDrawerMain(),
       body: new ListView(
         children: <Widget>[
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TabBarConstants(
-                    icon:
-                        FaIcon(FontAwesomeIcons.arrowAltCircleUp), //size: 15),
-                    title: "Profit/Loss",
-                    initialAmount: ("₹" + Body.profitLoss.round().toString()),
-                  ),
-                  TabBarConstants(
-                    icon: FaIcon(FontAwesomeIcons.piggyBank), //size: 15),
-                    title: "Invested Value",
-                    initialAmount: ("₹" + Body.purPrice.round().toString()),
-                  ),
-                  TabBarConstants(
-                    icon: FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
-                    title: "Present Value",
-                    initialAmount: "₹" + Body.presentVal.round().toString(),
-                  )
-                ],
+          RefreshIndicator(
+            onRefresh: () async {
+              final newRouteName = "/beginning";
+              bool isNewRouteSameAsCurrent = false;
+
+              Navigator.popUntil(context, (route) {
+                if (route.settings.name == newRouteName) {
+                  isNewRouteSameAsCurrent = true;
+                }
+                return true;
+              });
+
+              if (!isNewRouteSameAsCurrent) {
+                Navigator.pushNamed(context, newRouteName);
+              }
+            },
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TabBarConstants(
+                      icon: FaIcon(
+                          FontAwesomeIcons.arrowAltCircleUp), //size: 15),
+                      title: "Profit/Loss",
+                      initialAmount: ("₹" + Body.profitLoss.round().toString()),
+                    ),
+                    TabBarConstants(
+                      icon: FaIcon(FontAwesomeIcons.piggyBank), //size: 15),
+                      title: "Invested Value",
+                      initialAmount: ("₹" + Body.purPrice.round().toString()),
+                    ),
+                    TabBarConstants(
+                      icon:
+                          FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
+                      title: "Present Value",
+                      initialAmount: "₹" + Body.presentVal.round().toString(),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
