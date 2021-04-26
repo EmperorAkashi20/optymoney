@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -157,6 +158,7 @@ class _BodyState extends State<Body> {
       print(Body.presentVal);
       print(sch['nav_price']);
     }
+    print(Body.presentVal);
     Body.profitLoss = Body.presentVal - Body.purPrice;
     return schemes;
   }
@@ -165,6 +167,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     makeUserRequest();
+    //makePortfolioRequest();
   }
 
   @override
@@ -474,7 +477,26 @@ class _BodyState extends State<Body> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Current Total Value",
+                                  "Investment",
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data[index].sch_amount.toString(),
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Present Value",
                                   style: TextStyle(
                                     color: Colors.blueAccent,
                                     fontSize: 15,
