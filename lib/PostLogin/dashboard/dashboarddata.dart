@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
-import 'package:optymoney/PostLogin/postloginstartshere.dart';
-import 'package:optymoney/UserInfo/Components/ProfileComplete.dart';
-import 'package:optymoney/UserInfo/Components/UserInfo.dart';
-import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
-import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
 import 'package:optymoney/size_config.dart';
 
 import '../../constants.dart';
@@ -46,12 +40,12 @@ class _DashBoardDataState extends State<DashBoardData>
                     icon:
                         FaIcon(FontAwesomeIcons.arrowAltCircleUp), //size: 15),
                     title: "Profit/Loss",
-                    initialAmount: "₹0.0",
+                    initialAmount: ("₹" + Body.profitLoss.round().toString()),
                   ),
                   TabBarConstants(
                     icon: FaIcon(FontAwesomeIcons.piggyBank), //size: 15),
                     title: "Invested Value",
-                    initialAmount: ("₹" + Body.purchasePrice.toString()),
+                    initialAmount: ("₹" + Body.purPrice.round().toString()),
                   ),
                   TabBarConstants(
                     icon: FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
@@ -154,7 +148,19 @@ class AppDrawerMain extends StatelessWidget {
             ),
             navigationRoute: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+              final newRouteName = "/beginning";
+              bool isNewRouteSameAsCurrent = false;
+
+              Navigator.popUntil(context, (route) {
+                if (route.settings.name == newRouteName) {
+                  isNewRouteSameAsCurrent = true;
+                }
+                return true;
+              });
+
+              if (!isNewRouteSameAsCurrent) {
+                Navigator.pushNamed(context, newRouteName);
+              }
             },
           ),
           AppDrawerListTIle(
@@ -165,9 +171,34 @@ class AppDrawerMain extends StatelessWidget {
             navigationRoute: () {
               Navigator.pop(context);
               if (Body.custPan == 'null') {
-                Navigator.pushNamed(context, UserInfoScreen.routeName);
+                final newRouteName = "/UserInfo";
+                bool isNewRouteSameAsCurrent = false;
+
+                Navigator.popUntil(context, (route) {
+                  if (route.settings.name == newRouteName) {
+                    isNewRouteSameAsCurrent = true;
+                  }
+                  return true;
+                });
+
+                if (!isNewRouteSameAsCurrent) {
+                  Navigator.pushNamed(context, newRouteName);
+                }
               } else {
-                Navigator.pushNamed(context, DisplayUserInfoScreen.routeName);
+                //Navigator.pushNamed(context, DisplayUserInfoScreen.routeName);
+                final newRouteName = "/DisplayInfo";
+                bool isNewRouteSameAsCurrent = false;
+
+                Navigator.popUntil(context, (route) {
+                  if (route.settings.name == newRouteName) {
+                    isNewRouteSameAsCurrent = true;
+                  }
+                  return true;
+                });
+
+                if (!isNewRouteSameAsCurrent) {
+                  Navigator.pushNamed(context, newRouteName);
+                }
               }
             },
           ),

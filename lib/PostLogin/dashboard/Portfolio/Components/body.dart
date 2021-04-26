@@ -87,6 +87,11 @@ class Body extends StatefulWidget {
   static var custCity;
   static var custPinCode;
   static var custCountry;
+  static var purPrice = 0.0;
+  static var profitLoss = 0.0;
+  static var presentVal = 0.0;
+  static var amount;
+  static var allUnits;
 
   @override
   _BodyState createState() => _BodyState();
@@ -113,30 +118,47 @@ class _BodyState extends State<Body> {
 
     var schemeBody = response.body;
     var jsonData = json.decode(schemeBody);
+    print(jsonData);
     var len = jsonData.length;
     print("Length");
     print(len);
     List<Scheme> schemes = [];
+    Body.purPrice = 0.0;
+    // Body.allUnits = 0.0;
+    print("1");
     for (var sch in jsonData) {
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
       // this.purchase_price, this.scheme_type, this.amount, this.all_units);
+      var x = sch['nav_price'];
+      print(x);
       Scheme scheme = Scheme(
           sch['isin'],
           sch['folio'],
           sch['bse_scheme_code'],
           sch['fr_scheme_name'],
           sch['purchase_price'],
+          x.toDouble(),
           sch['scheme_type'],
           sch['amount'].toDouble(),
           sch['all_units'].toDouble());
-      print(sch['amount']);
-      //print(scheme.sch_amount);
-      if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
-        // sch++;
-      } else {
-        schemes.add(scheme);
-      }
+      print(scheme.toString());
+      // Body.amount = sch['amount'];
+      // Body.allUnits = sch['all_units'];
+      // print(sch['amount']);
+      // print(sch['all_units']);
+      // //print(sch['nav_price'].toString());
+      // Body.purPrice = Body.purPrice + sch['amount'].toDouble();
+      // //print("object");
+
+      // //print(scheme.sch_amount);
+      // if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
+      //   // sch++;
+      // } else {
+      //   schemes.add(scheme);
+      // }
+      print(sch['nav_price']);
     }
+    Body.profitLoss = Body.presentVal - Body.purPrice;
     return schemes;
   }
 
@@ -263,16 +285,24 @@ class _BodyState extends State<Body> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: <Widget>[
-                                                    Text(
-                                                      snapshot.data[index]
-                                                          .fr_scheme_name,
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 8.0,
+                                                        horizontal: 8.0,
                                                       ),
-                                                      textAlign:
-                                                          TextAlign.center,
+                                                      child: Text(
+                                                        snapshot.data[index]
+                                                            .fr_scheme_name,
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
                                                     ),
                                                     Column(
                                                       mainAxisAlignment:
@@ -534,10 +564,20 @@ class Scheme {
   final String bse_scheme_code;
   final String fr_scheme_name;
   var purchase_price;
+  final double nav_price;
   final double sch_amount;
   final double all_units;
   final String scheme_type;
 
-  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
-      this.purchase_price, this.scheme_type, this.sch_amount, this.all_units);
+  Scheme(
+    this.isin,
+    this.folio,
+    this.bse_scheme_code,
+    this.fr_scheme_name,
+    this.purchase_price,
+    this.nav_price,
+    this.scheme_type,
+    this.sch_amount,
+    this.all_units,
+  );
 }
