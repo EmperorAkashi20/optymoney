@@ -50,7 +50,7 @@ class _DashBoardDataState extends State<DashBoardData>
                   TabBarConstants(
                     icon: FaIcon(FontAwesomeIcons.filePowerpoint), //size: 15),
                     title: "Present Value",
-                    initialAmount: "₹0.0",
+                    initialAmount: "₹" + Body.presentVal.round().toString(),
                   )
                 ],
               ),

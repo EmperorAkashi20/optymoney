@@ -124,38 +124,41 @@ class _BodyState extends State<Body> {
     print(len);
     List<Scheme> schemes = [];
     Body.purPrice = 0.0;
+    Body.presentVal = 0.0;
     // Body.allUnits = 0.0;
     print("1");
     for (var sch in jsonData) {
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
       // this.purchase_price, this.scheme_type, this.amount, this.all_units);
-      var x = sch['nav_price'];
-      print(x);
+      var x = sch['nav_price'] * sch['all_units'];
       Scheme scheme = Scheme(
           sch['isin'],
           sch['folio'],
           sch['bse_scheme_code'],
           sch['fr_scheme_name'],
           sch['purchase_price'],
-          x.toDouble(),
+          sch['nav_price'],
           sch['scheme_type'],
           sch['amount'].toDouble(),
-          sch['all_units'].toDouble());
-      print(scheme.toString());
-      // Body.amount = sch['amount'];
-      // Body.allUnits = sch['all_units'];
-      // print(sch['amount']);
-      // print(sch['all_units']);
-      // //print(sch['nav_price'].toString());
-      // Body.purPrice = Body.purPrice + sch['amount'].toDouble();
-      // //print("object");
+          sch['all_units'].toDouble(),
+          x);
+      print(sch['amount']);
+      print(sch['all_units']);
+      print(sch['nav_price']);
+      print("present value");
+      //print(x);
+      Body.purPrice = Body.purPrice + sch['amount'].toDouble();
+      //print("object");
 
-      // //print(scheme.sch_amount);
-      // if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
-      //   // sch++;
-      // } else {
-      //   schemes.add(scheme);
-      // }
+      //print(scheme.sch_amount);
+      if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
+        // sch++;
+      } else {
+        Body.presentVal =
+            Body.presentVal + (sch['nav_price'] * sch['all_units']);
+        schemes.add(scheme);
+      }
+      print(Body.presentVal);
       print(sch['nav_price']);
     }
     Body.profitLoss = Body.presentVal - Body.purPrice;
@@ -351,6 +354,13 @@ class _BodyState extends State<Body> {
                                                               .sch_amount
                                                               .toString(),
                                                         ),
+                                                        DataDisplayScheme(
+                                                          data1: "Nav",
+                                                          data2: snapshot
+                                                              .data[index]
+                                                              .nav_price
+                                                              .toString(),
+                                                        ),
                                                       ],
                                                     ),
                                                     Row(
@@ -484,6 +494,27 @@ class _BodyState extends State<Body> {
                               ],
                             ),
 
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Present Value",
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  snapshot.data[index].present_invest
+                                      .round()
+                                      .toString(),
+                                  style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
                             // Row(
                             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             //   children: [
@@ -564,20 +595,21 @@ class Scheme {
   final String bse_scheme_code;
   final String fr_scheme_name;
   var purchase_price;
-  final double nav_price;
+  var nav_price;
   final double sch_amount;
   final double all_units;
   final String scheme_type;
+  final double present_invest;
 
   Scheme(
-    this.isin,
-    this.folio,
-    this.bse_scheme_code,
-    this.fr_scheme_name,
-    this.purchase_price,
-    this.nav_price,
-    this.scheme_type,
-    this.sch_amount,
-    this.all_units,
-  );
+      this.isin,
+      this.folio,
+      this.bse_scheme_code,
+      this.fr_scheme_name,
+      this.purchase_price,
+      this.nav_price,
+      this.scheme_type,
+      this.sch_amount,
+      this.all_units,
+      this.present_invest);
 }
