@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
-import 'package:optymoney/DataBaseHelper/DatabaseHelper.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/complete_profile/components/complete_profile_form.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';

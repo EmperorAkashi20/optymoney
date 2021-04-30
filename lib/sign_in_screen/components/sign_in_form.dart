@@ -5,10 +5,11 @@ import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
+import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
+import '../../main.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
@@ -41,8 +42,6 @@ makePostRequest() async {
   print(SignForm.message);
   if (SignForm.status != '0') {
     SignForm.parsedToken = json.decode(parsedJson['token']);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isLoggedIn", true);
     //print(parsedJson);
     // print('token');
     // print(parsedToken);
@@ -67,11 +66,61 @@ makePostRequest() async {
   }
 }
 
-final api = makePostRequest();
-void dispose() {
-  api.client.close();
-  dispose();
+checkUserPinSet() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=checkMPINApp&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'uid': SignForm.userId,
+  };
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  SignForm.pinBody = response.body;
+  SignForm.pinStatusCode = response.statusCode;
+
+  SignForm.pindecodedjson = json.decode(SignForm.pinBody);
+  print(SignForm.pindecodedjson);
+  SignForm.pindecodedjsonmessage =
+      SignForm.pindecodedjson['message'].toString();
+  print("object11111");
+  print(SignForm.pindecodedjsonmessage);
 }
+
+// signInWIthMpin() async {
+//   var url = Uri.parse(
+//       'https://optymoney.com/ajax-request/ajax_response.php?action=checkMPINApp&subaction=submit');
+//   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+//   Map<String, dynamic> body = {
+//     'uid': SignForm.userId,
+//   };
+//   //String jsonBody = json.encode(body);
+//   final encoding = Encoding.getByName('utf-8');
+
+//   Response response = await post(
+//     url,
+//     headers: headers,
+//     body: body,
+//     encoding: encoding,
+//   );
+
+//   SignForm.pinBody = response.body;
+//   SignForm.pinStatusCode = response.statusCode;
+
+//   SignForm.pindecodedjson = json.decode(SignForm.pinBody);
+//   print(SignForm.pindecodedjson);
+//   SignForm.pindecodedjsonmessage =
+//       SignForm.pindecodedjson['message'].toString();
+//   print("object11111");
+//   print(SignForm.pindecodedjsonmessage);
+// }
 
 makePortfolioRequest() async {
   var url = Uri.parse(
@@ -151,6 +200,10 @@ class SignForm extends StatefulWidget {
   static var userState;
   static var userPinCode;
   static var userCountry;
+  static var pinBody;
+  static var pinStatusCode;
+  static var pindecodedjson;
+  static var pindecodedjsonmessage;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -173,15 +226,6 @@ class _SignFormState extends State<SignForm> {
       setState(() {
         errors.remove(error);
       });
-  }
-
-  String? userId;
-
-  getData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userId = prefs.getString('UserId');
-    });
   }
 
   @override
@@ -241,11 +285,18 @@ class _SignFormState extends State<SignForm> {
                   removeError(error: kNoUserError1);
                   removeError(error: kSignUp);
                   //await makePortfolioRequest();
+                  await MyApp.prefs.setString('userId', SignForm.userIdGlobal);
+                  await MyApp.prefs.setString('emailId', SignForm.email1);
+                  await MyApp.prefs.setString('name', SignForm.name);
+                  await MyApp.prefs.setString('pan', SignForm.pan);
+                  await MyApp.prefs.setString('pin', "");
+                  await checkUserPinSet();
                   _formKey.currentState!.reset();
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setBool("isLoggedIn", true);
-                  Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                  if (SignForm.pindecodedjsonmessage == 'MPIN_SET') {
+                    Navigator.pushNamed(context, PostLoginStartsHere.routeName);
+                  } else {
+                    Navigator.pushNamed(context, PinSetupScreen.routeName);
+                  }
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);

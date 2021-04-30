@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/PinSetup/Components/finalscreen.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/otp/components/otp_form.dart';
 import 'package:flutter/widgets.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -15,7 +17,7 @@ makePostRequest() async {
       'https://optymoney.com/ajax-request/ajax_response.php?action=savePin&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
-    'userid': OtpForm.status,
+    'userid': SignForm.userIdGlobal,
     'mpin': PinForm.mpin,
   };
   print(PinForm.mpin);
@@ -208,7 +210,7 @@ class _PinFormState extends State<PinForm> {
               PinForm.mpin = a + b + c + d;
               await makePostRequest();
               if (PinForm.responseBody != 1) {
-                Navigator.pushNamed(context, FinalScreen.routeName);
+                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
               } else {
                 print("error");
               }

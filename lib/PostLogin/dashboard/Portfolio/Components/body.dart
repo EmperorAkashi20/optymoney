@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
         'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
     final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     Map<String, dynamic> body = {
-      'uid': SignForm.userId,
+      'uid': SignForm.userIdGlobal,
       'pan': SignForm.pan,
     };
     //String jsonBody = json.encode(body);
