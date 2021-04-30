@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
         'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
     final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     Map<String, dynamic> body = {
-      'uid': SignForm.userId,
+      'uid': SignForm.userIdGlobal,
       'pan': SignForm.pan,
     };
     //String jsonBody = json.encode(body);
@@ -125,7 +125,7 @@ class _BodyState extends State<Body> {
     print(len);
     List<Scheme> schemes = [];
     Body.purPrice = 0.0;
-    //Body.presentVal = 0.0;
+    Body.presentVal = 0.0;
     print("1");
     for (var sch in jsonData) {
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
