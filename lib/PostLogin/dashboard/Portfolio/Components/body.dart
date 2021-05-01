@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
@@ -93,6 +94,7 @@ class Body extends StatefulWidget {
   static var presentVal = 0.0;
   static var amount;
   static var allUnits;
+  static var navPrice;
 
   @override
   _BodyState createState() => _BodyState();
@@ -157,6 +159,8 @@ class _BodyState extends State<Body> {
         Body.presentVal =
             Body.presentVal + (sch['nav_price'] * sch['all_units']);
         Body.purPrice = Body.purPrice + sch['amount'].toDouble();
+        Body.navPrice = sch['nav_price'].toDouble();
+        //Body.purchasePrice = sch['purchase_price'].toDouble();
       }
     }
     print(Body.presentVal);
@@ -236,12 +240,17 @@ class _BodyState extends State<Body> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                      left: 3.0,
-                      right: 3,
+                      left: 10.0,
+                      right: 10.0,
                       top: 5,
                     ),
-                    child: Card(
-                      elevation: 5,
+                    child: Container(
+                      width: double.infinity,
+                      height: getProportionateScreenHeight(120),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: kPrimaryColor, width: 1),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -262,50 +271,83 @@ class _BodyState extends State<Body> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.login,
-                                      color: Colors.blueGrey,
-                                    ),
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return Dialog(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade200,
+                                    radius: 20,
+                                    child: IconButton(
+                                        icon: Icon(
+                                          Icons.add_chart,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            //expand: false,
+                                            enableDrag: true,
+                                            isDismissible: true,
+                                            //duration: Duration(milliseconds: 400),
+                                            context: context,
+                                            //isScrollControlled: true,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
                                               ),
-                                              child: Container(
-                                                height:
-                                                    getProportionateScreenHeight(
-                                                        450),
-                                                width:
-                                                    getProportionateScreenWidth(
-                                                        350),
+                                            ),
+                                            builder: (context) => Scaffold(
+                                              body: Container(
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: <Widget>[
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        vertical: 8.0,
-                                                        horizontal: 8.0,
-                                                      ),
-                                                      child: Text(
-                                                        snapshot.data[index]
-                                                            .fr_scheme_name,
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w600,
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Icon(
+                                                            Icons
+                                                                .analytics_sharp,
+                                                            size: 35,
+                                                          ),
                                                         ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
+                                                        Expanded(
+                                                          flex: 7,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                              vertical: 8.0,
+                                                              horizontal: 8.0,
+                                                            ),
+                                                            child: Text(
+                                                              snapshot
+                                                                  .data[index]
+                                                                  .fr_scheme_name,
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: CloseButton(),
+                                                        ),
+                                                      ],
                                                     ),
                                                     Column(
                                                       mainAxisAlignment:
@@ -372,13 +414,11 @@ class _BodyState extends State<Body> {
                                                         Expanded(
                                                           flex: 1,
                                                           child: Container(
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .blueAccent,
-                                                                borderRadius: BorderRadius.only(
-                                                                    bottomLeft:
-                                                                        Radius.circular(
-                                                                            15))),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .blueAccent,
+                                                            ),
                                                             height:
                                                                 getProportionateScreenHeight(
                                                                     40),
@@ -409,14 +449,6 @@ class _BodyState extends State<Body> {
                                                                 BoxDecoration(
                                                               color:
                                                                   kPrimaryColor,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .only(
-                                                                bottomRight:
-                                                                    Radius
-                                                                        .circular(
-                                                                            15),
-                                                              ),
                                                             ),
                                                             height:
                                                                 getProportionateScreenHeight(
@@ -446,71 +478,103 @@ class _BodyState extends State<Body> {
                                                   ],
                                                 ),
                                               ),
-                                            );
-                                          });
-                                    },
+                                            ),
+                                          );
+                                        }),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Purchase Price",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Purchase Price",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        snapshot.data[index].purchase_price
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  snapshot.data[index].purchase_price
-                                      .toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Investment",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        snapshot.data[index].sch_amount
+                                            .toDouble()
+                                            .toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Investment",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Present Value",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          if (Body.purchasePrice <
+                                              Body.navPrice)
+                                            Icon(
+                                              Icons.arrow_upward_sharp,
+                                              size: 16,
+                                            ),
+                                          if (Body.purchasePrice >
+                                              Body.navPrice)
+                                            Icon(
+                                              Icons.arrow_downward_sharp,
+                                              size: 15,
+                                            ),
+                                          Text(
+                                            snapshot.data[index].nav_price
+                                                .toDouble()
+                                                .toStringAsFixed(2),
+                                            style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  snapshot.data[index].sch_amount.toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Present Value",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Text(
-                                  snapshot.data[index].sch_amount.toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                             // Row(
