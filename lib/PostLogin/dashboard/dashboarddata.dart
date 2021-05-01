@@ -99,7 +99,7 @@ class _DashBoardDataState extends State<DashBoardData>
             ),
           ),
           new Container(
-            height: getProportionateScreenHeight(540),
+            height: getProportionateScreenHeight(560),
             child: new TabBarView(
               controller: _controller,
               children: <Widget>[
