@@ -430,17 +430,31 @@ class _BodyState extends State<Body> {
                                                                     140),
                                                             child: TextButton(
                                                               onPressed: () {},
-                                                              child: Text(
-                                                                "BUY",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .swap_vert_circle_sharp,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  Text(
+                                                                    "BUY",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ),
@@ -461,17 +475,31 @@ class _BodyState extends State<Body> {
                                                                     140),
                                                             child: TextButton(
                                                               onPressed: () {},
-                                                              child: Text(
-                                                                "SELL",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons
+                                                                        .swap_vertical_circle_sharp,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  Text(
+                                                                    "SELL",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ),
