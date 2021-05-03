@@ -41,6 +41,7 @@ const String kAddressNullError = "Please Enter your address";
 const String kNoUserError = "No User Found";
 const String kPasswordNotValidError = "Please Check Your Password";
 const String kEmptyFieldError = "Please complete all details";
+const String kWrongPinError = "Please enter the correct PIN";
 
 final otpInputDecoration = InputDecoration(
   contentPadding:
