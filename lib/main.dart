@@ -34,6 +34,7 @@ class MyApp extends StatefulWidget {
   static var email;
   static var name;
   static var pan;
+  static var hash;
   @override
   _MyAppState createState() => _MyAppState();
 }

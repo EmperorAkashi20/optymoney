@@ -40,11 +40,23 @@ class Body extends StatelessWidget {
               //     style: TextStyle(decoration: TextDecoration.underline),
               //   ),
               // ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
-                  },
-                  child: Text("Sign In With Email and Password"))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    },
+                    child: Text("Forgot MPIN"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignInScreen.routeName);
+                    },
+                    child: Text("Sign In With Email and Password"),
+                  ),
+                ],
+              )
             ],
           ),
         ),
