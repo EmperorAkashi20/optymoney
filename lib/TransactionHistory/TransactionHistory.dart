@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:optymoney/TransactionHistory/Components/Body.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -10,6 +9,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  // ignore: unused_element
   Future<List<Transact>> _getTransactions() async {
     var url = Uri.parse('https://optymoney.com/__lib.ajax/mutual_fund.php');
     final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
@@ -53,10 +53,14 @@ class _BodyState extends State<Body> {
 }
 
 class Transact {
+  // ignore: non_constant_identifier_names
   final String purchase_price;
   final String unit;
+  // ignore: non_constant_identifier_names
   final String purchase_date;
+  // ignore: non_constant_identifier_names
   final String tran_type;
+  // ignore: non_constant_identifier_names
   final String trnx_id;
   final String amount;
   final String folio;

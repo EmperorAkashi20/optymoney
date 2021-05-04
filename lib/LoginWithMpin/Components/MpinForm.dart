@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../../main.dart';
 import '../../size_config.dart';
 

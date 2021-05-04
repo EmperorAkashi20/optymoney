@@ -5,7 +5,6 @@ import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
-import 'package:optymoney/OtherDetails/OtherDetails.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/UserInfo/Components/UserInfoForm.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';

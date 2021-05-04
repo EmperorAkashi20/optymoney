@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -43,7 +41,7 @@ makeUserRequest() async {
   Body.custName = parsedJson['cust_name'].toString();
   // print(Body.custName);
   Body.custPan = parsedJson['pan_number'].toString();
-  // print(Body.custPan);
+  print('pan:' + Body.custPan);
   Body.custLetter = Body.custName[0].toUpperCase();
   // print(Body.custLetter);
   Body.custBday = parsedJson['dob'].toString();
@@ -696,13 +694,20 @@ class DataDisplayScheme extends StatelessWidget {
 class Scheme {
   final String isin;
   final String folio;
+  // ignore: non_constant_identifier_names
   final String bse_scheme_code;
+  // ignore: non_constant_identifier_names
   final String fr_scheme_name;
+  // ignore: non_constant_identifier_names
   var purchase_price;
+  // ignore: non_constant_identifier_names
   var nav_price;
   var presentVal;
+  // ignore: non_constant_identifier_names
   final double sch_amount;
+  // ignore: non_constant_identifier_names
   final double all_units;
+  // ignore: non_constant_identifier_names
   final String scheme_type;
 
   Scheme(
