@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optymoney/LoginWithMpin/Components/MpinForm.dart';
-
-import 'package:optymoney/ResetMpin/resetmpin.dart';
-import 'package:optymoney/sign_in_screen/sign_in_screen.dart';
+import 'package:optymoney/ResetMpin/Components/PinForm.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -20,18 +17,17 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               Icon(
-                Icons.lock_rounded,
+                Icons.account_circle_sharp,
                 color: kPrimaryColor,
                 size: 50,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.05),
               Text(
-                "SIGN IN",
+                "RESET MPIN",
                 style: headingStyle,
               ),
-              Text("Please enter your MPIN"),
+              Text("Please enter new MPIN & Password"),
               // SizedBox(height: SizeConfig.screenHeight * 0.09),
-
               PinForm(),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
               // GestureDetector(
@@ -43,26 +39,26 @@ class Body extends StatelessWidget {
               //     style: TextStyle(decoration: TextDecoration.underline),
               //   ),
               // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, ResetMpinScreen.routeName);
-                    },
-                    child: Text("Forgot MPIN"),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, SignInScreen.routeName);
-                    },
-                    child: Text(
-                      "Sign In With Email and Password",
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ],
-              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.pushNamed(context, ResetMpinScreen.routeName);
+              //       },
+              //       child: Text("Forgot MPIN"),
+              //     ),
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.pushNamed(context, SignInScreen.routeName);
+              //       },
+              //       child: Text(
+              //         "Sign In With Email and Password",
+              //         textAlign: TextAlign.end,
+              //       ),
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),

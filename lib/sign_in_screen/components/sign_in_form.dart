@@ -7,6 +7,7 @@ import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:crypto/crypto.dart';
 
 import '../../constants.dart';
 import '../../main.dart';
@@ -61,6 +62,7 @@ makePostRequest() async {
     SignForm.letter = SignForm.name[0];
     // print(SignForm.letter);
     //
+
   } else {
     print("cool");
   }
@@ -204,6 +206,7 @@ class SignForm extends StatefulWidget {
   static var pinStatusCode;
   static var pindecodedjson;
   static var pindecodedjsonmessage;
+  static var digest;
 
   @override
   _SignFormState createState() => _SignFormState();
@@ -290,13 +293,16 @@ class _SignFormState extends State<SignForm> {
                   await MyApp.prefs.setString('name', SignForm.name);
                   await MyApp.prefs.setString('pan', SignForm.pan);
                   await MyApp.prefs.setString('pin', "");
+                  var hashedPass = utf8.encode(SignForm.password.toString());
+                  SignForm.digest = sha512256.convert(hashedPass);
+                  await MyApp.prefs
+                      .setString('hash', SignForm.digest.toString());
+                  print(SignForm.digest.toString());
                   await checkUserPinSet();
                   _formKey.currentState!.reset();
                   if (SignForm.pindecodedjsonmessage == 'MPIN_SET') {
                     Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-                  } else {
-                    Navigator.pushNamed(context, PinSetupScreen.routeName);
-                  }
+                  } else {}
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);

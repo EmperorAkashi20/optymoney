@@ -95,6 +95,7 @@ class Body extends StatefulWidget {
   static var amount;
   static var allUnits;
   static var navPrice;
+  static var presentValIndi;
 
   @override
   _BodyState createState() => _BodyState();
@@ -131,6 +132,7 @@ class _BodyState extends State<Body> {
     // Body.allUnits = 0.0;
     print("1");
     for (var sch in jsonData) {
+      var a = sch['nav_price'] * sch['all_units'];
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
       // this.purchase_price, this.scheme_type, this.amount, this.all_units);
       var x = sch['nav_price'] * sch['all_units'];
@@ -144,24 +146,25 @@ class _BodyState extends State<Body> {
           sch['scheme_type'],
           sch['amount'].toDouble(),
           sch['all_units'].toDouble(),
-          x.toDouble());
-      print(sch['amount']);
-      print(sch['all_units']);
-      print(sch['nav_price']);
-      Body.purPrice = Body.purPrice + sch['amount'].toDouble();
+          a.toDouble().round());
+      // print(scheme.toString());
+      //
+      if (sch['all_units'] != 0) {
+        print(sch['amount']);
+        print(sch['all_units']);
+        print(sch['nav_price']);
+      }
+
       //print(scheme.sch_amount);
       if (sch['all_units'].toDouble() == 0 || sch['all_units'].toDouble() < 0) {
         // sch++;
       } else {
         Body.presentVal =
             Body.presentVal + (sch['nav_price'] * sch['all_units']);
-<<<<<<< HEAD
-        schemes.add(scheme);
-=======
         Body.purPrice = Body.purPrice + sch['amount'].toDouble();
         Body.navPrice = sch['nav_price'].toDouble();
+        Body.presentValIndi = sch['nav_price'] * sch['all_units'];
         //Body.purchasePrice = sch['purchase_price'].toDouble();
->>>>>>> test
       }
       print(Body.presentVal);
       print(sch['nav_price']);
@@ -533,8 +536,9 @@ class _BodyState extends State<Body> {
                                         ),
                                       ),
                                       Text(
-                                        snapshot.data[index].purchase_price
-                                            .toString(),
+                                        "₹" +
+                                            snapshot.data[index].purchase_price
+                                                .toString(),
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
@@ -553,9 +557,10 @@ class _BodyState extends State<Body> {
                                         ),
                                       ),
                                       Text(
-                                        snapshot.data[index].sch_amount
-                                            .toDouble()
-                                            .toStringAsFixed(2),
+                                        "₹" +
+                                            snapshot.data[index].sch_amount
+                                                .toDouble()
+                                                .toStringAsFixed(2),
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
@@ -579,67 +584,41 @@ class _BodyState extends State<Body> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          if (Body.purchasePrice <
-                                              Body.navPrice)
-                                            Icon(
-                                              Icons.arrow_upward_sharp,
-                                              size: 16,
-                                            ),
-                                          if (Body.purchasePrice >
-                                              Body.navPrice)
-                                            Icon(
-                                              Icons.arrow_downward_sharp,
-                                              size: 15,
-                                            ),
                                           Text(
-                                            snapshot.data[index].nav_price
-                                                .toDouble()
-                                                .toStringAsFixed(2),
+                                            "₹" +
+                                                snapshot.data[index].presentVal
+                                                    .toString(),
                                             style: TextStyle(
                                               color: kPrimaryColor,
                                               fontSize: 15,
                                             ),
                                           ),
+                                          if ((snapshot.data[index].sch_amount
+                                                  .toDouble()
+                                                  .round()) <
+                                              (snapshot.data[index].presentVal
+                                                  .toDouble()
+                                                  .round()))
+                                            Icon(
+                                              Icons.arrow_upward_sharp,
+                                              size: 16,
+                                            ),
+                                          if (snapshot.data[index].sch_amount
+                                                  .toDouble()
+                                                  .round() >
+                                              snapshot.data[index].presentVal
+                                                  .toDouble()
+                                                  .round())
+                                            Icon(
+                                              Icons.arrow_downward_sharp,
+                                              size: 16,
+                                            ),
                                         ],
                                       ),
                                     ],
                                   ),
-<<<<<<< HEAD
-                                ),
-                                Text(
-                                  snapshot.data[index].sch_amount.toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Present Value",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Text(
-                                  snapshot.data[index].present_invest
-                                      .round()
-                                      .toString(),
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ],
-=======
                                 ],
                               ),
->>>>>>> test
                             ),
                             // Row(
                             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -722,20 +701,22 @@ class Scheme {
   final String fr_scheme_name;
   var purchase_price;
   var nav_price;
+  var presentVal;
   final double sch_amount;
   final double all_units;
   final String scheme_type;
   final double present_invest;
 
   Scheme(
-      this.isin,
-      this.folio,
-      this.bse_scheme_code,
-      this.fr_scheme_name,
-      this.purchase_price,
-      this.nav_price,
-      this.scheme_type,
-      this.sch_amount,
-      this.all_units,
-      this.present_invest);
+    this.isin,
+    this.folio,
+    this.bse_scheme_code,
+    this.fr_scheme_name,
+    this.purchase_price,
+    this.nav_price,
+    this.scheme_type,
+    this.sch_amount,
+    this.all_units,
+    this.presentVal,
+  );
 }

@@ -18,10 +18,12 @@ void main() async {
   MyApp.email = MyApp.prefs.getString('emailId') ?? '0';
   MyApp.name = MyApp.prefs.getString('name') ?? '0';
   MyApp.pan = MyApp.prefs.getString('pan') ?? '0';
-  print(MyApp.email);
+  MyApp.hash = MyApp.prefs.getString('hash') ?? '0';
   print(MyApp.user);
-  print(MyApp.pan);
+  print(MyApp.email);
   print(MyApp.name);
+  print(MyApp.pan);
+  print(MyApp.hash);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());
@@ -34,6 +36,7 @@ class MyApp extends StatefulWidget {
   static var email;
   static var name;
   static var pan;
+  static var hash;
   @override
   _MyAppState createState() => _MyAppState();
 }

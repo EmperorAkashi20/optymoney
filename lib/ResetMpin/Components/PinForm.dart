@@ -1,25 +1,27 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
-import 'package:optymoney/PostLogin/postloginstartshere.dart';
+import 'package:optymoney/Components/suffix_icon.dart';
+import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:flutter/widgets.dart';
-import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
 import '../../main.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
+  print(PinForm.mpin1);
+
   var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=doLoginAppWithPin&subaction=submit');
+      'https://optymoney.com/ajax-request/ajax_response.php?action=doChangeMpinApp&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
     'userid': MyApp.user,
-    'mpin': PinForm.mpin,
+    'resetmpin': PinForm.mpin1,
   };
-  print(PinForm.mpin);
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
@@ -33,37 +35,21 @@ makePostRequest() async {
   int statusCode = response.statusCode;
   PinForm.responseBody = (response.body);
   PinForm.responseData = json.decode(PinForm.responseBody);
-  print(PinForm.responseBody);
-  print(PinForm.responseData);
   PinForm.responseMessgae = PinForm.responseData['message'].toString();
-  if (PinForm.responseMessgae != 'LOGIN_FAILED') {
-    PinForm.parsedToken = json.decode(PinForm.responseData['token']);
-    print(PinForm.parsedToken);
-    PinForm.responseUser = PinForm.parsedToken['caTAX_user_id'].toString();
-    PinForm.responsePan = PinForm.parsedToken['caTAX_pan_number'].toString();
-    print("aaaaaa");
-    print(statusCode);
 
-    print(PinForm.responseMessgae);
-    print(PinForm.responseUser);
-    SignForm.userIdGlobal = PinForm.responseUser;
-    SignForm.pan = PinForm.responsePan;
-    print("object");
-    print(SignForm.userIdGlobal);
-  } else {
-    print('oops');
-  }
+  print("aaaaaa");
+  print(statusCode);
+  print(PinForm.responseMessgae);
 }
 
 class PinForm extends StatefulWidget {
-  static var mpin;
+  static var mpin1;
   static var responseBody;
-  static var userId;
   static var responseData;
   static var responseMessgae;
-  static var responseUser;
-  static var responsePan;
-  static var parsedToken;
+  static var checkHash;
+  static var digest;
+
   const PinForm({
     Key? key,
   }) : super(key: key);
@@ -77,6 +63,7 @@ class _PinFormState extends State<PinForm> {
   static TextEditingController nodeTwo = TextEditingController();
   static TextEditingController nodeThree = TextEditingController();
   static TextEditingController nodeFour = TextEditingController();
+  static TextEditingController pass = TextEditingController();
   //static TextEditingController nodeFive = TextEditingController();
   //static TextEditingController nodeSix = TextEditingController();
   FocusNode? pin2FocusNode;
@@ -233,28 +220,71 @@ class _PinFormState extends State<PinForm> {
             ],
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.15),
+          buildPasswordFormField(),
+          SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
-            text: "Continue",
-            press: () async {
-              var a = nodeOne.text;
-              var b = nodeTwo.text;
-              var c = nodeThree.text;
-              var d = nodeFour.text;
-              //var e = nodeFive.text;
-              //var f = nodeSix.text;
-              PinForm.mpin = a + b + c + d;
-              await makePostRequest();
-              if (PinForm.responseMessgae != "LOGIN_FAILED") {
-                removeError(error: kWrongPinError);
-                Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-              } else {
-                setState(() {
-                  addError(error: kWrongPinError);
-                });
-              }
-            },
-          )
+              text: "Continue",
+              press: () async {
+                var a = nodeOne.text;
+                var b = nodeTwo.text;
+                var c = nodeThree.text;
+                var d = nodeFour.text;
+                //var e = nodeFive.text;
+                //var f = nodeSix.text;
+                var hashedPass = utf8.encode(pass.text);
+                PinForm.digest = sha512256.convert(hashedPass);
+                print(PinForm.digest.toString());
+                PinForm.mpin1 = a + b + c + d;
+                if (PinForm.digest.toString() == MyApp.hash.toString()) {
+                  await makePostRequest();
+                  if (PinForm.responseMessgae == 'MPIN_CHANGED') {
+                    Navigator.pushNamed(context, LoginWIthMpin.routeName);
+                  } else {
+                    setState(() {
+                      addError(error: "MPIN NOT CHANGED");
+                    });
+                  }
+                } else {
+                  setState(() {
+                    addError(error: kPasswordNotValidError);
+                  });
+                }
+              })
         ],
+      ),
+    );
+  }
+
+  TextFormField buildPasswordFormField() {
+    return TextFormField(
+      controller: pass,
+      obscureText: true,
+      onSaved: (newValue) => PinForm.checkHash = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kPassNullError);
+        } else if (value.length >= 2) {
+          removeError(error: kShortPassError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: kPassNullError);
+          return "";
+        } else if (value.length < 2) {
+          addError(error: kShortPassError);
+          return "";
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Password",
+        hintText: "Enter your password",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
   }
