@@ -15,13 +15,13 @@ class Body extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
+              //SizedBox(height: SizeConfig.screenHeight * 0.05),
               Icon(
                 Icons.account_circle_sharp,
                 color: kPrimaryColor,
                 size: 50,
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.05),
+              //SizedBox(height: SizeConfig.screenHeight * 0.05),
               Text(
                 "RESET MPIN",
                 style: headingStyle,
@@ -29,7 +29,7 @@ class Body extends StatelessWidget {
               Text("Please enter new MPIN & Password"),
               // SizedBox(height: SizeConfig.screenHeight * 0.09),
               PinForm(),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              //SizedBox(height: SizeConfig.screenHeight * 0.1),
               // GestureDetector(
               //   onTap: () {
               //     Navigator.pushNamed(context, PostLoginStartsHere.routeName);

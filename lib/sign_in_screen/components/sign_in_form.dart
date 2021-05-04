@@ -5,11 +5,11 @@ import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
-import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:crypto/crypto.dart';
 
 import '../../constants.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../../main.dart';
 import '../../size_config.dart';
 

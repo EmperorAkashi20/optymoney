@@ -4,11 +4,13 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
+import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../constants.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../../main.dart';
 import '../../size_config.dart';
 
@@ -72,6 +74,7 @@ class _PinFormState extends State<PinForm> {
   FocusNode? pin5FocusNode;
   FocusNode? pin6FocusNode;
   final List<String?> errors = [];
+  final _formKey = GlobalKey<FormState>();
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -116,6 +119,7 @@ class _PinFormState extends State<PinForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           SizedBox(height: SizeConfig.screenHeight * 0.15),
@@ -219,8 +223,12 @@ class _PinFormState extends State<PinForm> {
               // ),
             ],
           ),
-          SizedBox(height: SizeConfig.screenHeight * 0.15),
+          SizedBox(height: SizeConfig.screenHeight * 0.09),
           buildPasswordFormField(),
+          SizedBox(
+            height: getProportionateScreenHeight(30),
+          ),
+          FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.15),
           DefaultButton(
               text: "Continue",
@@ -231,21 +239,28 @@ class _PinFormState extends State<PinForm> {
                 var d = nodeFour.text;
                 //var e = nodeFive.text;
                 //var f = nodeSix.text;
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                }
                 var hashedPass = utf8.encode(pass.text);
                 PinForm.digest = sha512256.convert(hashedPass);
                 print(PinForm.digest.toString());
                 PinForm.mpin1 = a + b + c + d;
                 if (PinForm.digest.toString() == MyApp.hash.toString()) {
+                  removeError(error: kPasswordNotValidError);
                   await makePostRequest();
                   if (PinForm.responseMessgae == 'MPIN_CHANGED') {
+                    _formKey.currentState!.reset();
                     Navigator.pushNamed(context, LoginWIthMpin.routeName);
                   } else {
                     setState(() {
+                      _formKey.currentState!.reset();
                       addError(error: "MPIN NOT CHANGED");
                     });
                   }
                 } else {
                   setState(() {
+                    _formKey.currentState!.reset();
                     addError(error: kPasswordNotValidError);
                   });
                 }
@@ -270,6 +285,7 @@ class _PinFormState extends State<PinForm> {
       },
       validator: (value) {
         if (value!.isEmpty) {
+          removeError(error: kPasswordNotValidError);
           addError(error: kPassNullError);
           return "";
         } else if (value.length < 2) {
