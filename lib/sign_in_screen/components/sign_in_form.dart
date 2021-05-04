@@ -293,17 +293,16 @@ class _SignFormState extends State<SignForm> {
                   await MyApp.prefs.setString('name', SignForm.name);
                   await MyApp.prefs.setString('pan', SignForm.pan);
                   await MyApp.prefs.setString('pin', "");
-                  //await MyApp.hash.setString('hash', SignForm.digest);
+                  var hashedPass = utf8.encode(SignForm.password.toString());
+                  SignForm.digest = sha512256.convert(hashedPass);
+                  await MyApp.prefs
+                      .setString('hash', SignForm.digest.toString());
+                  print(SignForm.digest.toString());
                   await checkUserPinSet();
                   _formKey.currentState!.reset();
                   if (SignForm.pindecodedjsonmessage == 'MPIN_SET') {
-                    var hashedPass = utf8.encode(SignForm.password.toString());
-                    SignForm.digest = sha512256.convert(hashedPass);
-                    print(SignForm.digest);
                     Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-                  } else {
-                    Navigator.pushNamed(context, PinSetupScreen.routeName);
-                  }
+                  } else {}
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);
