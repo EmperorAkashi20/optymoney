@@ -3,13 +3,14 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
-import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -75,6 +76,8 @@ class _PinFormState extends State<PinForm> {
   FocusNode? pin4FocusNode;
   FocusNode? pin5FocusNode;
   FocusNode? pin6FocusNode;
+  Timer? _timer;
+  late double _progress;
   final List<String?> errors = [];
   final _formKey = GlobalKey<FormState>();
 
@@ -252,8 +255,33 @@ class _PinFormState extends State<PinForm> {
                   removeError(error: kPasswordNotValidError);
                   await makePostRequest();
                   if (PinForm.responseMessgae == 'MPIN_CHANGED') {
+                    _progress = 0;
+                    _timer?.cancel();
+                    _timer = Timer.periodic(const Duration(milliseconds: 10),
+                        (Timer timer) async {
+                      await EasyLoading.showProgress(_progress,
+                          status: '${(_progress * 100).toStringAsFixed(0)}%');
+                      _progress += 0.03;
+                      if (_progress >= 1) {
+                        _timer?.cancel();
+                        EasyLoading.dismiss();
+                      }
+                    });
+
+                    //await EasyLoading.showSuccess("Successfull");
+                    // Fluttertoast.showToast(
+                    //     msg: "Pin Updated Successfully",
+                    //     toastLength: Toast.LENGTH_LONG,
+                    //     gravity: ToastGravity.CENTER,
+                    //     timeInSecForIosWeb: 1,
+                    //     backgroundColor: Colors.white10,
+                    //     textColor: Colors.black,
+                    //     fontSize: 12.0);
                     _formKey.currentState!.reset();
-                    Navigator.pushNamed(context, LoginWIthMpin.routeName);
+                    Future.delayed(Duration(milliseconds: 800), () async {
+                      //await EasyLoading.showSuccess("Successfully Changed");
+                      Navigator.pushNamed(context, LoginWIthMpin.routeName);
+                    });
                   } else {
                     setState(() {
                       _formKey.currentState!.reset();

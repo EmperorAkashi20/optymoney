@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -6,6 +7,7 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:flutter/widgets.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
@@ -104,9 +106,29 @@ class _PinFormState extends State<PinForm> {
       });
   }
 
+  checkLocalAuthPossible() async {
+    var localAuth = LocalAuthentication();
+    bool canCheckBiomteric = await localAuth.canCheckBiometrics;
+    print(canCheckBiomteric.toString());
+    List<BiometricType> availableBiometrics =
+        await LocalAuthentication().getAvailableBiometrics();
+    if (Platform.isIOS) {
+      if (availableBiometrics.contains(BiometricType.face)) {
+        // Face ID.
+      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        // Touch ID.
+      }
+    }
+    bool didAuthenticate = await localAuth.authenticate(
+        localizedReason: 'Please authenticate to show account balance',
+        biometricOnly: true);
+    print(didAuthenticate.toString());
+  }
+
   @override
   void initState() {
     super.initState();
+    //checkLocalAuthPossible();
     pin2FocusNode = FocusNode();
     pin3FocusNode = FocusNode();
     pin4FocusNode = FocusNode();
