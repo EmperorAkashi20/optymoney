@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -192,8 +193,18 @@ class _BodyState extends State<Body> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator.adaptive(),
-                      Text("Loading..."),
+                      //CircularProgressIndicator.adaptive(),
+                      LoadingDoubleFlipping.circle(
+                        borderColor: kPrimaryColor,
+                        borderSize: 2.0,
+                        size: 40.0,
+                        backgroundColor: kPrimaryColor,
+                        //duration: Duration(milliseconds: 500),
+                      ),
+                      Text(
+                        "We are fetching your profits...\nHOLD TIGHT!!",
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),

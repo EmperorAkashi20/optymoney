@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
@@ -22,7 +24,7 @@ makePostRequest() async {
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
     'userid': MyApp.user,
-    'resetmpin': PinForm.mpin1,
+    'mpin': PinForm.mpin1,
   };
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
