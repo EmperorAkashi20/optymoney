@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/PostLogin/investments/components/Calculators/calculatorbuttons.dart';
 import 'package:optymoney/PostLogin/investments/components/LifeGoals/lifegoalscalc.dart';
+import 'package:optymoney/SchemeDisplay/schemedisplay.dart';
 import 'package:optymoney/constants.dart';
 
 class Body extends StatefulWidget {
@@ -34,7 +35,7 @@ class _BodyState extends State<Body> {
         drawer: AppDrawerMain(),
         body: TabBarView(
           children: [
-            Center(child: Text("The Content will be live soon...")),
+            SchemeDisplay(),
             CalculatorButtons(),
             LifeGoalsButtons(),
           ],

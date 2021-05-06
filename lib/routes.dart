@@ -7,6 +7,7 @@ import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/ResetMpin/resetmpin.dart';
+import 'package:optymoney/SchemeDisplay/schemedisplay.dart';
 import 'package:optymoney/UserInfo/Components/ProfileComplete.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/complete_profile/complete_profile_screen.dart';
@@ -35,4 +36,5 @@ final Map<String, WidgetBuilder> routes = {
   DisplayUserInfoScreen.routeName: (context) => DisplayUserInfoScreen(),
   LoginWIthMpin.routeName: (context) => LoginWIthMpin(),
   ResetMpinScreen.routeName: (context) => ResetMpinScreen(),
+  SchemeDisplay.routeName: (context) => SchemeDisplay(),
 };
