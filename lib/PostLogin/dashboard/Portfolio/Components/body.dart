@@ -278,6 +278,7 @@ class _BodyState extends State<Body> {
                                     snapshot.data[index].fr_scheme_name,
                                     style: TextStyle(
                                       color: Colors.black,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
@@ -540,6 +541,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       Text(
@@ -549,6 +551,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],
@@ -561,6 +564,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       Text(
@@ -571,6 +575,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],
@@ -583,6 +588,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       Row(
@@ -598,6 +604,7 @@ class _BodyState extends State<Body> {
                                             style: TextStyle(
                                               color: kPrimaryColor,
                                               fontSize: 15,
+                                              fontWeight: FontWeight.w700,
                                             ),
                                           ),
                                           if ((snapshot.data[index].sch_amount

@@ -125,7 +125,13 @@ class _BodyState extends State<Body> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(dropDownStringItem),
+                          Text(
+                            dropDownStringItem,
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                           Divider(
                             thickness: 0.4,
                           ),
@@ -225,7 +231,10 @@ class _BodyState extends State<Body> {
                                     children: [
                                       Text(
                                         snapshot.data[index].scheme_name,
-                                        style: TextStyle(color: Colors.black),
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                         textAlign: TextAlign.left,
                                       ),
                                       Container(
@@ -250,6 +259,7 @@ class _BodyState extends State<Body> {
                                                     .data[index].scheme_type,
                                                 style: TextStyle(
                                                   color: kPrimaryColor,
+                                                  fontWeight: FontWeight.w800,
                                                 ),
                                               ),
                                               Icon(
@@ -339,6 +349,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       Text(
@@ -346,6 +357,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
@@ -358,6 +370,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       Text(
@@ -365,6 +378,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
@@ -377,6 +391,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: Colors.blueAccent,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       Text(
@@ -384,6 +399,7 @@ class _BodyState extends State<Body> {
                                         style: TextStyle(
                                           color: kPrimaryColor,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
@@ -433,7 +449,9 @@ class GetIndiScheme {
   final String scheme_name;
   // ignore: non_constant_identifier_names
   final String nav_price1;
+  // ignore: non_constant_identifier_names
   final String nav_price2;
+  // ignore: non_constant_identifier_names
   final String nav_price3;
 
   GetIndiScheme(
