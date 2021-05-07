@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:optymoney/size_config.dart';
 
 import '../../constants.dart';
@@ -52,15 +53,19 @@ class _BodyState extends State<Body> {
     print('Length');
     print(len);
     //print(jsonData[])
-    // var parsedNav = json.decode(jsonData['nav_price']);
+    //var parsedNav = json.decode(jsonData['nav_price']);
     //print("object");
     //print(parsedNav);
     List<GetIndiScheme> getIndiSchemes = [];
     for (var sch in jsonData) {
-      var a = json.encode(sch['nav_price']);
-      print(a);
-      var b = json.decode(a);
-      print(b);
+      var a = (sch['nav_price']);
+      print(a['1'].toString());
+      var nav1 = a['1'];
+      var nav2 = a['3'];
+      var nav3 = a['5'];
+
+      // var b = json.decode(a);
+      //print(b);
       GetIndiScheme getIndiScheme = GetIndiScheme(
         sch['pk_nav_id'],
         sch['scheme_code'],
@@ -71,14 +76,15 @@ class _BodyState extends State<Body> {
         sch['scheme_type'],
         sch['scheme_plan'],
         sch['scheme_name'],
-        sch['nav_price'],
+        nav1.toString(),
+        nav2.toString(),
+        nav3.toString(),
       );
       if (sch['pk_nav_id'] != null) {
-        print(sch['pk_nav_id']);
-        print(sch['scheme_code']);
-        print(sch['unique_no']);
-
-        //print(sch['nav_price']);
+        //print(sch['pk_nav_id']);
+        //print(sch['scheme_code']);
+        //print(sch['unique_no']);
+        //print(sch['nav_price'][1]);
       }
       getIndiSchemes.add(getIndiScheme);
     }
@@ -116,7 +122,7 @@ class _BodyState extends State<Body> {
                     return DropdownMenuItem<String>(
                       value: dropDownStringItem,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(dropDownStringItem),
@@ -198,7 +204,7 @@ class _BodyState extends State<Body> {
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: getProportionateScreenHeight(120),
+                      height: getProportionateScreenHeight(140),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(color: kPrimaryColor, width: 1),
@@ -213,10 +219,49 @@ class _BodyState extends State<Body> {
                               children: [
                                 Expanded(
                                   flex: 8,
-                                  child: Text(
-                                    snapshot.data[index].scheme_name,
-                                    style: TextStyle(color: Colors.black),
-                                    textAlign: TextAlign.left,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        snapshot.data[index].scheme_name,
+                                        style: TextStyle(color: Colors.black),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                      Container(
+                                        width: getProportionateScreenWidth(100),
+                                        height:
+                                            getProportionateScreenHeight(20),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: kPrimaryColor,
+                                              width: 0.28),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                snapshot
+                                                    .data[index].scheme_type,
+                                                style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: kPrimaryColor,
+                                                size: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Expanded(
@@ -229,23 +274,119 @@ class _BodyState extends State<Body> {
                                         Icons.add_chart,
                                         color: Colors.blueGrey,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showCupertinoModalBottomSheet(
+                                          expand: false,
+                                          isDismissible: true,
+                                          enableDrag: true,
+                                          bounce: true,
+                                          duration: Duration(milliseconds: 400),
+                                          context: context,
+                                          builder: (context) => Scaffold(
+                                            appBar: AppBar(
+                                              automaticallyImplyLeading: false,
+                                              flexibleSpace: Container(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 7,
+                                                        child: Text(
+                                                          snapshot.data[index]
+                                                              .scheme_name,
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: CloseButton()),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            SizedBox(height: 10),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Nav'),
-                                  Text(
-                                    snapshot.data[index].nav_price,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "1 Year",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        snapshot.data[index].nav_price1 + "%",
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "3 Years",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        snapshot.data[index].nav_price2 + "%",
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "5 Years",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(
+                                        snapshot.data[index].nav_price3 + "%",
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -291,7 +432,9 @@ class GetIndiScheme {
   // ignore: non_constant_identifier_names
   final String scheme_name;
   // ignore: non_constant_identifier_names
-  final String nav_price;
+  final String nav_price1;
+  final String nav_price2;
+  final String nav_price3;
 
   GetIndiScheme(
     this.pk_nav_id,
@@ -303,6 +446,8 @@ class GetIndiScheme {
     this.scheme_type,
     this.scheme_plan,
     this.scheme_name,
-    this.nav_price,
+    this.nav_price1,
+    this.nav_price2,
+    this.nav_price3,
   );
 }

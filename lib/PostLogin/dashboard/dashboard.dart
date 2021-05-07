@@ -14,14 +14,14 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
-  int currentIndex = 2;
+  int currentIndex = 1;
 
   List pageList = [
     Tax(),
-    Investments(),
     DashBoardData(),
-    Resources(),
-    Settings(),
+    Investments(),
+    //Resources(),
+    //Settings(),
   ];
 
   @override
@@ -46,28 +46,28 @@ class _DashBoardState extends State<DashBoard> {
           ),
           BottomNavyBarItem(
             icon: FaIcon(FontAwesomeIcons.moneyCheck),
-            title: Text("Investments"),
-            activeColor: kPrimaryColor,
-            inactiveColor: kPrimaryColor,
-          ),
-          BottomNavyBarItem(
-            icon: FaIcon(FontAwesomeIcons.dashcube),
             title: Text("Dashboard"),
             activeColor: kPrimaryColor,
             inactiveColor: kPrimaryColor,
           ),
           BottomNavyBarItem(
-            icon: FaIcon(FontAwesomeIcons.blog),
-            title: Text("Resources"),
+            icon: FaIcon(FontAwesomeIcons.dashcube),
+            title: Text("Investment"),
             activeColor: kPrimaryColor,
             inactiveColor: kPrimaryColor,
           ),
-          BottomNavyBarItem(
-            icon: FaIcon(FontAwesomeIcons.cogs),
-            title: Text("Settings"),
-            activeColor: kPrimaryColor,
-            inactiveColor: kPrimaryColor,
-          ),
+          // BottomNavyBarItem(
+          //   icon: FaIcon(FontAwesomeIcons.blog),
+          //   title: Text("Resources"),
+          //   activeColor: kPrimaryColor,
+          //   inactiveColor: kPrimaryColor,
+          // ),
+          // BottomNavyBarItem(
+          //   icon: FaIcon(FontAwesomeIcons.cogs),
+          //   title: Text("Settings"),
+          //   activeColor: kPrimaryColor,
+          //   inactiveColor: kPrimaryColor,
+          // ),
         ],
       ),
     );
