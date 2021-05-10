@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
+import 'package:optymoney/PasswordReset/passwordresetscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:crypto/crypto.dart';
 
@@ -255,8 +256,8 @@ class _SignFormState extends State<SignForm> {
               Text("Remember me"),
               Spacer(),
               GestureDetector(
-                //onTap: () => Navigator.pushNamed(
-                //  context, ForgotPasswordScreen.routeName),
+                onTap: () =>
+                    Navigator.pushNamed(context, ResetPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(decoration: TextDecoration.underline),

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:optymoney/OtherDetails/OtherDetails.dart';
+import 'package:optymoney/PasswordReset/passwordresetscreen.dart';
 import 'package:optymoney/PinSetup/Components/finalscreen.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
@@ -37,4 +38,5 @@ final Map<String, WidgetBuilder> routes = {
   LoginWIthMpin.routeName: (context) => LoginWIthMpin(),
   ResetMpinScreen.routeName: (context) => ResetMpinScreen(),
   SchemeDisplay.routeName: (context) => SchemeDisplay(),
+  ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
 };
