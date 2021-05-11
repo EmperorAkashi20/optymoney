@@ -277,7 +277,7 @@ class _SignFormState extends State<SignForm> {
                     child: Column(
                       children: [
                         CircularProgressIndicator.adaptive(),
-                        Text("PLease wait"),
+                        Text("Please wait"),
                       ],
                     ),
                   ),
