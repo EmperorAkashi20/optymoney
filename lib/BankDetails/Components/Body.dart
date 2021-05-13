@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:optymoney/BankDetails/bankdetails.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -37,6 +40,29 @@ addBankAccount() async {
   print(jsonData);
 }
 
+deleteBankAccount() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=deletebank_api&subaction=Submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'id': Body.bankId,
+    'uid': SignForm.userIdGlobal,
+  };
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  var responseBody = response.body;
+  var jsonData = json.decode(responseBody);
+  print(jsonData);
+}
+
 class Body extends StatefulWidget {
   static TextEditingController bankAccountNameController =
       new TextEditingController();
@@ -47,13 +73,17 @@ class Body extends StatefulWidget {
   static var bankAccountName;
   static var bankAccountNumber;
   static var bankAccountIfsc;
+  static var initialText;
+  static var bankId;
+  static TextEditingController editingController = new TextEditingController();
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
   bool _isEditingText = false;
-  late TextEditingController _editingController;
+  Timer? _timer;
+  late double _progress;
 
   Future<List<BankDetail>> _getBankDetail() async {
     var url = Uri.parse(
@@ -79,6 +109,7 @@ class _BodyState extends State<Body> {
     print(len);
     List<BankDetail> bankDetails = [];
     for (var sch in jsonData) {
+      Body.initialText = sch['bank_name'];
       BankDetail bankDetail = BankDetail(
         sch['pk_bank_detail_id'],
         sch['fr_user_id'],
@@ -224,13 +255,124 @@ class _BodyState extends State<Body> {
                                                     appBar: AppBar(
                                                       automaticallyImplyLeading:
                                                           false,
+                                                      title: Text(
+                                                          'Manage Your Account'),
                                                       actions: [
                                                         CloseButton(),
                                                       ],
                                                     ),
                                                     body: Container(
                                                       child: Column(
-                                                        children: [],
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          TitleHeader(
+                                                            text: "ABC",
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                flex: 1,
+                                                                child:
+                                                                    Container(
+                                                                  height: 40,
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  child: Center(
+                                                                    child:
+                                                                        TextButton(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      child:
+                                                                          Text(
+                                                                        'Edit Details',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                flex: 1,
+                                                                child:
+                                                                    Container(
+                                                                  height: 40,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  child: Center(
+                                                                    child:
+                                                                        TextButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        Body.bankId = snapshot
+                                                                            .data[index]
+                                                                            .pk_bank_detail_id
+                                                                            .toString();
+
+                                                                        showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return AlertDialog(
+                                                                              title: Text('Please Confirm'),
+                                                                              content: Text('Are you sure you want to delete this account?'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () async {
+                                                                                    await deleteBankAccount();
+                                                                                    _progress = 0;
+                                                                                    _timer?.cancel();
+                                                                                    _timer = Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
+                                                                                      await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
+                                                                                      _progress += 0.03;
+                                                                                      if (_progress >= 1) {
+                                                                                        _timer?.cancel();
+                                                                                        EasyLoading.dismiss();
+                                                                                      }
+                                                                                    });
+                                                                                    Navigator.pop(context);
+                                                                                    setState(() {
+                                                                                      _getBankDetail();
+                                                                                    });
+                                                                                  },
+                                                                                  child: Text('Yes'),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () {
+                                                                                    Navigator.pop(context);
+                                                                                    setState(() {
+                                                                                      _getBankDetail();
+                                                                                    });
+                                                                                  },
+                                                                                  child: Text('Cancel'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        'Delete Account',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -366,7 +508,26 @@ class _BodyState extends State<Body> {
                                                     .bankAccountNumberController
                                                     .text;
                                                 await addBankAccount();
+                                                _progress = 0;
+                                                _timer?.cancel();
+                                                _timer = Timer.periodic(
+                                                    const Duration(
+                                                        milliseconds: 10),
+                                                    (Timer timer) async {
+                                                  await EasyLoading.showProgress(
+                                                      _progress,
+                                                      status:
+                                                          '${(_progress * 100).toStringAsFixed(0)}%');
+                                                  _progress += 0.03;
+                                                  if (_progress >= 1) {
+                                                    _timer?.cancel();
+                                                    EasyLoading.dismiss();
+                                                  }
+                                                });
                                                 Navigator.pop(context);
+                                                setState(() {
+                                                  _getBankDetail();
+                                                });
                                               },
                                               child: Text(
                                                 'ADD',
