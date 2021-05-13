@@ -95,6 +95,7 @@ class Body extends StatefulWidget {
   static var allUnits;
   static var navPrice;
   static var presentValIndi;
+  static var flag = 0;
 
   @override
   _BodyState createState() => _BodyState();
@@ -209,42 +210,199 @@ class _BodyState extends State<Body> {
               );
             } else if (snapshot.data.length == 0) {
               return Container(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //CircularProgressIndicator.adaptive(),
-                      if (Body.custPan == 'null')
-                        AlertDialog(
-                          title: Text("Profile Incomplete"),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("To Complete your profile: "),
-                              Text("1. Keep Your documents handy"),
-                              Text("2. Tap on the menu on the top left corner"),
-                              Text("3. Enter details and verify"),
-                              Text("\n\nOr tap on \"complete Now\" below"),
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              child: Text("Complete Now"),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, UserInfoScreen.routeName);
-                              },
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //CircularProgressIndicator.adaptive(),
+                    if (Body.custPan == 'null')
+                      Container(
+                        width: double.infinity,
+                        height: getProportionateScreenHeight(200),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: kPrimaryColor, width: 1),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Profile Incomplete"),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("To Complete your profile: "),
+                                Text("1. Keep Your documents handy"),
+                                Text(
+                                    "2. Tap on the menu on the top left corner"),
+                                Text("3. Enter details and verify"),
+                                Text("\n\nOr tap on \"complete Now\" below"),
+                                TextButton(
+                                  child: Text("Complete Now"),
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, UserInfoScreen.routeName);
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      if (Body.custPan != 'null')
-                        AlertDialog(
-                          title: Text("Start Your Investments"),
-                          content: Text(
-                              "Content will start appearing once you invest"),
+                      ),
+                    if (Body.custPan != 'null')
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: getProportionateScreenHeight(120),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border:
+                                    Border.all(color: kPrimaryColor, width: 1),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'This is an example company',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                        CircleAvatar(
+                                          backgroundColor: Colors.grey.shade200,
+                                          child: Icon(Icons.add_chart),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text(
+                                              "Purchase Price",
+                                              style: TextStyle(
+                                                color: Colors.blueAccent,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "₹ 1234",
+                                              style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text(
+                                              "Investment",
+                                              style: TextStyle(
+                                                color: Colors.blueAccent,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Text(
+                                              "₹ 12340",
+                                              style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Text(
+                                              "Present Value",
+                                              style: TextStyle(
+                                                color: Colors.blueAccent,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  "₹ 123400",
+                                                  style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.arrow_upward_sharp,
+                                                  size: 16,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: getProportionateScreenHeight(120),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border:
+                                    Border.all(color: kPrimaryColor, width: 1),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Start Your Investments"),
+                                  Text(
+                                      "Content will start appearing once you invest"),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
                         ),
-                    ],
-                  ),
+                      ),
+                  ],
                 ),
               );
             } else {

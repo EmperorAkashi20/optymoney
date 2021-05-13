@@ -45,7 +45,7 @@ class _DashBoardState extends State<DashBoard> {
             inactiveColor: kPrimaryColor,
           ),
           BottomNavyBarItem(
-            icon: FaIcon(FontAwesomeIcons.moneyCheck),
+            icon: FaIcon(FontAwesomeIcons.chartLine),
             title: Text("Dashboard"),
             activeColor: kPrimaryColor,
             inactiveColor: kPrimaryColor,

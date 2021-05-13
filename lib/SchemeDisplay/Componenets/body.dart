@@ -11,6 +11,7 @@ import '../../constants.dart';
 
 class Body extends StatefulWidget {
   static var offerId = 32;
+  static var encoded;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -59,10 +60,52 @@ class _BodyState extends State<Body> {
     List<GetIndiScheme> getIndiSchemes = [];
     for (var sch in jsonData) {
       var a = (sch['nav_price']);
-      print(a['1'].toString());
+      //print(a['1'].toString());
       var nav1 = a['1'];
       var nav2 = a['3'];
       var nav3 = a['5'];
+      //print(sch['isin']);
+      String credentials = sch['isin'];
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      Body.encoded =
+          stringToBase64.encode(credentials); // dXNlcm5hbWU6cGFzc3dvcmQ=
+      //String decoded = stringToBase64.decode(encoded);
+      //print(decoded);
+      //print(encoded);
+
+      Future<List<CreateDataList>> _createList() async {
+        var url =
+            Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
+        final headers = {'content-Type': 'application/x-www-form-urlencoded'};
+        Map<String, dynamic> body = {
+          'get_nav': 'yes',
+          'sch_code': Body.encoded,
+        };
+
+        final encoding = Encoding.getByName('utf-8');
+
+        Response response = await post(
+          url,
+          headers: headers,
+          body: body,
+          encoding: encoding,
+        );
+
+        var listBody = response.body;
+        print(listBody);
+        var jsonData = json.decode(listBody);
+        print(jsonData);
+        var len = jsonData.length;
+        print(len);
+
+        List<CreateDataList> createDataLists = [];
+        for (var sch in jsonData) {
+          CreateDataList createDataList =
+              CreateDataList(sch['price_date'], sch['net_asset_value']);
+          createDataLists.add(createDataList);
+        }
+        return createDataLists;
+      }
 
       // var b = json.decode(a);
       //print(b);
@@ -79,12 +122,19 @@ class _BodyState extends State<Body> {
         nav1.toString(),
         nav2.toString(),
         nav3.toString(),
+        Body.encoded,
+        //makeGraph(Body.encoded.toString()),
       );
       if (sch['pk_nav_id'] != null) {
+        // print(Body.encoded);
+        // print(base64.encode(sch['isin']).toString());
         //print(sch['pk_nav_id']);
         //print(sch['scheme_code']);
         //print(sch['unique_no']);
         //print(sch['nav_price'][1]);
+        //print(Body.encoded);
+
+        //makeGraph();
       }
       getIndiSchemes.add(getIndiScheme);
     }
@@ -327,6 +377,7 @@ class _BodyState extends State<Body> {
                                                 ),
                                               ),
                                             ),
+                                            body: Container(),
                                           ),
                                         );
                                       },
@@ -428,6 +479,13 @@ class _BodyState extends State<Body> {
   }
 }
 
+class CreateDataList {
+  var price;
+  var date;
+
+  CreateDataList(this.price, this.date);
+}
+
 class GetIndiScheme {
   // ignore: non_constant_identifier_names
   final String pk_nav_id;
@@ -453,6 +511,8 @@ class GetIndiScheme {
   final String nav_price2;
   // ignore: non_constant_identifier_names
   final String nav_price3;
+  final String encodedIsin;
+  //Future makeGraph;
 
   GetIndiScheme(
     this.pk_nav_id,
@@ -467,5 +527,7 @@ class GetIndiScheme {
     this.nav_price1,
     this.nav_price2,
     this.nav_price3,
+    this.encodedIsin,
+    //this.makeGraph,
   );
 }

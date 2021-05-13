@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:optymoney/BankDetails/bankdetails.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/size_config.dart';
@@ -144,7 +145,7 @@ class AppDrawerMain extends StatelessWidget {
           AppDrawerListTIle(
             title: "Dashboard",
             icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
+              FontAwesomeIcons.chartLine,
             ),
             navigationRoute: () {
               Navigator.pop(context);
@@ -166,7 +167,7 @@ class AppDrawerMain extends StatelessWidget {
           AppDrawerListTIle(
             title: "Profile",
             icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
+              FontAwesomeIcons.solidIdCard,
             ),
             navigationRoute: () {
               Navigator.pop(context);
@@ -202,16 +203,27 @@ class AppDrawerMain extends StatelessWidget {
               }
             },
           ),
+          AppDrawerListTIle(
+            title: "Bank Accounts",
+            icon: FaIcon(
+              FontAwesomeIcons.university,
+            ),
+            navigationRoute: () {
+              Navigator.pop(context);
+              bool isNewRouteSameAsCurrent = false;
 
-          // AppDrawerListTIle(
-          //   title: "Item 3",
-          //   icon: FaIcon(
-          //     FontAwesomeIcons.stopwatch,
-          //   ),
-          //   navigationRoute: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
+              Navigator.popUntil(context, (route) {
+                if (route.settings.name == BankDetailsScreen.routeName) {
+                  isNewRouteSameAsCurrent = true;
+                }
+                return true;
+              });
+
+              if (!isNewRouteSameAsCurrent) {
+                Navigator.pushNamed(context, BankDetailsScreen.routeName);
+              }
+            },
+          ),
           // AppDrawerListTIle(
           //   title: "Item 4",
           //   icon: FaIcon(

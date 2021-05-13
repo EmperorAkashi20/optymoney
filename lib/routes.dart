@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:optymoney/BankDetails/bankdetails.dart';
 import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:optymoney/OtherDetails/OtherDetails.dart';
@@ -39,4 +40,5 @@ final Map<String, WidgetBuilder> routes = {
   ResetMpinScreen.routeName: (context) => ResetMpinScreen(),
   SchemeDisplay.routeName: (context) => SchemeDisplay(),
   ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
+  BankDetailsScreen.routeName: (context) => BankDetailsScreen(),
 };
