@@ -255,9 +255,9 @@ class _BodyState extends State<Body> {
                           children: [
                             Container(
                               width: double.infinity,
-                              height: getProportionateScreenHeight(120),
+                              height: getProportionateScreenHeight(100),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(10),
                                 border:
                                     Border.all(color: kPrimaryColor, width: 1),
                               ),
@@ -381,9 +381,9 @@ class _BodyState extends State<Body> {
                             ),
                             Container(
                               width: double.infinity,
-                              height: getProportionateScreenHeight(120),
+                              height: getProportionateScreenHeight(100),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(10),
                                 border:
                                     Border.all(color: kPrimaryColor, width: 1),
                               ),
@@ -413,13 +413,13 @@ class _BodyState extends State<Body> {
                     padding: const EdgeInsets.only(
                       left: 10.0,
                       right: 10.0,
-                      top: 5,
+                      top: 10,
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: getProportionateScreenHeight(120),
+                      height: getProportionateScreenHeight(100),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: kPrimaryColor, width: 1),
                       ),
                       child: Padding(

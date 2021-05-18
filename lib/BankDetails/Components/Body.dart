@@ -209,7 +209,7 @@ class _BodyState extends State<Body> {
                             ),
                             child: Container(
                               width: double.infinity,
-                              height: getProportionateScreenHeight(100),
+                              height: getProportionateScreenHeight(160),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
@@ -384,7 +384,8 @@ class _BodyState extends State<Body> {
                                       ],
                                     ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Row(
                                           mainAxisAlignment:
@@ -427,6 +428,36 @@ class _BodyState extends State<Body> {
                                               style: TextStyle(
                                                 color: kPrimaryColor,
                                                 fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                'Mandate Id',
+                                                style: TextStyle(
+                                                  color: Colors.blueAccent,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 6,
+                                              child: Text(
+                                                snapshot.data[index].mandate_id
+                                                    .toString()
+                                                    .toUpperCase(),
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  color: kPrimaryColor,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
                                             ),
                                           ],
