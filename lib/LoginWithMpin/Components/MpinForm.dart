@@ -23,7 +23,7 @@ makePostRequest() async {
     'userid': MyApp.user,
     'mpin': PinForm.mpin,
   };
-  print(PinForm.mpin);
+  //print(PinForm.mpin);
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
@@ -34,26 +34,16 @@ makePostRequest() async {
     encoding: encoding,
   );
 
-  int statusCode = response.statusCode;
   PinForm.responseBody = (response.body);
   PinForm.responseData = json.decode(PinForm.responseBody);
-  print(PinForm.responseBody);
-  print(PinForm.responseData);
   PinForm.responseMessgae = PinForm.responseData['message'].toString();
   if (PinForm.responseMessgae != 'LOGIN_FAILED') {
     PinForm.parsedToken = json.decode(PinForm.responseData['token']);
-    print(PinForm.parsedToken);
     PinForm.responseUser = PinForm.parsedToken['caTAX_user_id'].toString();
     PinForm.responsePan = PinForm.parsedToken['caTAX_pan_number'].toString();
-    print("aaaaaa");
-    print(statusCode);
 
-    print(PinForm.responseMessgae);
-    print(PinForm.responseUser);
     SignForm.userIdGlobal = PinForm.responseUser;
     SignForm.pan = PinForm.responsePan;
-    print("object");
-    print(SignForm.userIdGlobal);
   } else {
     print('oops');
   }

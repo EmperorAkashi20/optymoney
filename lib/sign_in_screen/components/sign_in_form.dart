@@ -44,24 +44,17 @@ makePostRequest() async {
   print(SignForm.message);
   if (SignForm.status != '0') {
     SignForm.parsedToken = json.decode(parsedJson['token']);
-    //print(parsedJson);
-    // print('token');
-    // print(parsedToken);
+
     var pan1 = SignForm.parsedToken['caTAX_pan_number'].toString();
     SignForm.pan = pan1;
-    // print(SignForm.pan);
     var userId1 = SignForm.parsedToken['caTAX_user_id'].toString();
     SignForm.userId = userId1;
     SignForm.userIdGlobal = SignForm.userId;
-    // print(SignForm.userId);
 
     SignForm.name = SignForm.parsedToken['caTAX_user_name'].toString();
-    // print(SignForm.name);
     SignForm.email1 = SignForm.parsedToken['caTAX_email_id'].toString();
-    // print(SignForm.email1);
-    //print('${SignForm.name[0]}');
+
     SignForm.letter = SignForm.name[0];
-    // print(SignForm.letter);
     //
 
   } else {
@@ -90,40 +83,9 @@ checkUserPinSet() async {
   SignForm.pinStatusCode = response.statusCode;
 
   SignForm.pindecodedjson = json.decode(SignForm.pinBody);
-  print(SignForm.pindecodedjson);
   SignForm.pindecodedjsonmessage =
       SignForm.pindecodedjson['message'].toString();
-  print("object11111");
-  print(SignForm.pindecodedjsonmessage);
 }
-
-// signInWIthMpin() async {
-//   var url = Uri.parse(
-//       'https://optymoney.com/ajax-request/ajax_response.php?action=checkMPINApp&subaction=submit');
-//   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-//   Map<String, dynamic> body = {
-//     'uid': SignForm.userId,
-//   };
-//   //String jsonBody = json.encode(body);
-//   final encoding = Encoding.getByName('utf-8');
-
-//   Response response = await post(
-//     url,
-//     headers: headers,
-//     body: body,
-//     encoding: encoding,
-//   );
-
-//   SignForm.pinBody = response.body;
-//   SignForm.pinStatusCode = response.statusCode;
-
-//   SignForm.pindecodedjson = json.decode(SignForm.pinBody);
-//   print(SignForm.pindecodedjson);
-//   SignForm.pindecodedjsonmessage =
-//       SignForm.pindecodedjson['message'].toString();
-//   print("object11111");
-//   print(SignForm.pindecodedjsonmessage);
-// }
 
 makePortfolioRequest() async {
   var url = Uri.parse(
@@ -145,28 +107,15 @@ makePortfolioRequest() async {
 
   SignForm.portfolioCode = response.statusCode;
   SignForm.portfolioBody = response.body;
-  print(SignForm.userId);
-  print(SignForm.portfolioBody);
-  print(SignForm.pan);
   var jsonData = SignForm.portfolioBody;
-  print(jsonData);
   SignForm.parsedJson = json.decode(jsonData);
-  print('test');
-  print(SignForm.parsedJson);
   SignForm.parsedJson.forEach((foliodata) {
     if (foliodata["all_units"] != 0) {
-      print(foliodata["isin"]);
-      //SignForm.folioDataNum++;
       SignForm.isin = foliodata["isin"];
       SignForm.schemeName = foliodata["fr_scheme_name"];
       SignForm.schemeCode = foliodata["fr_scheme_code"];
       SignForm.purchasePrice = foliodata['amount'];
-
-      //SignForm.
-
       SignForm.investedValue = SignForm.investedValue + SignForm.purchasePrice;
-
-      //print(SignForm.folioDataNum);
     }
   });
 }
@@ -298,7 +247,6 @@ class _SignFormState extends State<SignForm> {
                   SignForm.digest = sha512256.convert(hashedPass);
                   await MyApp.prefs
                       .setString('hash', SignForm.digest.toString());
-                  print(SignForm.digest.toString());
                   await checkUserPinSet();
                   _formKey.currentState!.reset();
                   if (SignForm.pindecodedjsonmessage == 'MPIN_SET') {

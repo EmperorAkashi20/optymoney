@@ -26,27 +26,18 @@ makeUserRequest() async {
     encoding: encoding,
   );
 
-  print("aaa");
   Body.statusCode = response.statusCode;
   Body.responseBody = response.body;
-  print(Body.responseBody);
   var jsonData = Body.responseBody;
 
   var parsedJson = json.decode(jsonData);
   Body.userId = parsedJson['pk_user_id'].toString();
-  // print(Body.userId);
   Body.emailId = parsedJson['login_id'].toString();
-  // print(Body.emailId);
   Body.custId = parsedJson['fr_customer_id'].toString();
-  // print(Body.custId);
   Body.custName = parsedJson['cust_name'].toString();
-  // print(Body.custName);
   Body.custPan = parsedJson['pan_number'].toString();
-  print('pan:' + Body.custPan);
   Body.custLetter = Body.custName[0].toUpperCase();
-  // print(Body.custLetter);
   Body.custBday = parsedJson['dob'].toString();
-  // print(Body.custBday);
   Body.custAddress1 = parsedJson['address1'].toString();
   Body.custAddress2 = parsedJson['address2'].toString();
   Body.custAddress3 = parsedJson['address3'].toString();
@@ -122,14 +113,11 @@ class _BodyState extends State<Body> {
 
     var schemeBody = response.body;
     var jsonData = json.decode(schemeBody);
-    print(jsonData);
     var len = jsonData.length;
-    print("Length");
     print(len);
     List<Scheme> schemes = [];
     Body.purPrice = 0.0;
     Body.presentVal = 0.0;
-    print("1");
     for (var sch in jsonData) {
       var a = sch['nav_price'] * sch['all_units'];
       //  Scheme(this.isin, this.folio, this.bse_scheme_code, this.fr_scheme_name,
@@ -149,9 +137,9 @@ class _BodyState extends State<Body> {
       // print(scheme.toString());
       //
       if (sch['all_units'] != 0) {
-        print(sch['amount']);
-        print(sch['all_units']);
-        print(sch['nav_price']);
+        // print(sch['amount']);
+        // print(sch['all_units']);
+        // print(sch['nav_price']);
       }
 
       //print(scheme.sch_amount);
@@ -167,7 +155,7 @@ class _BodyState extends State<Body> {
         //Body.purchasePrice = sch['purchase_price'].toDouble();
       }
     }
-    print(Body.presentVal);
+    //print(Body.presentVal);
     Body.profitLoss = Body.presentVal - Body.purPrice;
     return schemes;
   }

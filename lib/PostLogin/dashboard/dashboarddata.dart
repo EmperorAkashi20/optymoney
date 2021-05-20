@@ -4,6 +4,7 @@ import 'package:optymoney/BankDetails/bankdetails.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/size_config.dart';
+import 'package:optymoney/testpage.dart';
 
 import '../../constants.dart';
 
@@ -224,15 +225,27 @@ class AppDrawerMain extends StatelessWidget {
               }
             },
           ),
-          // AppDrawerListTIle(
-          //   title: "Item 4",
-          //   icon: FaIcon(
-          //     FontAwesomeIcons.stopwatch,
-          //   ),
-          //   navigationRoute: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
+          AppDrawerListTIle(
+            title: "Item 4",
+            icon: FaIcon(
+              FontAwesomeIcons.stopwatch,
+            ),
+            navigationRoute: () {
+              Navigator.pop(context);
+              bool isNewRouteSameAsCurrent = false;
+
+              Navigator.popUntil(context, (route) {
+                if (route.settings.name == TestPage.routeName) {
+                  isNewRouteSameAsCurrent = true;
+                }
+                return true;
+              });
+
+              if (!isNewRouteSameAsCurrent) {
+                Navigator.pushNamed(context, TestPage.routeName);
+              }
+            },
+          ),
           // AppDrawerListTIle(
           //   title: "Item 5",
           //   icon: FaIcon(

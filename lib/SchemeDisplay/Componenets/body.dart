@@ -6,12 +6,18 @@ import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:optymoney/size_config.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constants.dart';
 
 class Body extends StatefulWidget {
   static var offerId = 32;
   static var encoded;
+  static var netAsset;
+  static var priceDate;
+  static var priceList;
+  static var dateList;
+  static var i;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -30,7 +36,7 @@ class _BodyState extends State<Body> {
   ];
   String _currentItemSelected = 'Best Performing Mutual Funds';
 
-  Future<List<GetIndiScheme>> _getScheme() async {
+  Future<List<GetIndiScheme>> getScheme() async {
     var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
     final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     Map<String, dynamic> body = {
@@ -47,68 +53,19 @@ class _BodyState extends State<Body> {
     );
 
     var schemeBody = response.body;
-    print(schemeBody);
     var jsonData = json.decode(schemeBody);
-    print(jsonData);
-    var len = jsonData.length;
-    print('Length');
-    print(len);
-    //print(jsonData[])
-    //var parsedNav = json.decode(jsonData['nav_price']);
-    //print("object");
-    //print(parsedNav);
+
     List<GetIndiScheme> getIndiSchemes = [];
     for (var sch in jsonData) {
       var a = (sch['nav_price']);
-      //print(a['1'].toString());
       var nav1 = a['1'];
       var nav2 = a['3'];
       var nav3 = a['5'];
-      //print(sch['isin']);
       String credentials = sch['isin'];
       Codec<String, String> stringToBase64 = utf8.fuse(base64);
       Body.encoded =
           stringToBase64.encode(credentials); // dXNlcm5hbWU6cGFzc3dvcmQ=
-      //String decoded = stringToBase64.decode(encoded);
-      //print(decoded);
-      //print(encoded);
 
-      Future<List<CreateDataList>> _createList() async {
-        var url =
-            Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
-        final headers = {'content-Type': 'application/x-www-form-urlencoded'};
-        Map<String, dynamic> body = {
-          'get_nav': 'yes',
-          'sch_code': Body.encoded,
-        };
-
-        final encoding = Encoding.getByName('utf-8');
-
-        Response response = await post(
-          url,
-          headers: headers,
-          body: body,
-          encoding: encoding,
-        );
-
-        var listBody = response.body;
-        print(listBody);
-        var jsonData = json.decode(listBody);
-        print(jsonData);
-        var len = jsonData.length;
-        print(len);
-
-        List<CreateDataList> createDataLists = [];
-        for (var sch in jsonData) {
-          CreateDataList createDataList =
-              CreateDataList(sch['price_date'], sch['net_asset_value']);
-          createDataLists.add(createDataList);
-        }
-        return createDataLists;
-      }
-
-      // var b = json.decode(a);
-      //print(b);
       GetIndiScheme getIndiScheme = GetIndiScheme(
         sch['pk_nav_id'],
         sch['scheme_code'],
@@ -125,19 +82,13 @@ class _BodyState extends State<Body> {
         Body.encoded,
         //makeGraph(Body.encoded.toString()),
       );
-      if (sch['pk_nav_id'] != null) {
-        // print(Body.encoded);
-        // print(base64.encode(sch['isin']).toString());
-        //print(sch['pk_nav_id']);
-        //print(sch['scheme_code']);
-        //print(sch['unique_no']);
-        //print(sch['nav_price'][1]);
-        //print(Body.encoded);
+      if (sch['pk_nav_id'] != null) {}
 
-        //makeGraph();
-      }
+      //print(Body.encoded);
       getIndiSchemes.add(getIndiScheme);
+      //print(getIndiScheme.encodedIsin);
     }
+
     return getIndiSchemes;
   }
 
@@ -145,6 +96,65 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     Body.offerId = 32;
+  }
+
+  Future<List<CreateDataList>> _createList(String enc) async {
+    var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
+    final headers = {'content-Type': 'application/x-www-form-urlencoded'};
+    Map<String, dynamic> body = {
+      'get_nav': 'yes',
+      'sch_code': enc,
+    };
+
+    final encoding = Encoding.getByName('utf-8');
+
+    Response response = await post(
+      url,
+      headers: headers,
+      body: body,
+      encoding: encoding,
+    );
+
+    var listBody = response.body;
+    //print(listBody);
+    var jsonData = json.decode(listBody);
+    //print(jsonData);
+    var len = jsonData.length;
+    //print(len);
+
+    for (int i = 0; i < len; i++) {
+      Body.netAsset = jsonData[i]['net_asset_value'];
+      Body.priceDate = jsonData[i]['price_date'];
+      //print('object');
+      //print(Body.netAsset);
+      //print(Body.priceDate);
+    }
+    print(enc);
+    List<CreateDataList> createDataLists = [];
+    for (var sch in jsonData) {
+      CreateDataList createDataList = CreateDataList(
+        sch['net_asset_value'],
+        sch['price_date'],
+      );
+
+      //print(sch['price_date']);
+      //print(sch['net_asset_value']);
+      createDataLists.add(createDataList);
+      Container(
+        child: SfCartesianChart(
+            primaryXAxis: CategoryAxis(),
+            title: ChartTitle(text: 'This is Test'),
+            series: <ChartSeries<CreateDataList, String>>[
+              LineSeries<CreateDataList, String>(
+                dataSource: createDataLists,
+                xValueMapper: (CreateDataList okay, _) =>
+                    sch['net_asset_value'],
+                yValueMapper: (CreateDataList bye, _) => sch['price_date'],
+              )
+            ]),
+      );
+    }
+    return createDataLists;
   }
 
   @override
@@ -225,7 +235,7 @@ class _BodyState extends State<Body> {
       ),
       body: Container(
         child: FutureBuilder(
-          future: _getScheme(),
+          future: getScheme(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Container(
@@ -377,7 +387,58 @@ class _BodyState extends State<Body> {
                                                 ),
                                               ),
                                             ),
-                                            body: Container(),
+                                            body: Container(
+                                              child: FutureBuilder(
+                                                future: getDataFromJson(),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.data == null) {
+                                                    return Container(
+                                                      child: Text('ABC'),
+                                                    );
+                                                  } else {
+                                                    return Container();
+                                                  }
+                                                },
+                                              ),
+                                              // child: FutureBuilder(
+                                              //     future: _createList(snapshot
+                                              //         .data[index].encodedIsin),
+                                              //     builder: (BuildContext
+                                              //             context,
+                                              //         AsyncSnapshot snapshot) {
+                                              //       if (snapshot.data == null) {
+                                              //         return Container(
+                                              //           child: Text('oka'),
+                                              //         );
+                                              //       } else {
+                                              //         return ListView.builder(
+                                              //             itemCount: snapshot
+                                              //                 .data.length,
+                                              //             itemBuilder:
+                                              //                 (BuildContext
+                                              //                         context,
+                                              //                     int index) {
+                                              //               return Container(
+                                              //                 child: Row(
+                                              //                   mainAxisAlignment:
+                                              //                       MainAxisAlignment
+                                              //                           .spaceBetween,
+                                              //                   children: [
+                                              //                     Text(snapshot
+                                              //                         .data[
+                                              //                             index]
+                                              //                         .price),
+                                              //                     Text(snapshot
+                                              //                         .data[
+                                              //                             index]
+                                              //                         .date)
+                                              //                   ],
+                                              //                 ),
+                                              //               );
+                                              //             });
+                                              //       }
+                                              //     }),
+                                            ),
                                           ),
                                         );
                                       },
@@ -530,4 +591,91 @@ class GetIndiScheme {
     this.encodedIsin,
     //this.makeGraph,
   );
+}
+
+Future<List<CreateDataList>> createList(String enc) async {
+  var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
+  final headers = {'content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'get_nav': 'yes',
+    'sch_code': enc,
+  };
+
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  var listBody = response.body;
+  //print(listBody);
+  var jsonData = json.decode(listBody);
+  //print(jsonData);
+  var len = jsonData.length;
+  //print(len);
+
+  for (int i = 0; i < len; i++) {
+    Body.netAsset = jsonData[i]['net_asset_value'];
+    Body.priceDate = jsonData[i]['price_date'];
+    //print('object');
+    //print(Body.netAsset);
+    //print(Body.priceDate);
+  }
+  print(enc);
+  List<CreateDataList> createDataLists = [];
+  for (var sch in jsonData) {
+    CreateDataList createDataList = CreateDataList(
+      sch['net_asset_value'],
+      sch['price_date'],
+    );
+
+    //print(sch['price_date']);
+    //print(sch['net_asset_value']);
+    createDataLists.add(createDataList);
+  }
+  return createDataLists;
+}
+
+Future<String> getDataFromJson() async {
+  var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
+  final headers = {'content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'get_nav': 'yes',
+    'sch_code': 'SU5GODQ2SzAxMTY0',
+  };
+
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+  return response.body;
+}
+
+class ChartData {
+  ChartData(this.month, this.price);
+
+  final String month;
+  final String price;
+
+  factory ChartData.fromJson(Map<String, dynamic> parsedJson) {
+    return ChartData(
+      parsedJson['month'].toString(),
+      parsedJson['price'],
+    );
+  }
+  List<ChartData> chartData = [];
+  Future loadChartData() async {
+    String jsonString = await getDataFromJson();
+    final jsonResponse = json.decode(jsonString);
+    for (Map<String, dynamic> i in jsonResponse) {
+      chartData.add(ChartData.fromJson(i));
+    }
+  }
 }

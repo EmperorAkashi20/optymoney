@@ -41,4 +41,5 @@ final Map<String, WidgetBuilder> routes = {
   SchemeDisplay.routeName: (context) => SchemeDisplay(),
   ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
   BankDetailsScreen.routeName: (context) => BankDetailsScreen(),
+  TestPage.routeName: (context) => TestPage(),
 };

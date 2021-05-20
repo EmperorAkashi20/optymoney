@@ -1,8 +1,37 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _url = 'https://flutter.dev';
+
+makeKycRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=kyccheck_app&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  Map<String, dynamic> body = {
+    'pan': SignForm.pan,
+  };
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+  print(SignForm.pan);
+  print('object');
+  print(response.statusCode);
+  print(response.body);
+}
 
 class Body extends StatefulWidget {
   @override
@@ -10,6 +39,12 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  @override
+  void initState() {
+    super.initState();
+    makeKycRequest();
+  }
+
   bool enableNow = false;
   Color disabledColor = Colors.grey;
   Color stringColorSave = Colors.grey.shade600;
@@ -115,6 +150,7 @@ class _BodyState extends State<Body> {
                 keyboardTypeGlobal: TextInputType.text,
                 stringColor: disabledColor,
               ),
+              TextButton(onPressed: _launchURL, child: Text('Launch')),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -162,4 +198,8 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }

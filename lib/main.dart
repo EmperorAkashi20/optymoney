@@ -20,11 +20,11 @@ void main() async {
   MyApp.name = MyApp.prefs.getString('name') ?? '0';
   MyApp.pan = MyApp.prefs.getString('pan') ?? '0';
   MyApp.hash = MyApp.prefs.getString('hash') ?? '0';
-  print(MyApp.user);
-  print(MyApp.email);
-  print(MyApp.name);
-  print(MyApp.pan);
-  print(MyApp.hash);
+  // print(MyApp.user);
+  // print(MyApp.email);
+  // print(MyApp.name);
+  // print(MyApp.pan);
+  // print(MyApp.hash);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());
