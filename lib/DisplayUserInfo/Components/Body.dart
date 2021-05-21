@@ -13,7 +13,7 @@ const _url = 'https://flutter.dev';
 
 makeKycRequest() async {
   var url = Uri.parse(
-      'https://optymoney.com/ajax-request/ajax_response.php?action=kyccheck_app&subaction=submit');
+      'https://optymoney.com/ajax-request/ajax_response.php?action=kyccheck_api&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
     'pan': SignForm.pan,
@@ -27,13 +27,18 @@ makeKycRequest() async {
     body: body,
     encoding: encoding,
   );
-  print(SignForm.pan);
-  print('object');
-  print(response.statusCode);
-  print(response.body);
+
+  Body.responseBody = response.body;
+  Body.parsed = json.decode(Body.responseBody);
+  Body.status = Body.parsed['status'].toString();
+  print(Body.status);
 }
 
 class Body extends StatefulWidget {
+  static var responseBody;
+  static var parsed;
+  static var status;
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -76,6 +81,20 @@ class _BodyState extends State<Body> {
                           SignForm.email1,
                           style: TextStyle(color: Colors.black),
                         ),
+                        if (Body.status == 'success')
+                          Text(
+                            'KYC Compliant',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        if (Body.status != 'success')
+                          Text(
+                            'Please complete your KYC',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
                       ],
                     ),
                     CircleAvatar(
@@ -150,7 +169,8 @@ class _BodyState extends State<Body> {
                 keyboardTypeGlobal: TextInputType.text,
                 stringColor: disabledColor,
               ),
-              TextButton(onPressed: _launchURL, child: Text('Launch')),
+              if (Body.status != 'success')
+                TextButton(onPressed: _launchURL, child: Text('Launch')),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

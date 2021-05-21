@@ -264,19 +264,17 @@ class _BodyState extends State<Body> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0,
-                      top: 10,
+                      left: 5.0,
+                      right: 5.0,
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      height: getProportionateScreenHeight(120),
-                      decoration: BoxDecoration(
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: kPrimaryColor, width: 1),
+                        side: BorderSide(color: kPrimaryColor),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -309,7 +307,7 @@ class _BodyState extends State<Body> {
                                               width: 0.28),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(2.0),
+                                          padding: EdgeInsets.all(2.0),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -337,187 +335,142 @@ class _BodyState extends State<Body> {
                                 Expanded(
                                   flex: 1,
                                   child: CircleAvatar(
-                                    backgroundColor: Colors.grey.shade200,
-                                    radius: 20,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.add_chart,
-                                        color: Colors.blueGrey,
-                                      ),
-                                      onPressed: () {
-                                        showCupertinoModalBottomSheet(
-                                          expand: false,
-                                          isDismissible: true,
-                                          enableDrag: true,
-                                          bounce: true,
-                                          duration: Duration(milliseconds: 400),
-                                          context: context,
-                                          builder: (context) => Scaffold(
-                                            appBar: AppBar(
-                                              automaticallyImplyLeading: false,
-                                              flexibleSpace: Container(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 7,
-                                                        child: Text(
-                                                          snapshot.data[index]
-                                                              .scheme_name,
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                      backgroundColor: Colors.grey.shade200,
+                                      radius: 20,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.add_chart,
+                                          color: Colors.blueGrey,
+                                        ),
+                                        onPressed: () {
+                                          showCupertinoModalBottomSheet(
+                                            expand: false,
+                                            isDismissible: true,
+                                            enableDrag: true,
+                                            bounce: true,
+                                            duration:
+                                                Duration(milliseconds: 400),
+                                            context: context,
+                                            builder: (context) => Scaffold(
+                                              appBar: AppBar(
+                                                automaticallyImplyLeading:
+                                                    false,
+                                                flexibleSpace: Container(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 7,
+                                                          child: Text(
+                                                            snapshot.data[index]
+                                                                .scheme_name,
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
                                                           ),
-                                                          textAlign:
-                                                              TextAlign.left,
                                                         ),
-                                                      ),
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: CloseButton()),
-                                                    ],
+                                                        Expanded(
+                                                            flex: 1,
+                                                            child:
+                                                                CloseButton()),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            body: Container(
-                                              child: FutureBuilder(
-                                                future: getDataFromJson(),
-                                                builder: (context, snapshot) {
-                                                  if (snapshot.data == null) {
-                                                    return Container(
-                                                      child: Text('ABC'),
-                                                    );
-                                                  } else {
-                                                    return Container();
-                                                  }
-                                                },
+                                              body: Container(
+                                                child: Text('ABC'),
                                               ),
-                                              // child: FutureBuilder(
-                                              //     future: _createList(snapshot
-                                              //         .data[index].encodedIsin),
-                                              //     builder: (BuildContext
-                                              //             context,
-                                              //         AsyncSnapshot snapshot) {
-                                              //       if (snapshot.data == null) {
-                                              //         return Container(
-                                              //           child: Text('oka'),
-                                              //         );
-                                              //       } else {
-                                              //         return ListView.builder(
-                                              //             itemCount: snapshot
-                                              //                 .data.length,
-                                              //             itemBuilder:
-                                              //                 (BuildContext
-                                              //                         context,
-                                              //                     int index) {
-                                              //               return Container(
-                                              //                 child: Row(
-                                              //                   mainAxisAlignment:
-                                              //                       MainAxisAlignment
-                                              //                           .spaceBetween,
-                                              //                   children: [
-                                              //                     Text(snapshot
-                                              //                         .data[
-                                              //                             index]
-                                              //                         .price),
-                                              //                     Text(snapshot
-                                              //                         .data[
-                                              //                             index]
-                                              //                         .date)
-                                              //                   ],
-                                              //                 ),
-                                              //               );
-                                              //             });
-                                              //       }
-                                              //     }),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                          );
+                                        },
+                                      )),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "1 Year",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "1 Year",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      Text(
-                                        snapshot.data[index].nav_price1 + "%",
-                                        style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                    Text(
+                                      snapshot.data[index].nav_price1 + "%",
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "3 Years",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "3 Years",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      Text(
-                                        snapshot.data[index].nav_price2 + "%",
-                                        style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                    Text(
+                                      snapshot.data[index].nav_price2 + "%",
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        "5 Years",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "5 Years",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      Text(
-                                        snapshot.data[index].nav_price3 + "%",
-                                        style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                    Text(
+                                      snapshot.data[index].nav_price3 + "%",
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -591,91 +544,4 @@ class GetIndiScheme {
     this.encodedIsin,
     //this.makeGraph,
   );
-}
-
-Future<List<CreateDataList>> createList(String enc) async {
-  var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
-  final headers = {'content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {
-    'get_nav': 'yes',
-    'sch_code': enc,
-  };
-
-  final encoding = Encoding.getByName('utf-8');
-
-  Response response = await post(
-    url,
-    headers: headers,
-    body: body,
-    encoding: encoding,
-  );
-
-  var listBody = response.body;
-  //print(listBody);
-  var jsonData = json.decode(listBody);
-  //print(jsonData);
-  var len = jsonData.length;
-  //print(len);
-
-  for (int i = 0; i < len; i++) {
-    Body.netAsset = jsonData[i]['net_asset_value'];
-    Body.priceDate = jsonData[i]['price_date'];
-    //print('object');
-    //print(Body.netAsset);
-    //print(Body.priceDate);
-  }
-  print(enc);
-  List<CreateDataList> createDataLists = [];
-  for (var sch in jsonData) {
-    CreateDataList createDataList = CreateDataList(
-      sch['net_asset_value'],
-      sch['price_date'],
-    );
-
-    //print(sch['price_date']);
-    //print(sch['net_asset_value']);
-    createDataLists.add(createDataList);
-  }
-  return createDataLists;
-}
-
-Future<String> getDataFromJson() async {
-  var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
-  final headers = {'content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {
-    'get_nav': 'yes',
-    'sch_code': 'SU5GODQ2SzAxMTY0',
-  };
-
-  final encoding = Encoding.getByName('utf-8');
-
-  Response response = await post(
-    url,
-    headers: headers,
-    body: body,
-    encoding: encoding,
-  );
-  return response.body;
-}
-
-class ChartData {
-  ChartData(this.month, this.price);
-
-  final String month;
-  final String price;
-
-  factory ChartData.fromJson(Map<String, dynamic> parsedJson) {
-    return ChartData(
-      parsedJson['month'].toString(),
-      parsedJson['price'],
-    );
-  }
-  List<ChartData> chartData = [];
-  Future loadChartData() async {
-    String jsonString = await getDataFromJson();
-    final jsonResponse = json.decode(jsonString);
-    for (Map<String, dynamic> i in jsonResponse) {
-      chartData.add(ChartData.fromJson(i));
-    }
-  }
 }

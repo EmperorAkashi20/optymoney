@@ -203,12 +203,11 @@ class _BodyState extends State<Body> {
                   children: [
                     //CircularProgressIndicator.adaptive(),
                     if (Body.custPan == 'null')
-                      Container(
-                        width: double.infinity,
-                        height: getProportionateScreenHeight(200),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: kPrimaryColor, width: 1),
+                      Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: kPrimaryColor),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -241,13 +240,11 @@ class _BodyState extends State<Body> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: double.infinity,
-                              height: getProportionateScreenHeight(100),
-                              decoration: BoxDecoration(
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border:
-                                    Border.all(color: kPrimaryColor, width: 1),
+                                side: BorderSide(color: kPrimaryColor),
                               ),
                               child: Column(
                                 mainAxisAlignment:
@@ -367,13 +364,11 @@ class _BodyState extends State<Body> {
                             SizedBox(
                               height: 50,
                             ),
-                            Container(
-                              width: double.infinity,
-                              height: getProportionateScreenHeight(100),
-                              decoration: BoxDecoration(
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border:
-                                    Border.all(color: kPrimaryColor, width: 1),
+                                side: BorderSide(color: kPrimaryColor),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -399,16 +394,14 @@ class _BodyState extends State<Body> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0,
-                      top: 10,
+                      left: 5.0,
+                      right: 5.0,
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      height: getProportionateScreenHeight(100),
-                      decoration: BoxDecoration(
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: kPrimaryColor, width: 1),
+                        side: BorderSide(color: kPrimaryColor),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -674,111 +667,108 @@ class _BodyState extends State<Body> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        "Purchase Price",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      "Purchase Price",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                      Text(
-                                        "₹" +
-                                            snapshot.data[index].purchase_price
-                                                .toString(),
-                                        style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                    ),
+                                    Text(
+                                      "₹" +
+                                          snapshot.data[index].purchase_price
+                                              .toString(),
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        "Investment",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      "Investment",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                      Text(
-                                        "₹" +
-                                            snapshot.data[index].sch_amount
-                                                .toDouble()
-                                                .toStringAsFixed(2),
-                                        style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                    ),
+                                    Text(
+                                      "₹" +
+                                          snapshot.data[index].sch_amount
+                                              .toDouble()
+                                              .toStringAsFixed(2),
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        "Present Value",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Text(
+                                      "Present Value",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "₹" +
-                                                snapshot.data[index].presentVal
-                                                    .toString(),
-                                            style: TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                          if ((snapshot.data[index].sch_amount
-                                                  .toDouble()
-                                                  .round()) <
-                                              (snapshot.data[index].presentVal
-                                                  .toDouble()
-                                                  .round()))
-                                            Icon(
-                                              Icons.arrow_upward_sharp,
-                                              size: 16,
-                                            ),
-                                          if (snapshot.data[index].sch_amount
-                                                  .toDouble()
-                                                  .round() >
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "₹" +
                                               snapshot.data[index].presentVal
-                                                  .toDouble()
-                                                  .round())
-                                            Icon(
-                                              Icons.arrow_downward_sharp,
-                                              size: 16,
-                                            ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                                  .toString(),
+                                          style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        if ((snapshot.data[index].sch_amount
+                                                .toDouble()
+                                                .round()) <
+                                            (snapshot.data[index].presentVal
+                                                .toDouble()
+                                                .round()))
+                                          Icon(
+                                            Icons.arrow_upward_sharp,
+                                            size: 16,
+                                          ),
+                                        if (snapshot.data[index].sch_amount
+                                                .toDouble()
+                                                .round() >
+                                            snapshot.data[index].presentVal
+                                                .toDouble()
+                                                .round())
+                                          Icon(
+                                            Icons.arrow_downward_sharp,
+                                            size: 16,
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
 
                             // Row(
