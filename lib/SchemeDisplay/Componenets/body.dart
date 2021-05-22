@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:optymoney/PostLogin/investments/components/body.dart';
+import 'package:optymoney/SchemeDisplay/Componenets/LumpSumDisplay.dart';
+import 'package:optymoney/SchemeDisplay/Componenets/SipDisplay.dart';
 import 'package:optymoney/size_config.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../constants.dart';
 
@@ -18,11 +19,18 @@ class Body extends StatefulWidget {
   static var priceList;
   static var dateList;
   static var i;
+  static var id;
+  static var minAmt;
+  static var maxAmt;
+  static var values;
+  static var lumpSumMin;
+  static var lumpSumMax;
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  double height = 40;
   var _options = [
     'Best Performing Mutual Funds',
     'Best Equity Mutual Funds',
@@ -92,20 +100,13 @@ class _BodyState extends State<Body> {
     return getIndiSchemes;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    Body.offerId = 32;
-  }
-
-  Future<List<CreateDataList>> _createList(String enc) async {
+  makeSipRequest(pknavid) async {
     var url = Uri.parse('https://optymoney.com/__lib.ajax/ajax_response.php');
-    final headers = {'content-Type': 'application/x-www-form-urlencoded'};
+    final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     Map<String, dynamic> body = {
-      'get_nav': 'yes',
-      'sch_code': enc,
+      'fetch_sch': pknavid,
+      'get_scheme_data': 'yes',
     };
-
     final encoding = Encoding.getByName('utf-8');
 
     Response response = await post(
@@ -114,47 +115,26 @@ class _BodyState extends State<Body> {
       body: body,
       encoding: encoding,
     );
+    var dataBody = response.body;
+    var jsonData = json.decode(dataBody);
+    Body.minAmt =
+        double.tryParse(jsonData[0]['sip_minimum_installment_amount']);
+    Body.maxAmt =
+        double.tryParse(jsonData[0]['sip_maximum_installment_amount']);
+    Body.id = jsonData[0]['pk_nav_id'];
+    Body.values = Body.minAmt;
+    Body.lumpSumMin = double.tryParse(jsonData[0]['minimum_purchase_amount']);
+    Body.lumpSumMax = double.tryParse(jsonData[0]['maximum_purchase_amount']);
+    print(Body.minAmt);
+    print(Body.maxAmt);
+    print(Body.lumpSumMin);
+    print(Body.lumpSumMax);
+  }
 
-    var listBody = response.body;
-    //print(listBody);
-    var jsonData = json.decode(listBody);
-    //print(jsonData);
-    var len = jsonData.length;
-    //print(len);
-
-    for (int i = 0; i < len; i++) {
-      Body.netAsset = jsonData[i]['net_asset_value'];
-      Body.priceDate = jsonData[i]['price_date'];
-      //print('object');
-      //print(Body.netAsset);
-      //print(Body.priceDate);
-    }
-    print(enc);
-    List<CreateDataList> createDataLists = [];
-    for (var sch in jsonData) {
-      CreateDataList createDataList = CreateDataList(
-        sch['net_asset_value'],
-        sch['price_date'],
-      );
-
-      //print(sch['price_date']);
-      //print(sch['net_asset_value']);
-      createDataLists.add(createDataList);
-      Container(
-        child: SfCartesianChart(
-            primaryXAxis: CategoryAxis(),
-            title: ChartTitle(text: 'This is Test'),
-            series: <ChartSeries<CreateDataList, String>>[
-              LineSeries<CreateDataList, String>(
-                dataSource: createDataLists,
-                xValueMapper: (CreateDataList okay, _) =>
-                    sch['net_asset_value'],
-                yValueMapper: (CreateDataList bye, _) => sch['price_date'],
-              )
-            ]),
-      );
-    }
-    return createDataLists;
+  @override
+  void initState() {
+    super.initState();
+    Body.offerId = 32;
   }
 
   @override
@@ -342,57 +322,82 @@ class _BodyState extends State<Body> {
                                           Icons.add_chart,
                                           color: Colors.blueGrey,
                                         ),
-                                        onPressed: () {
-                                          showCupertinoModalBottomSheet(
-                                            expand: false,
+                                        onPressed: () async {
+                                          await makeSipRequest(
+                                              snapshot.data[index].pk_nav_id);
+                                          showModalBottomSheet(
                                             isDismissible: true,
                                             enableDrag: true,
-                                            bounce: true,
-                                            duration:
-                                                Duration(milliseconds: 400),
                                             context: context,
-                                            builder: (context) => Scaffold(
-                                              appBar: AppBar(
-                                                automaticallyImplyLeading:
-                                                    false,
-                                                flexibleSpace: Container(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Expanded(
-                                                          flex: 7,
-                                                          child: Text(
-                                                            snapshot.data[index]
-                                                                .scheme_name,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
+                                            builder: (context) =>
+                                                DefaultTabController(
+                                              length: 2,
+                                              child: Scaffold(
+                                                appBar: AppBar(
+                                                  bottom: TabBar(
+                                                    tabs: [
+                                                      InvestmentTabs(
+                                                          title: 'SIP'),
+                                                      InvestmentTabs(
+                                                          title: 'One Time'),
+                                                    ],
+                                                    unselectedLabelColor:
+                                                        kPrimaryColor,
+                                                    indicator: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                        color: kPrimaryColor),
+                                                    indicatorSize:
+                                                        TabBarIndicatorSize
+                                                            .label,
+                                                  ),
+                                                  automaticallyImplyLeading:
+                                                      false,
+                                                  flexibleSpace: Container(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 7,
+                                                            child: Text(
+                                                              snapshot
+                                                                  .data[index]
+                                                                  .scheme_name,
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
                                                             ),
-                                                            textAlign:
-                                                                TextAlign.left,
                                                           ),
-                                                        ),
-                                                        Expanded(
-                                                            flex: 1,
-                                                            child:
-                                                                CloseButton()),
-                                                      ],
+                                                          Expanded(
+                                                              flex: 1,
+                                                              child:
+                                                                  CloseButton()),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              body: Container(
-                                                child: Text('ABC'),
+                                                body: TabBarView(
+                                                  children: [
+                                                    SipDisplay(),
+                                                    LumpSumDisplay(),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
