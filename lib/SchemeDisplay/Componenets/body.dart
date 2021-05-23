@@ -30,7 +30,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  double height = 40;
   var _options = [
     'Best Performing Mutual Funds',
     'Best Equity Mutual Funds',
@@ -125,10 +124,6 @@ class _BodyState extends State<Body> {
     Body.values = Body.minAmt;
     Body.lumpSumMin = double.tryParse(jsonData[0]['minimum_purchase_amount']);
     Body.lumpSumMax = double.tryParse(jsonData[0]['maximum_purchase_amount']);
-    print(Body.minAmt);
-    print(Body.maxAmt);
-    print(Body.lumpSumMin);
-    print(Body.lumpSumMax);
   }
 
   @override
@@ -182,8 +177,7 @@ class _BodyState extends State<Body> {
                   onChanged: (String? newValueSelected) {
                     _dropDownItemSelected(newValueSelected);
                     //Body.offerId = _currentItemSelected;
-                    print("aaa");
-                    print(Body.offerId);
+
                     if (_currentItemSelected ==
                         'Best Performing Mutual Funds') {
                       Body.offerId = 32;

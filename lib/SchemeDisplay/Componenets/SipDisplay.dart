@@ -13,7 +13,41 @@ class SipDisplay extends StatefulWidget {
 }
 
 class _SipDisplayState extends State<SipDisplay> {
+  var _options = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+  ];
+  String _currentItemSelected = '1';
   double miniamt = Body.minAmt;
+  String _prefix = 'st';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,9 +120,80 @@ class _SipDisplayState extends State<SipDisplay> {
                     children: [
                       Expanded(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(Icons.calendar_today_rounded),
-                            Text('SIP DATE'),
+                            Row(
+                              children: [
+                                Icon(Icons.calendar_today_rounded),
+                                SizedBox(width: 3),
+                                Text('SIP DATE'),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: getProportionateScreenWidth(70),
+                                  height: getProportionateScreenHeight(40),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                        color: kPrimaryColor, width: 1),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      dropdownColor: Colors.grey.shade200,
+                                      isExpanded: true,
+                                      elevation: 0,
+                                      items: _options
+                                          .map((String dropDownStringItem) {
+                                        return DropdownMenuItem<String>(
+                                          value: dropDownStringItem,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                dropDownStringItem,
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 0.4,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValueSelected) {
+                                        _dropDownItemSelected(newValueSelected);
+                                        if (_currentItemSelected == '1' ||
+                                            _currentItemSelected == '21') {
+                                          _prefix = 'st';
+                                        } else if (_currentItemSelected ==
+                                                '2' ||
+                                            _currentItemSelected == '22') {
+                                          _prefix = 'nd';
+                                        } else if (_currentItemSelected ==
+                                                '3' ||
+                                            _currentItemSelected == '23') {
+                                          _prefix = 'rd';
+                                        } else {
+                                          _prefix = 'th';
+                                        }
+                                      },
+                                      value: _currentItemSelected,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(_prefix + ' of Every Month'),
+                              ],
+                            ),
                           ],
                         ),
                       )
@@ -138,6 +243,12 @@ class _SipDisplayState extends State<SipDisplay> {
         ),
       ),
     );
+  }
+
+  void _dropDownItemSelected(String? newValueSelected) {
+    setState(() {
+      this._currentItemSelected = newValueSelected.toString();
+    });
   }
 }
 
