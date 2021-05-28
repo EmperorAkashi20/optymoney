@@ -11,15 +11,16 @@ class CategoriesDsiplay extends StatefulWidget {
   static var pName;
   static var cName;
   static var id;
-  static var alen;
-  static var b;
-  static var c;
+  static var keys;
+  static var values;
 
   @override
   _CategoriesDsiplayState createState() => _CategoriesDsiplayState();
 }
 
 class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
+  bool value = false;
+  final allCheckbox = CategoryFilters(title: 'SELECT ALL');
   Future<List<CategoryFiltersList>> getCategoryList() async {
     var url = Uri.parse(
         'https://optymoney.com/__lib.ajax/ajax_response.php?action=schemetypelist&subaction=submit');
@@ -35,44 +36,16 @@ class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
       body: body,
       encoding: encoding,
     );
-
-    var schemeBody = response.body;
-    var jsonData = json.decode(schemeBody);
-    print(jsonData);
-    // print(jsonData);
-    // print('a');
-    // var a = jsonData['EQUITY'].toString();
-    // print(a);
-    // print('b');
-    // var b = jsonData['ELSS'].toString();
-    // print(b);
-    // var c = jsonData['EQUITY']['value'];
-    // print(c);
-    // var d = c.length;
-    // print(d);
-    // for (var a in c) {
-    //   print(a['id']);
-    // }
-
+    Map<String, dynamic> jsonResponse = json.decode(response.body);
     List<CategoryFiltersList> categoryFiltersLists = [];
-    for (var sch in jsonData) {
-      print('length:$jsonData.length');
-      // String credentials = sch['isin'];
-      // Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      // Body.encoded =
-      //     stringToBase64.encode(credentials); // dXNlcm5hbWU6cGFzc3dvcmQ=
+    jsonResponse.forEach((key, value) {
+      CategoryFiltersList categoryFiltersList =
+          CategoryFiltersList.fromJson(jsonResponse);
 
-      CategoryFiltersList categoryFiltersList = CategoryFiltersList(
-        sch['EQUITY'],
-        sch['ELSS'],
-        sch['HYBRID'],
-        sch['DEBT'],
-        sch['FOF'],
-      );
-
+      CategoriesDsiplay.keys = jsonResponse.keys.toList();
+      CategoriesDsiplay.values = jsonResponse.values.toList();
       categoryFiltersLists.add(categoryFiltersList);
-      CategoriesDsiplay.userStatus.add(false);
-    }
+    });
 
     return categoryFiltersLists;
   }
@@ -105,11 +78,23 @@ class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
             );
           } else {
             return ListView.builder(
-              itemCount: CategoriesDsiplay.alen,
+              itemCount: CategoriesDsiplay.keys.length,
               itemBuilder: (BuildContext context, int index) {
+                String key = CategoriesDsiplay.keys.elementAt(index);
+                String values =
+                    CategoriesDsiplay.values.elementAt(index).toString();
+                print(key);
                 return Column(
                   children: [
-                    Text(snapshot.data[index].EQUITY),
+                    new ExpansionTile(
+                      title: Text('$key'),
+                      children: [
+                        Text((CategoriesDsiplay.values[index]['value'])
+                            .toString()),
+                        //json.decode(CategoriesDsiplay.values[index].toString()),
+                      ],
+                      // subtitle: Text('$values'.toString()),
+                    ),
                   ],
                 );
               },
@@ -140,4 +125,30 @@ class CategoryFiltersList {
     this.DEBT,
     this.FOF,
   );
+
+  Map<String, dynamic> toJson() => {
+        'EQUITY': EQUITY,
+        'ELSS': ELSS,
+        'HYBRID': HYBRID,
+        'DEBT': DEBT,
+        'FOF': FOF,
+      };
+
+  // for init from a json object.
+  CategoryFiltersList.fromJson(Map<String, dynamic> json)
+      : EQUITY = json['EQUITY'],
+        ELSS = json['ELSS'],
+        HYBRID = json['HYBRID'],
+        DEBT = json['DEBT'],
+        FOF = json['FOF'];
+}
+
+class CategoryFilters {
+  final String title;
+  bool value;
+
+  CategoryFilters({
+    required this.title,
+    this.value = false,
+  });
 }
