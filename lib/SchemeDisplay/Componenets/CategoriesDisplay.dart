@@ -39,22 +39,24 @@ class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
     var schemeBody = response.body;
     var jsonData = json.decode(schemeBody);
     print(jsonData);
-    print('a');
-    var a = jsonData['EQUITY'].toString();
-    print(a);
-    print('b');
-    var b = jsonData['ELSS'].toString();
-    print(b);
-    var c = jsonData['EQUITY']['value'];
-    print(c);
-    var d = c.length;
-    print(d);
-    for (var a in c) {
-      print(a['id']);
-    }
+    // print(jsonData);
+    // print('a');
+    // var a = jsonData['EQUITY'].toString();
+    // print(a);
+    // print('b');
+    // var b = jsonData['ELSS'].toString();
+    // print(b);
+    // var c = jsonData['EQUITY']['value'];
+    // print(c);
+    // var d = c.length;
+    // print(d);
+    // for (var a in c) {
+    //   print(a['id']);
+    // }
 
     List<CategoryFiltersList> categoryFiltersLists = [];
     for (var sch in jsonData) {
+      print('length:$jsonData.length');
       // String credentials = sch['isin'];
       // Codec<String, String> stringToBase64 = utf8.fuse(base64);
       // Body.encoded =

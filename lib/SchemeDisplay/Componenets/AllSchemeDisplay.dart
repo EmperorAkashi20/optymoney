@@ -6,9 +6,7 @@ import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/PostLogin/investments/components/body.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/AmcFilters.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/CategoriesDisplay.dart';
-import 'package:optymoney/SchemeDisplay/Componenets/LumpSumDisplay.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/LumpSumDisplayFilters.dart';
-import 'package:optymoney/SchemeDisplay/Componenets/SipDisplay.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/SipDisplayFilters.dart';
 
 import '../../constants.dart';
@@ -47,9 +45,7 @@ Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a) async {
     body: body,
   );
   var dataBody = response.body;
-  print(dataBody);
   var jsonData = json.decode(dataBody);
-  print(jsonData);
   List<AllSchemeWithFilters> allSchemeWithFilterss = [];
 
   for (var sch in jsonData) {
@@ -75,9 +71,7 @@ Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a) async {
       nav3.toString(),
       AllSchemeDisplay.encoded,
     );
-    if (sch['pk_nav_id'] != null) {
-      print(sch['scheme_name']);
-    }
+    if (sch['pk_nav_id'] != null) {}
     allSchemeWithFilterss.add(allSchemeWithFilters);
   }
   return allSchemeWithFilterss;
