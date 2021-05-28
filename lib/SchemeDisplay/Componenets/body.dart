@@ -121,9 +121,18 @@ class _BodyState extends State<Body> {
     Body.maxAmt =
         double.tryParse(jsonData[0]['sip_maximum_installment_amount']);
     Body.id = jsonData[0]['pk_nav_id'];
-    Body.values = Body.minAmt;
+
     Body.lumpSumMin = double.tryParse(jsonData[0]['minimum_purchase_amount']);
     Body.lumpSumMax = double.tryParse(jsonData[0]['maximum_purchase_amount']);
+    if (Body.lumpSumMin == Body.lumpSumMax) {
+      Body.lumpSumMin = 0.0;
+      Body.lumpSumMax = 99999999.0;
+    }
+    if (Body.minAmt == Body.maxAmt) {
+      Body.minAmt = 0.0;
+      Body.maxAmt = 99999999.0;
+    }
+    Body.values = Body.minAmt;
   }
 
   @override
@@ -222,7 +231,6 @@ class _BodyState extends State<Body> {
                         borderSize: 2.0,
                         size: 40.0,
                         backgroundColor: kPrimaryColor,
-                        //duration: Duration(milliseconds: 500),
                       ),
                       Text(
                         "We are fetching the best schemes for you...\nHOLD TIGHT!!",
@@ -420,7 +428,7 @@ class _BodyState extends State<Body> {
                                     Text(
                                       snapshot.data[index].nav_price1 + "%",
                                       style: TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Colors.black,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -441,7 +449,7 @@ class _BodyState extends State<Body> {
                                     Text(
                                       snapshot.data[index].nav_price2 + "%",
                                       style: TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Colors.black,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -462,7 +470,7 @@ class _BodyState extends State<Body> {
                                     Text(
                                       snapshot.data[index].nav_price3 + "%",
                                       style: TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Colors.black,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),

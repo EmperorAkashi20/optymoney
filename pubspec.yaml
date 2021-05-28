@@ -44,7 +44,6 @@ dependencies:
   syncfusion_flutter_charts: ^19.1.63
   url_launcher: ^6.0.4
   syncfusion_flutter_sliders: ^19.1.64-beta
-
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

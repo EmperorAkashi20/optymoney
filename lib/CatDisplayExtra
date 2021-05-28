@@ -1,0 +1,248 @@
+import 'package:flutter/material.dart';
+
+import '../../constants.dart';
+
+class CategoriesDsiplay extends StatefulWidget {
+  @override
+  _CategoriesDsiplayState createState() => _CategoriesDsiplayState();
+}
+
+class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
+  bool value = false;
+  final allCheckbox = CategoryFilters(title: 'SELECT ALL');
+
+  final equityFilters = [
+    CategoryFilters(title: 'Value Fund'),
+    CategoryFilters(title: 'Large Cap'),
+    CategoryFilters(title: 'Large And Midcap'),
+    CategoryFilters(title: 'Multicap'),
+    CategoryFilters(title: 'Midcap'),
+    CategoryFilters(title: 'Small Cap'),
+    CategoryFilters(title: 'Focused Fund'),
+    CategoryFilters(title: 'Dividend Yeild Fund'),
+  ];
+
+  final hybridFilters = [
+    CategoryFilters(title: 'Arbitrage Fund'),
+    CategoryFilters(title: 'Conservative Hybrid Fund'),
+    CategoryFilters(title: 'Equity Savings Fund'),
+    CategoryFilters(title: 'Dynamic Assets Allocation Fund'),
+    CategoryFilters(title: 'Balanced Advantage Fund'),
+    CategoryFilters(title: 'Aggressive Hybrid Fund'),
+    CategoryFilters(title: 'Multi Asset Allocation'),
+  ];
+
+  final debtFilters = [
+    CategoryFilters(title: 'Liquid Fund'),
+    CategoryFilters(title: 'Ultra Short Duration Fund'),
+    CategoryFilters(title: 'Low Duration Fund'),
+    CategoryFilters(title: 'Short Duration Fund'),
+    CategoryFilters(title: 'Medium Duration Fund'),
+    CategoryFilters(title: 'Medium To Long Duration Fund'),
+    CategoryFilters(title: 'Long Duration Fund'),
+    CategoryFilters(title: 'Dynamic Bond'),
+    CategoryFilters(title: 'Corporate Bond Fund'),
+    CategoryFilters(title: 'Credit Risk Fund'),
+    CategoryFilters(title: 'Floater Fund'),
+    CategoryFilters(title: 'Money Market Fund'),
+    CategoryFilters(title: 'Banking & BSU Fund'),
+    CategoryFilters(title: 'Gilt Fund'),
+  ];
+
+  final fofFilters = [
+    CategoryFilters(title: 'Domestic'),
+    CategoryFilters(title: 'International'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView(
+        children: [
+          ExpansionTile(
+            title: Text('EQUITY'),
+            children: [
+              buildGroupCheckBoxEquity(allCheckbox),
+              ...equityFilters.map(buildSingleCheckBoxEquity).toList(),
+            ],
+          ),
+          CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
+            checkColor: Colors.white,
+            activeColor: kPrimaryColor,
+            value: value,
+            title: Text('ELSS'),
+            onChanged: (value) => setState(() => this.value = value!),
+          ),
+          ExpansionTile(
+            title: Text('HYBRID'),
+            children: [
+              buildGroupCheckBoxHybrid(allCheckbox),
+              ...hybridFilters.map(buildSingleCheckBoxHybrid).toList(),
+            ],
+          ),
+          ExpansionTile(
+            title: Text('DEBT'),
+            children: [
+              buildGroupCheckBoxDebt(allCheckbox),
+              ...debtFilters.map(buildSingleCheckBoxDebt).toList(),
+            ],
+          ),
+          ExpansionTile(
+            title: Text('FOF'),
+            children: [
+              buildGroupCheckBoxFof(allCheckbox),
+              ...fofFilters.map(buildSingleCheckBoxFof).toList(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSingleCheckBoxEquity(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: (bool? value) {
+          setState(() {
+            categoryFilters.value = value!;
+            allCheckbox.value =
+                equityFilters.every((equityFilters) => equityFilters.value);
+          });
+        },
+      );
+
+  Widget buildGroupCheckBoxEquity(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: toggleGroupCheckBoxEquity,
+      );
+
+  void toggleGroupCheckBoxEquity(bool? value) {
+    if (value == null) return;
+    setState(() {
+      allCheckbox.value = value;
+      equityFilters.forEach((equityFilters) => equityFilters.value = value);
+    });
+  }
+
+  Widget buildSingleCheckBoxHybrid(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: (bool? value) {
+          setState(() {
+            categoryFilters.value = value!;
+            allCheckbox.value =
+                hybridFilters.every((hybridFilters) => hybridFilters.value);
+          });
+        },
+      );
+
+  Widget buildGroupCheckBoxHybrid(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: toggleGroupCheckBoxHybrid,
+      );
+
+  void toggleGroupCheckBoxHybrid(bool? value) {
+    if (value == null) return;
+    setState(() {
+      allCheckbox.value = value;
+      hybridFilters.forEach((hybridFilters) => hybridFilters.value = value);
+    });
+  }
+
+  Widget buildSingleCheckBoxDebt(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: (bool? value) {
+          setState(() {
+            categoryFilters.value = value!;
+            allCheckbox.value =
+                debtFilters.every((debtFilters) => debtFilters.value);
+          });
+        },
+      );
+
+  Widget buildGroupCheckBoxDebt(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: toggleGroupCheckBoxDebt,
+      );
+
+  void toggleGroupCheckBoxDebt(bool? value) {
+    if (value == null) return;
+    setState(() {
+      allCheckbox.value = value;
+      debtFilters.forEach((debtFilters) => debtFilters.value = value);
+    });
+  }
+
+  Widget buildSingleCheckBoxFof(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: (bool? value) {
+          setState(() {
+            categoryFilters.value = value!;
+            allCheckbox.value =
+                fofFilters.every((fofFilters) => fofFilters.value);
+          });
+        },
+      );
+
+  Widget buildGroupCheckBoxFof(CategoryFilters categoryFilters) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        checkColor: Colors.white,
+        activeColor: kPrimaryColor,
+        value: categoryFilters.value,
+        title: Text(categoryFilters.title),
+        onChanged: toggleGroupCheckBoxFof,
+      );
+
+  void toggleGroupCheckBoxFof(bool? value) {
+    if (value == null) return;
+    setState(() {
+      allCheckbox.value = value;
+      fofFilters.forEach((fofFilters) => fofFilters.value = value);
+    });
+  }
+}
+
+class CategoryFilters {
+  final String title;
+  bool value;
+
+  CategoryFilters({
+    required this.title,
+    this.value = false,
+  });
+}
