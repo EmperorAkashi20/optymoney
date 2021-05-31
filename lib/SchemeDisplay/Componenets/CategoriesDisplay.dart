@@ -7,10 +7,7 @@ import 'package:loading_animations/loading_animations.dart';
 import '../../constants.dart';
 
 class CategoriesDsiplay extends StatefulWidget {
-  static var userStatus = <bool>[];
-  static var pName;
-  static var cName;
-  static var id;
+  static List selectedCategories = [];
   static var keys;
   static var values;
 
@@ -19,7 +16,9 @@ class CategoriesDsiplay extends StatefulWidget {
 }
 
 class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
-  bool value = false;
+  bool selected = false;
+  var userStatus = <bool>[];
+  var selectAll = <bool>[];
   final allCheckbox = CategoryFilters(title: 'SELECT ALL');
   Future<List<CategoryFiltersList>> getCategoryList() async {
     var url = Uri.parse(
@@ -51,6 +50,12 @@ class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    CategoriesDsiplay.selectedCategories = [];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder(
@@ -78,22 +83,71 @@ class _CategoriesDsiplayState extends State<CategoriesDsiplay> {
             );
           } else {
             return ListView.builder(
+              shrinkWrap: true,
               itemCount: CategoriesDsiplay.keys.length,
               itemBuilder: (BuildContext context, int index) {
-                String key = CategoriesDsiplay.keys.elementAt(index);
-                String values =
-                    CategoriesDsiplay.values.elementAt(index).toString();
-                print(key);
+                var key = CategoriesDsiplay.keys.elementAt(index);
+                var values = CategoriesDsiplay.values.elementAt(index);
+                var sch = values['value'];
+                var sch1 = sch;
+                selectAll.add(false);
                 return Column(
                   children: [
-                    new ExpansionTile(
+                    ExpansionTile(
                       title: Text('$key'),
                       children: [
-                        Text((CategoriesDsiplay.values[index]['value'])
-                            .toString()),
-                        //json.decode(CategoriesDsiplay.values[index].toString()),
+                        CheckboxListTile(
+                          title: Text('SELECT ALL'),
+                          value: selectAll[index],
+                          onChanged: (val) {
+                            setState(() {
+                              selectAll[index] = !selectAll[index];
+                              if (selectAll[index] == true) {
+                                for (int i = 0; i < sch.length; i++) {
+                                  userStatus[i] = (true);
+                                  CategoriesDsiplay.selectedCategories
+                                      .add(sch1[i]['id']);
+                                  print(CategoriesDsiplay.selectedCategories);
+                                }
+                              }
+                              if (selectAll[index] == false) {
+                                for (int i = 0; i < sch.length; i++) {
+                                  userStatus[i] = (false);
+                                  CategoriesDsiplay.selectedCategories
+                                      .remove(sch1[i]['id']);
+                                  print(CategoriesDsiplay.selectedCategories);
+                                }
+                              }
+                            });
+                          },
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: sch.length,
+                          itemBuilder: (context, index) {
+                            userStatus.add(false);
+                            return CheckboxListTile(
+                              title: Text(sch1[index]['name'].toString()),
+                              value: userStatus[index],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  //selected = !selected;
+                                  userStatus[index] = !userStatus[index];
+                                  if (userStatus[index] == true) {
+                                    CategoriesDsiplay.selectedCategories
+                                        .add(sch1[index]['id']);
+                                    print(CategoriesDsiplay.selectedCategories);
+                                  } else if (userStatus[index] == false) {
+                                    CategoriesDsiplay.selectedCategories
+                                        .remove(sch1[index]['id']);
+                                    print(CategoriesDsiplay.selectedCategories);
+                                  }
+                                });
+                              },
+                            );
+                          },
+                        ),
                       ],
-                      // subtitle: Text('$values'.toString()),
                     ),
                   ],
                 );
@@ -151,4 +205,14 @@ class CategoryFilters {
     required this.title,
     this.value = false,
   });
+}
+
+class SingleValues {
+  var name;
+  var id;
+
+  SingleValues(
+    this.name,
+    this.id,
+  );
 }

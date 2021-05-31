@@ -90,25 +90,21 @@ class _AmcFiltersState extends State<AmcFilters> {
                     shrinkWrap: true,
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.all(10),
-                        child: CheckboxListTile(
-                          title: Text(snapshot.data[index].amc_name_act),
-                          value: userStatus[index],
-                          onChanged: (val) {
-                            setState(() {
-                              userStatus[index] = !userStatus[index];
-                              if (userStatus[index] == true) {
-                                AmcFilters.selecteCategorys
-                                    .add(snapshot.data[index].mf_schema_id);
-                              } else if (userStatus[index] == false) {
-                                AmcFilters.selecteCategorys
-                                    .remove(snapshot.data[index].mf_schema_id);
-                              }
-                              //print(AmcFilters.selecteCategorys);
-                            });
-                          },
-                        ),
+                      return CheckboxListTile(
+                        title: Text(snapshot.data[index].amc_name_act),
+                        value: userStatus[index],
+                        onChanged: (val) {
+                          setState(() {
+                            userStatus[index] = !userStatus[index];
+                            if (userStatus[index] == true) {
+                              AmcFilters.selecteCategorys
+                                  .add(snapshot.data[index].mf_schema_id);
+                            } else if (userStatus[index] == false) {
+                              AmcFilters.selecteCategorys
+                                  .remove(snapshot.data[index].mf_schema_id);
+                            }
+                          });
+                        },
                       );
                     },
                   ),
