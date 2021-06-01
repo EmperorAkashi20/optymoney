@@ -27,8 +27,9 @@ class AllSchemeDisplay extends StatefulWidget {
   _AllSchemeDisplayState createState() => _AllSchemeDisplayState();
 }
 
-Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a) async {
+Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a, List b) async {
   print(AmcFilters.selecteCategorys);
+  print(CategoriesDsiplay.selectedCategories);
   var url = Uri.parse(
       'https://optymoney.com/__lib.ajax/ajax_response.php?action=filter_offer_search_app_test1');
   final headers = {'Content-Type': 'application/json'};
@@ -144,7 +145,8 @@ class _AllSchemeDisplayState extends State<AllSchemeDisplay> {
       ),
       body: Container(
         child: FutureBuilder(
-          future: getSchemeListRequest(AmcFilters.selecteCategorys),
+          future: getSchemeListRequest(AmcFilters.selecteCategorys,
+              CategoriesDsiplay.selectedCategories),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return Container(

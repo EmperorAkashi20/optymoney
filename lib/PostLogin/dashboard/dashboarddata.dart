@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optymoney/BankDetails/bankdetails.dart';
+import 'package:optymoney/Cart/cart.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/size_config.dart';
@@ -226,23 +227,21 @@ class AppDrawerMain extends StatelessWidget {
             },
           ),
           AppDrawerListTIle(
-            title: "Item 4",
-            icon: FaIcon(
-              FontAwesomeIcons.stopwatch,
-            ),
+            title: "Cart",
+            icon: FaIcon(FontAwesomeIcons.shoppingCart),
             navigationRoute: () {
               Navigator.pop(context);
               bool isNewRouteSameAsCurrent = false;
 
               Navigator.popUntil(context, (route) {
-                if (route.settings.name == TestPage.routeName) {
+                if (route.settings.name == Cart.routeName) {
                   isNewRouteSameAsCurrent = true;
                 }
                 return true;
               });
 
               if (!isNewRouteSameAsCurrent) {
-                Navigator.pushNamed(context, TestPage.routeName);
+                Navigator.pushNamed(context, Cart.routeName);
               }
             },
           ),

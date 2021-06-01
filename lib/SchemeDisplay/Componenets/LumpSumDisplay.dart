@@ -8,13 +8,13 @@ import '../../size_config.dart';
 import 'SipDisplay.dart';
 
 class LumpSumDisplay extends StatefulWidget {
+  static double miniamt = Body.lumpSumMin;
+
   @override
   _LumpSumDisplayState createState() => _LumpSumDisplayState();
 }
 
 class _LumpSumDisplayState extends State<LumpSumDisplay> {
-  double miniamt = Body.lumpSumMin;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,17 +37,17 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                       activeColor: kPrimaryColor,
                       min: Body.lumpSumMin,
                       max: Body.lumpSumMax,
-                      value: miniamt.toDouble(),
+                      value: LumpSumDisplay.miniamt.toDouble(),
                       onChanged: (dynamic value) {
                         setState(() {
-                          miniamt = value;
+                          LumpSumDisplay.miniamt = value;
                         });
                       },
                     ),
                   ],
                 ),
                 GlobalOutputField(
-                  outputValue: miniamt.toStringAsFixed(2),
+                  outputValue: LumpSumDisplay.miniamt.toStringAsFixed(2),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -58,7 +58,8 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '1000',
                         press: () {
                           setState(() {
-                            miniamt = (miniamt + 1000).toDouble();
+                            LumpSumDisplay.miniamt =
+                                (LumpSumDisplay.miniamt + 1000).toDouble();
                           });
                         },
                       ),
@@ -66,7 +67,8 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '3000',
                         press: () {
                           setState(() {
-                            miniamt = (miniamt + 3000).toDouble();
+                            LumpSumDisplay.miniamt =
+                                (LumpSumDisplay.miniamt + 3000).toDouble();
                           });
                         },
                       ),
@@ -74,7 +76,8 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '5000',
                         press: () {
                           setState(() {
-                            miniamt = (miniamt + 5000).toDouble();
+                            LumpSumDisplay.miniamt =
+                                (LumpSumDisplay.miniamt + 5000).toDouble();
                           });
                         },
                       ),

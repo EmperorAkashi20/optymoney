@@ -1,13 +1,44 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/body.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../constants.dart';
 import '../../models.dart';
 import '../../size_config.dart';
 
+addToCartRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/__lib.ajax/mutual_fund.php?action=add_cart_api&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  var body = jsonEncode({
+    "sch_code": Body.encodedIndex,
+    "f_sip_amount": SipDisplay.sipAmount,
+    "sip_date": SipDisplay.date,
+    "sch_d": Body.idIndex,
+    "uid": SignForm.userIdGlobal,
+  });
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  print(response.body);
+}
+
 class SipDisplay extends StatefulWidget {
   static var ignoreButton = false;
+  static var date;
+  static var sipAmount;
+
   @override
   _SipDisplayState createState() => _SipDisplayState();
 }
@@ -48,6 +79,13 @@ class _SipDisplayState extends State<SipDisplay> {
   String _currentItemSelected = '1';
   double miniamt = Body.minAmt;
   String _prefix = 'st';
+
+  @override
+  void initState() {
+    super.initState();
+    SipDisplay.date = '1';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,6 +208,7 @@ class _SipDisplayState extends State<SipDisplay> {
                                         );
                                       }).toList(),
                                       onChanged: (String? newValueSelected) {
+                                        SipDisplay.date = newValueSelected;
                                         _dropDownItemSelected(newValueSelected);
                                         if (_currentItemSelected == '1' ||
                                             _currentItemSelected == '21') {
@@ -211,7 +250,16 @@ class _SipDisplayState extends State<SipDisplay> {
                         height: getProportionateScreenHeight(40),
                         width: getProportionateScreenWidth(140),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            SipDisplay.sipAmount = miniamt;
+                            print(SignForm.userIdGlobal);
+                            print(Body.encodedIndex);
+                            print(SipDisplay.sipAmount);
+                            print(SipDisplay.date);
+                            print(Body.idIndex);
+                            await addToCartRequest();
+                            print('done');
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -25,6 +25,8 @@ class Body extends StatefulWidget {
   static var values;
   static var lumpSumMin;
   static var lumpSumMax;
+  static var encodedIndex;
+  static var idIndex;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -325,6 +327,10 @@ class _BodyState extends State<Body> {
                                           color: Colors.blueGrey,
                                         ),
                                         onPressed: () async {
+                                          Body.idIndex =
+                                              snapshot.data[index].pk_nav_id;
+                                          Body.encodedIndex =
+                                              snapshot.data[index].encodedIsin;
                                           await makeSipRequest(
                                               snapshot.data[index].pk_nav_id);
                                           showModalBottomSheet(
