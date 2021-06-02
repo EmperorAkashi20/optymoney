@@ -170,6 +170,7 @@ class _AllSchemeDisplayState extends State<AllSchemeDisplay> {
               );
             } else {
               return ListView.builder(
+                key: UniqueKey(),
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
