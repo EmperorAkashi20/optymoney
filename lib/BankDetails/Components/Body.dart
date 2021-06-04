@@ -86,6 +86,7 @@ class _BodyState extends State<Body> {
   Timer? _timer;
   late double _progress;
   var color1;
+  bool enableNotEnable = false;
 
   Future<List<BankDetail>> _getBankDetail() async {
     var url = Uri.parse(
@@ -416,8 +417,40 @@ class _BodyState extends State<Body> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          TitleHeader(
-                                                            text: "ABC",
+                                                          Column(
+                                                            children: [
+                                                              TitleHeader(
+                                                                text:
+                                                                    "Bank Name",
+                                                              ),
+                                                              FormFieldGlobal(
+                                                                enabledOrNot:
+                                                                    enableNotEnable,
+                                                              ),
+                                                              TitleHeader(
+                                                                text:
+                                                                    "Account Number",
+                                                              ),
+                                                              FormFieldGlobal(
+                                                                enabledOrNot:
+                                                                    enableNotEnable,
+                                                              ),
+                                                              TitleHeader(
+                                                                text:
+                                                                    "IFSC Code",
+                                                              ),
+                                                              FormFieldGlobal(
+                                                                enabledOrNot:
+                                                                    enableNotEnable,
+                                                              ),
+                                                              if (enableNotEnable ==
+                                                                  true)
+                                                                TextButton(
+                                                                    child: Text(
+                                                                        'Save'),
+                                                                    onPressed:
+                                                                        () {}),
+                                                            ],
                                                           ),
                                                           Row(
                                                             children: [
@@ -432,7 +465,13 @@ class _BodyState extends State<Body> {
                                                                     child:
                                                                         TextButton(
                                                                       onPressed:
-                                                                          () {},
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          enableNotEnable =
+                                                                              true;
+                                                                        });
+                                                                      },
                                                                       child:
                                                                           Text(
                                                                         'Edit Details',
@@ -606,6 +645,7 @@ class _BodyState extends State<Body> {
                                             ),
                                             Text(
                                               snapshot.data[index].mandate_id,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 15,

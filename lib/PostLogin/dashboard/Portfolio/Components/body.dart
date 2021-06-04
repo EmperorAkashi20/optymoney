@@ -11,6 +11,31 @@ import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/size_config.dart';
 
+redeemScheme(var a, b) async {
+  var url = Uri.parse(
+      'https://optymoney.com/__lib.ajax/mutual_fund.php?action=p_to_redeem_api&subaction=submit');
+  final headers = {'Content-Type': 'application/json'};
+  var body = jsonEncode({
+    "status": 2,
+    "uid": SignForm.userIdGlobal,
+    "redeem_amt": Body.redeemAmount,
+    "redeem_folio": a,
+    "redeem_scheme_id": b,
+    "redeem_order_id": '',
+    "redeem_all_amount": '',
+    "exampleadios": 'option1',
+  });
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+  print(response.body);
+}
+
 makeUserRequest() async {
   var url = Uri.parse(
       'https://optymoney.com/ajax-request/ajax_response.php?action=getCustomerInfo&subaction=submit');
@@ -89,17 +114,20 @@ class Body extends StatefulWidget {
   static var navPrice;
   static var presentValIndi;
   static var flag = 0;
+  static var redeemAmount;
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  TextEditingController redeemAmt = new TextEditingController();
   Timer? _timer;
   late double _progress;
   bool _isEditingText = false;
   late TextEditingController _editingController;
   String initialText = "";
+  bool valuefirst = false;
   Future<List<Scheme>> _getScheme() async {
     var url = Uri.parse(
         'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
@@ -657,7 +685,7 @@ class _BodyState extends State<Body> {
                                                                       content:
                                                                           Container(
                                                                         height:
-                                                                            getProportionateScreenHeight(170),
+                                                                            getProportionateScreenHeight(250),
                                                                         child:
                                                                             Column(
                                                                           crossAxisAlignment:
@@ -674,6 +702,7 @@ class _BodyState extends State<Body> {
                                                                                 children: [
                                                                                   TitleHeaderForPopUp(text: 'Redeem Amount*'),
                                                                                   FormFieldGlobalForPopUp(
+                                                                                    dataController: redeemAmt,
                                                                                     hintText: 'Please Enter The Amount',
                                                                                     keyboardTypeGlobal: TextInputType.number,
                                                                                   ),
@@ -687,19 +716,36 @@ class _BodyState extends State<Body> {
                                                                         TextButton(
                                                                           onPressed:
                                                                               () async {
-                                                                            _progress =
-                                                                                0;
-                                                                            _timer?.cancel();
-                                                                            _timer =
-                                                                                Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
-                                                                              await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
-                                                                              _progress += 0.03;
-                                                                              if (_progress >= 1) {
-                                                                                _timer?.cancel();
-                                                                                EasyLoading.dismiss();
-                                                                              }
-                                                                            });
-                                                                            Navigator.pop(context);
+                                                                            Body.redeemAmount =
+                                                                                redeemAmt.text;
+                                                                            double
+                                                                                a =
+                                                                                double.parse(Body.redeemAmount);
+                                                                            double
+                                                                                b =
+                                                                                Body.presentValIndi;
+
+                                                                            if (a >
+                                                                                b) {
+                                                                              EasyLoading.showError('Wrong Input', dismissOnTap: true, maskType: EasyLoadingMaskType.black);
+                                                                            } else {
+                                                                              await redeemScheme(
+                                                                                snapshot.data[index].folio,
+                                                                                snapshot.data[index].bse_scheme_code,
+                                                                              );
+
+                                                                              _progress = 0;
+                                                                              _timer?.cancel();
+                                                                              _timer = Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
+                                                                                await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
+                                                                                _progress += 0.03;
+                                                                                if (_progress >= 1) {
+                                                                                  _timer?.cancel();
+                                                                                  EasyLoading.dismiss();
+                                                                                }
+                                                                              });
+                                                                              Navigator.pop(context);
+                                                                            }
                                                                           },
                                                                           child:
                                                                               Text('Continue'),
@@ -988,8 +1034,8 @@ class Scheme {
 
   Scheme(
     this.isin,
-    this.folio,
-    this.bse_scheme_code,
+    this.folio, //redeem_folio
+    this.bse_scheme_code, //redeem_scheme_id
     this.fr_scheme_name,
     this.purchase_price,
     this.nav_price,
@@ -999,3 +1045,6 @@ class Scheme {
     this.presentVal,
   );
 }
+
+//redeem_all_amount =========== either 'null' || 'Y'
+//exampleRadios = 'option1'

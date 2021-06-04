@@ -122,6 +122,11 @@ class _AmcFiltersState extends State<AmcFilters> {
                         print(AmcFilters.selecteCategorys);
                         await getSchemeListRequest(AmcFilters.selecteCategorys,
                             CategoriesDsiplay.selectedCategories);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    super.widget));
                       },
                       child: Text(
                         'Apply',
