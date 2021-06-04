@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/body.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../constants.dart';
@@ -7,14 +11,42 @@ import '../../models.dart';
 import '../../size_config.dart';
 import 'SipDisplay.dart';
 
+addToCartRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/__lib.ajax/mutual_fund.php?action=add_cart_api&subaction=submit');
+  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  var body = jsonEncode({
+    "sch_code": Body.encodedIndex,
+    "f_sip_amount": '',
+    "sip_date": '0',
+    "sch_d": Body.idIndex,
+    "f_lum_amount": LumpSumDisplay.lumpsumAmount,
+    "uid": SignForm.userIdGlobal,
+  });
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  print(response.body);
+}
+
 class LumpSumDisplay extends StatefulWidget {
-  static double miniamt = Body.lumpSumMin;
+  static var ignoreButton = false;
+  static var date;
+  static var lumpsumAmount;
 
   @override
   _LumpSumDisplayState createState() => _LumpSumDisplayState();
 }
 
 class _LumpSumDisplayState extends State<LumpSumDisplay> {
+  double miniamt = Body.minAmt;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,17 +69,17 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                       activeColor: kPrimaryColor,
                       min: Body.lumpSumMin,
                       max: Body.lumpSumMax,
-                      value: LumpSumDisplay.miniamt.toDouble(),
+                      value: miniamt.toDouble(),
                       onChanged: (dynamic value) {
                         setState(() {
-                          LumpSumDisplay.miniamt = value;
+                          miniamt = value;
                         });
                       },
                     ),
                   ],
                 ),
                 GlobalOutputField(
-                  outputValue: LumpSumDisplay.miniamt.toStringAsFixed(2),
+                  outputValue: miniamt.toStringAsFixed(2),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -58,8 +90,7 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '1000',
                         press: () {
                           setState(() {
-                            LumpSumDisplay.miniamt =
-                                (LumpSumDisplay.miniamt + 1000).toDouble();
+                            miniamt = (miniamt + 1000).toDouble();
                           });
                         },
                       ),
@@ -67,8 +98,7 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '3000',
                         press: () {
                           setState(() {
-                            LumpSumDisplay.miniamt =
-                                (LumpSumDisplay.miniamt + 3000).toDouble();
+                            miniamt = (miniamt + 3000).toDouble();
                           });
                         },
                       ),
@@ -76,8 +106,7 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         amount: '5000',
                         press: () {
                           setState(() {
-                            LumpSumDisplay.miniamt =
-                                (LumpSumDisplay.miniamt + 5000).toDouble();
+                            miniamt = (miniamt + 5000).toDouble();
                           });
                         },
                       ),
@@ -95,7 +124,12 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                         height: getProportionateScreenHeight(40),
                         width: getProportionateScreenWidth(140),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            LumpSumDisplay.lumpsumAmount = miniamt;
+
+                            await addToCartRequest();
+                            print('done');
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -30,8 +31,39 @@ deleteCartItem(cartid) async {
   print(response.body);
 }
 
+checkoutCartItem() async {
+  var url = Uri.parse(
+      'https://optymoney.com/__lib.ajax/mutual_fund.php?action=p_to_pay_api&subaction=submit');
+  final headers = {'Content-Type': 'application/json'};
+  var body = jsonEncode({
+    "status": 2,
+    "uid": SignForm.userIdGlobal,
+  });
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+  //print(response.body);
+  // if (response.body is String) {
+  //   print('yes');
+  // } else {
+  //   print('no');
+  // }
+  final payUrl = Uri.encodeFull(response.body);
+  var len = payUrl.length;
+  final payUrl1 = payUrl.substring(3, len);
+  print(payUrl1);
+  launch(payUrl1);
+  print('object');
+}
+
 class Body extends StatefulWidget {
   static var totalAmt;
+  static var url;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -292,7 +324,9 @@ class _BodyState extends State<Body> {
                         height: getProportionateScreenHeight(20),
                         width: double.infinity,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await checkoutCartItem();
+                          },
                           child: Center(
                             child: Text(
                               'Checkout',
