@@ -11,32 +11,61 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  double height = Body.minAmt;
+  bool _isEditingText = false;
+  late TextEditingController _editingController;
+  String initialText = "Initial Text";
+
+  @override
+  void initState() {
+    super.initState();
+    _editingController = TextEditingController(text: initialText);
+  }
+
+  @override
+  void dispose() {
+    _editingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Editable Text'),
+      ),
       body: Container(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SfSlider(
-                enableTooltip: true,
-                activeColor: kPrimaryColor,
-                min: Body.minAmt,
-                max: Body.maxAmt,
-                value: height.toDouble(),
-                onChanged: (dynamic value) {
-                  setState(() {
-                    height = value;
-                  });
-                },
-              ),
-              GlobalOutputField(
-                outputValue: height.toStringAsFixed(2),
-              ),
-            ],
-          ),
+          child: _editTitleTextField(),
+        ),
+      ),
+    );
+  }
+
+  Widget _editTitleTextField() {
+    if (_isEditingText)
+      return Center(
+        child: TextField(
+          onSubmitted: (newValue) {
+            setState(() {
+              initialText = newValue;
+              _isEditingText = false;
+            });
+          },
+          autofocus: true,
+          controller: _editingController,
+        ),
+      );
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _isEditingText = true;
+        });
+      },
+      child: Text(
+        initialText,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18.0,
         ),
       ),
     );

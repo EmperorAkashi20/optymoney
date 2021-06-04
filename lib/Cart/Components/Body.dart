@@ -57,8 +57,11 @@ checkoutCartItem() async {
   var len = payUrl.length;
   final payUrl1 = payUrl.substring(3, len);
   print(payUrl1);
-  launch(payUrl1);
-  print('object');
+  if (await canLaunch(payUrl1)) {
+    await launch(payUrl1, forceWebView: true, enableJavaScript: true);
+  } else {
+    throw 'Could not launch $payUrl1';
+  }
 }
 
 class Body extends StatefulWidget {

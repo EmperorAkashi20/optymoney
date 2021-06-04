@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
+import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/size_config.dart';
 
@@ -93,6 +95,11 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  Timer? _timer;
+  late double _progress;
+  bool _isEditingText = false;
+  late TextEditingController _editingController;
+  String initialText = "";
   Future<List<Scheme>> _getScheme() async {
     var url = Uri.parse(
         'https://optymoney.com/ajax-request/ajax_response.php?action=fetchPortfolioApp&subaction=submit');
@@ -156,6 +163,7 @@ class _BodyState extends State<Body> {
       }
     }
     //print(Body.presentVal);
+    initialText = Body.presentValIndi.toString();
     Body.profitLoss = Body.presentVal - Body.purPrice;
     return schemes;
   }
@@ -624,7 +632,92 @@ class _BodyState extends State<Body> {
                                                                 getProportionateScreenWidth(
                                                                     140),
                                                             child: TextButton(
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        snapshot
+                                                                            .data[index]
+                                                                            .fr_scheme_name,
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.w600),
+                                                                      ),
+                                                                      content:
+                                                                          Container(
+                                                                        height:
+                                                                            getProportionateScreenHeight(170),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Text(
+                                                                                'Total Redeemable Amount (As Per Latest NAV) : ₹' + Body.presentValIndi.toStringAsFixed(2),
+                                                                                textAlign: TextAlign.left,
+                                                                              ),
+                                                                            ),
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  TitleHeaderForPopUp(text: 'Redeem Amount*'),
+                                                                                  FormFieldGlobalForPopUp(
+                                                                                    hintText: 'Please Enter The Amount',
+                                                                                    keyboardTypeGlobal: TextInputType.number,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () async {
+                                                                            _progress =
+                                                                                0;
+                                                                            _timer?.cancel();
+                                                                            _timer =
+                                                                                Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
+                                                                              await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
+                                                                              _progress += 0.03;
+                                                                              if (_progress >= 1) {
+                                                                                _timer?.cancel();
+                                                                                EasyLoading.dismiss();
+                                                                              }
+                                                                            });
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child:
+                                                                              Text('Continue'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.pop(context);
+                                                                            setState(() {});
+                                                                          },
+                                                                          child:
+                                                                              Text('Cancel'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                              },
                                                               child: Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -803,6 +896,35 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+
+  Widget _editTitleTextField() {
+    if (_isEditingText)
+      return Center(
+        child: TextField(
+          onSubmitted: (newValue) {
+            setState(() {
+              initialText = newValue;
+              _isEditingText = false;
+            });
+          },
+          autofocus: true,
+          controller: _editingController,
+        ),
+      );
+    return InkWell(
+        onTap: () {
+          setState(() {
+            _isEditingText = true;
+          });
+        },
+        child: Text(
+          initialText,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
+        ));
   }
 }
 

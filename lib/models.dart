@@ -50,6 +50,47 @@ class FormFieldGlobal extends StatelessWidget {
   }
 }
 
+class FormFieldGlobalForPopUp extends StatelessWidget {
+  const FormFieldGlobalForPopUp({
+    Key? key,
+    this.keyboardTypeGlobal,
+    this.hintText,
+    this.dataController,
+    this.enabledOrNot,
+  }) : super(key: key);
+
+  final TextInputType? keyboardTypeGlobal;
+  final String? hintText;
+  final TextEditingController? dataController;
+  final bool? enabledOrNot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: getProportionateScreenHeight(50),
+      child: TextFormField(
+        enabled: enabledOrNot,
+        controller: dataController,
+        keyboardType: keyboardTypeGlobal,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey, width: 1.1),
+          ),
+          hintText: hintText,
+          hintStyle: TextStyle(
+              fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.w100),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.teal,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class FormFieldDisplayProfile extends StatelessWidget {
   const FormFieldDisplayProfile({
     Key? key,
@@ -116,6 +157,26 @@ class TitleHeader extends StatelessWidget {
           text,
           style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w900),
         ),
+      ),
+    );
+  }
+}
+
+class TitleHeaderForPopUp extends StatelessWidget {
+  const TitleHeaderForPopUp({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w900),
       ),
     );
   }

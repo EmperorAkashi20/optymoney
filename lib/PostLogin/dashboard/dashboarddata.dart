@@ -245,15 +245,16 @@ class AppDrawerMain extends StatelessWidget {
               }
             },
           ),
-          // AppDrawerListTIle(
-          //   title: "Item 5",
-          //   icon: FaIcon(
-          //     FontAwesomeIcons.stopwatch,
-          //   ),
-          //   navigationRoute: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
+          AppDrawerListTIle(
+            title: "Item 5",
+            icon: FaIcon(
+              FontAwesomeIcons.stopwatch,
+            ),
+            navigationRoute: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, TestPage.routeName);
+            },
+          ),
         ],
       ),
     );
