@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/BankDetails/bankdetails.dart';
@@ -35,9 +36,9 @@ addBankAccount() async {
     encoding: encoding,
   );
 
-  var responseBody = response.body;
-  var jsonData = json.decode(responseBody);
-  print(jsonData);
+  //var responseBody = response.body;
+  //var jsonData = json.decode(responseBody);
+  // print(jsonData);
 }
 
 deleteBankAccount() async {
@@ -58,9 +59,9 @@ deleteBankAccount() async {
     encoding: encoding,
   );
 
-  var responseBody = response.body;
-  var jsonData = json.decode(responseBody);
-  print(jsonData);
+  //var responseBody = response.body;
+  //var jsonData = json.decode(responseBody);
+  // print(jsonData);
 }
 
 class Body extends StatefulWidget {
@@ -84,6 +85,7 @@ class _BodyState extends State<Body> {
   bool _isEditingText = false;
   Timer? _timer;
   late double _progress;
+  var color1;
 
   Future<List<BankDetail>> _getBankDetail() async {
     var url = Uri.parse(
@@ -103,10 +105,10 @@ class _BodyState extends State<Body> {
 
     var bankBody = response.body;
     var jsonData = json.decode(bankBody);
-    print(jsonData);
-    var len = jsonData.length;
-    print('Length');
-    print(len);
+    //print(jsonData);
+    //var len = jsonData.length;
+    //print('Length');
+    //print(len);
     List<BankDetail> bankDetails = [];
     for (var sch in jsonData) {
       Body.initialText = sch['bank_name'];
@@ -161,35 +163,148 @@ class _BodyState extends State<Body> {
                 );
               } else if (snapshot.data.length == 0) {
                 return Container(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: getProportionateScreenHeight(120),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: kPrimaryColor,
-                              width: 1,
-                            ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      Column(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.university,
+                            color: Colors.grey.shade400,
+                            size: 60,
                           ),
-                          child: Center(
-                            child: Expanded(
-                              child: Text(
-                                'Please Tap on the \'+\'Icon in the bottom to add your account',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: kPrimaryColor,
-                                ),
-                              ),
+                          Text(
+                            'You have not added any accounts,\nPurchase will Not be possible without adding accounts',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.grey.shade400,
                             ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Please Tap on the \'+\' Icon in the bottom to add your account',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.grey.shade400,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      SafeArea(
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            backgroundColor: kPrimaryColor,
+                            child: Icon(
+                              Icons.add,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => Scaffold(
+                                  appBar: AppBar(
+                                    automaticallyImplyLeading: false,
+                                    title: Text('Add New Bank Account'),
+                                    actions: [CloseButton()],
+                                  ),
+                                  body: Container(
+                                    child: Column(
+                                      children: [
+                                        TitleHeader(text: 'Bank Name'),
+                                        FormFieldGlobal(
+                                          dataController:
+                                              Body.bankAccountNameController,
+                                        ),
+                                        TitleHeader(text: 'Account Number'),
+                                        FormFieldGlobal(
+                                          dataController:
+                                              Body.bankAccountNumberController,
+                                        ),
+                                        TitleHeader(text: 'Bank IFSC Code'),
+                                        FormFieldGlobal(
+                                          dataController:
+                                              Body.bankAccountIfscController,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 18.0),
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                border: Border.all(
+                                                  color: kPrimaryColor,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              height:
+                                                  getProportionateScreenHeight(
+                                                      40),
+                                              width:
+                                                  getProportionateScreenWidth(
+                                                      80),
+                                              child: TextButton(
+                                                onPressed: () async {
+                                                  Body.bankAccountIfsc = Body
+                                                      .bankAccountIfscController
+                                                      .text;
+                                                  Body.bankAccountName = Body
+                                                      .bankAccountNameController
+                                                      .text;
+                                                  Body.bankAccountNumber = Body
+                                                      .bankAccountNumberController
+                                                      .text;
+                                                  await addBankAccount();
+                                                  _progress = 0;
+                                                  _timer?.cancel();
+                                                  _timer = Timer.periodic(
+                                                      const Duration(
+                                                          milliseconds: 10),
+                                                      (Timer timer) async {
+                                                    await EasyLoading.showProgress(
+                                                        _progress,
+                                                        status:
+                                                            '${(_progress * 100).toStringAsFixed(0)}%');
+                                                    _progress += 0.03;
+                                                    if (_progress >= 1) {
+                                                      _timer?.cancel();
+                                                      EasyLoading.dismiss();
+                                                    }
+                                                  });
+                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    _getBankDetail();
+                                                  });
+                                                },
+                                                child: Text(
+                                                  'ADD',
+                                                  style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               } else {
@@ -201,24 +316,28 @@ class _BodyState extends State<Body> {
                       child: ListView.builder(
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
+                          if (index == 0) {
+                            color1 = kPrimaryColor;
+                          } else if (index == 1) {
+                            color1 = Colors.blue;
+                          } else if (2 % index == 0) {
+                            color1 = kPrimaryColor;
+                          } else if (2 % index != 0) {
+                            color1 = Colors.blue;
+                          }
                           return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              right: 10,
-                              top: 5,
-                            ),
-                            child: Container(
-                              width: double.infinity,
-                              height: getProportionateScreenHeight(160),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(
-                                  color: kPrimaryColor,
-                                  width: 1,
-                                ),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Card(
+                              shadowColor: color1,
+                              color: color1,
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: BorderSide(color: kPrimaryColor),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: EdgeInsets.only(
+                                    top: 8.0, left: 8.0, right: 8.0),
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -229,14 +348,44 @@ class _BodyState extends State<Body> {
                                       children: [
                                         Expanded(
                                           flex: 8,
-                                          child: Text(
-                                            snapshot.data[index].bank_name
-                                                .toUpperCase(),
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                            textAlign: TextAlign.left,
+                                          child: Row(
+                                            children: [
+                                              FaIcon(
+                                                  FontAwesomeIcons.university,
+                                                  color: Colors.white),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    SignForm.name
+                                                        .toString()
+                                                        .toUpperCase(),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    snapshot
+                                                        .data[index].bank_name
+                                                        .toUpperCase(),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.left,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Expanded(
@@ -383,18 +532,27 @@ class _BodyState extends State<Body> {
                                         ),
                                       ],
                                     ),
+                                    Divider(
+                                      color: Colors.white,
+                                      thickness: 0.3,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
                                     Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: <Widget>[
                                             Text(
                                               'Account Number',
                                               style: TextStyle(
-                                                color: Colors.blueAccent,
+                                                color: Colors.white,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -403,7 +561,7 @@ class _BodyState extends State<Body> {
                                               snapshot.data[index].acc_no
                                                   .toString(),
                                               style: TextStyle(
-                                                color: kPrimaryColor,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
@@ -412,11 +570,13 @@ class _BodyState extends State<Body> {
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: <Widget>[
                                             Text(
                                               'IFSC Code',
                                               style: TextStyle(
-                                                color: Colors.blueAccent,
+                                                color: Colors.white,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -426,38 +586,30 @@ class _BodyState extends State<Body> {
                                                   .toString()
                                                   .toUpperCase(),
                                               style: TextStyle(
-                                                color: kPrimaryColor,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 2,
-                                              child: Text(
-                                                'Mandate Id',
-                                                style: TextStyle(
-                                                  color: Colors.blueAccent,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Mandate Id',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
-                                            Expanded(
-                                              flex: 6,
-                                              child: Text(
-                                                snapshot.data[index].mandate_id
-                                                    .toString()
-                                                    .toUpperCase(),
-                                                textAlign: TextAlign.right,
-                                                style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
+                                            Text(
+                                              snapshot.data[index].mandate_id,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ],
@@ -473,112 +625,108 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: FloatingActionButton(
-                          backgroundColor: kPrimaryColor,
-                          child: Icon(
-                            Icons.add,
-                            size: 40,
-                          ),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) => Scaffold(
-                                appBar: AppBar(
-                                  automaticallyImplyLeading: false,
-                                  title: Text('Add New Bank Account'),
-                                  actions: [CloseButton()],
-                                ),
-                                body: Container(
-                                  child: Column(
-                                    children: [
-                                      TitleHeader(text: 'Bank Name'),
-                                      FormFieldGlobal(
-                                        dataController:
-                                            Body.bankAccountNameController,
-                                      ),
-                                      TitleHeader(text: 'Account Number'),
-                                      FormFieldGlobal(
-                                        dataController:
-                                            Body.bankAccountNumberController,
-                                      ),
-                                      TitleHeader(text: 'Bank IFSC Code'),
-                                      FormFieldGlobal(
-                                        dataController:
-                                            Body.bankAccountIfscController,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 18.0),
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              border: Border.all(
-                                                color: kPrimaryColor,
-                                                width: 1,
-                                              ),
+                      child: FloatingActionButton(
+                        backgroundColor: kPrimaryColor,
+                        child: Icon(
+                          Icons.add,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                automaticallyImplyLeading: false,
+                                title: Text('Add New Bank Account'),
+                                actions: [CloseButton()],
+                              ),
+                              body: Container(
+                                child: Column(
+                                  children: [
+                                    TitleHeader(text: 'Bank Name'),
+                                    FormFieldGlobal(
+                                      dataController:
+                                          Body.bankAccountNameController,
+                                    ),
+                                    TitleHeader(text: 'Account Number'),
+                                    FormFieldGlobal(
+                                      dataController:
+                                          Body.bankAccountNumberController,
+                                    ),
+                                    TitleHeader(text: 'Bank IFSC Code'),
+                                    FormFieldGlobal(
+                                      dataController:
+                                          Body.bankAccountIfscController,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 18.0),
+                                      child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            border: Border.all(
+                                              color: kPrimaryColor,
+                                              width: 1,
                                             ),
-                                            height:
-                                                getProportionateScreenHeight(
-                                                    40),
-                                            width:
-                                                getProportionateScreenWidth(80),
-                                            child: TextButton(
-                                              onPressed: () async {
-                                                Body.bankAccountIfsc = Body
-                                                    .bankAccountIfscController
-                                                    .text;
-                                                Body.bankAccountName = Body
-                                                    .bankAccountNameController
-                                                    .text;
-                                                Body.bankAccountNumber = Body
-                                                    .bankAccountNumberController
-                                                    .text;
-                                                await addBankAccount();
-                                                _progress = 0;
-                                                _timer?.cancel();
-                                                _timer = Timer.periodic(
-                                                    const Duration(
-                                                        milliseconds: 10),
-                                                    (Timer timer) async {
-                                                  await EasyLoading.showProgress(
-                                                      _progress,
-                                                      status:
-                                                          '${(_progress * 100).toStringAsFixed(0)}%');
-                                                  _progress += 0.03;
-                                                  if (_progress >= 1) {
-                                                    _timer?.cancel();
-                                                    EasyLoading.dismiss();
-                                                  }
-                                                });
-                                                Navigator.pop(context);
-                                                setState(() {
-                                                  _getBankDetail();
-                                                });
-                                              },
-                                              child: Text(
-                                                'ADD',
-                                                style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
+                                          ),
+                                          height:
+                                              getProportionateScreenHeight(40),
+                                          width:
+                                              getProportionateScreenWidth(80),
+                                          child: TextButton(
+                                            onPressed: () async {
+                                              Body.bankAccountIfsc = Body
+                                                  .bankAccountIfscController
+                                                  .text;
+                                              Body.bankAccountName = Body
+                                                  .bankAccountNameController
+                                                  .text;
+                                              Body.bankAccountNumber = Body
+                                                  .bankAccountNumberController
+                                                  .text;
+                                              await addBankAccount();
+                                              _progress = 0;
+                                              _timer?.cancel();
+                                              _timer = Timer.periodic(
+                                                  const Duration(
+                                                      milliseconds: 10),
+                                                  (Timer timer) async {
+                                                await EasyLoading.showProgress(
+                                                    _progress,
+                                                    status:
+                                                        '${(_progress * 100).toStringAsFixed(0)}%');
+                                                _progress += 0.03;
+                                                if (_progress >= 1) {
+                                                  _timer?.cancel();
+                                                  EasyLoading.dismiss();
+                                                }
+                                              });
+                                              Navigator.pop(context);
+                                              setState(() {
+                                                _getBankDetail();
+                                              });
+                                            },
+                                            child: Text(
+                                              'ADD',
+                                              style: TextStyle(
+                                                color: kPrimaryColor,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

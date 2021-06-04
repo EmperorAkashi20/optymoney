@@ -120,8 +120,8 @@ class _BodyState extends State<Body> {
 
     var schemeBody = response.body;
     var jsonData = json.decode(schemeBody);
-    var len = jsonData.length;
-    print(len);
+    //var len = jsonData.length;
+    //print(len);
     List<Scheme> schemes = [];
     Body.purPrice = 0.0;
     Body.presentVal = 0.0;
