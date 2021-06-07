@@ -17,11 +17,8 @@ import '../../size_config.dart';
 makePostRequest() async {
   var url = Uri.parse(
       'https://optymoney.com/ajax-request/ajax_response.php?action=doLoginApp&subaction=loginSubmit');
-  final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  Map<String, dynamic> body = {
-    'email': SignForm.email,
-    'passwd': SignForm.password
-  };
+  final headers = {'Content-Type': 'application/json'};
+  var body = jsonEncode({'email': SignForm.email, 'passwd': SignForm.password});
   //String jsonBody = json.encode(body);
   final encoding = Encoding.getByName('utf-8');
 
