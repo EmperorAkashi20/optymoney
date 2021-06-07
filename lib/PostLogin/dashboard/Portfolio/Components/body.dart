@@ -18,12 +18,12 @@ redeemScheme(var a, b) async {
   var body = jsonEncode({
     "status": 2,
     "uid": SignForm.userIdGlobal,
-    "redeem_amt": Body.redeemAmount,
+    "redeem_amnt": Body.redeemAmount,
     "redeem_folio": a,
     "redeem_scheme_id": b,
     "redeem_order_id": '',
     "redeem_all_amount": '',
-    "exampleadios": 'option1',
+    "exampleradios": 'option1',
   });
   final encoding = Encoding.getByName('utf-8');
 

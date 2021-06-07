@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/AllSchemeDisplay.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/CategoriesDisplay.dart';
+import 'package:optymoney/SchemeDisplay/schemedisplay.dart';
 import 'package:optymoney/size_config.dart';
 
 import '../../constants.dart';
@@ -122,11 +123,7 @@ class _AmcFiltersState extends State<AmcFilters> {
                         print(AmcFilters.selecteCategorys);
                         await getSchemeListRequest(AmcFilters.selecteCategorys,
                             CategoriesDsiplay.selectedCategories);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    super.widget));
+                        Navigator.pushNamed(context, SchemeDisplay.routeName);
                       },
                       child: Text(
                         'Apply',
