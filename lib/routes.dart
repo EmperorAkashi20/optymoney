@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:optymoney/BankDetails/bankdetails.dart';
 import 'package:optymoney/Cart/cart.dart';
+import 'package:optymoney/DisplayUserInfo/Components/kycStartPage.dart';
 import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/LoginWithMpin/loginwithmpin.dart';
 import 'package:optymoney/OtherDetails/OtherDetails.dart';
@@ -46,4 +47,5 @@ final Map<String, WidgetBuilder> routes = {
   TestPage.routeName: (context) => TestPage(),
   AllSchemeDisplay.routeName: (context) => AllSchemeDisplay(),
   Cart.routeName: (context) => Cart(),
+  KycStartPage.routeName: (context) => KycStartPage(),
 };

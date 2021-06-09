@@ -31,14 +31,14 @@ makePostRequest() async {
 
   SignForm.statusCode = response.statusCode;
   SignForm.responseBody = response.body;
-  print(SignForm.responseBody);
+  //print(SignForm.responseBody);
   var jsonData = SignForm.responseBody;
 
   var parsedJson = json.decode(jsonData);
   SignForm.status = parsedJson['status'].toString();
-  print(SignForm.status);
+  //print(SignForm.status);
   SignForm.message = parsedJson['message'].toString();
-  print(SignForm.message);
+  //print(SignForm.message);
   if (SignForm.status != '0') {
     SignForm.parsedToken = json.decode(parsedJson['token']);
 

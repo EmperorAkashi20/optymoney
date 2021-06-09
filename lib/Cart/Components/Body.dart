@@ -31,6 +31,30 @@ deleteCartItem(cartid) async {
   print(response.body);
 }
 
+makeKycRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=kyccheck_api&subaction=submit');
+  final headers = {'Content-Type': 'application/json'};
+  var body = jsonEncode({
+    'pan': SignForm.pan,
+  });
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  Body.responseBody = response.body;
+  Body.parsed = json.decode(Body.responseBody);
+  Body.kycStatus = Body.parsed['status'].toString();
+  print(Body.responseBody);
+  print(Body.kycStatus);
+}
+
 checkoutCartItem() async {
   var url = Uri.parse(
       'https://optymoney.com/__lib.ajax/mutual_fund.php?action=p_to_pay_api&subaction=submit');
@@ -67,6 +91,9 @@ checkoutCartItem() async {
 class Body extends StatefulWidget {
   static var totalAmt;
   static var url;
+  static var responseBody;
+  static var parsed;
+  static var kycStatus;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -328,7 +355,37 @@ class _BodyState extends State<Body> {
                         width: double.infinity,
                         child: TextButton(
                           onPressed: () async {
-                            await checkoutCartItem();
+                            await makeKycRequest();
+                            if (Body.kycStatus == 'success') {
+                              await checkoutCartItem();
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        'KYC Not Done',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      content: Text(
+                                        'Please Complete Your KYC To Proceed Forward',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancle'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {},
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }
                           },
                           child: Center(
                             child: Text(
