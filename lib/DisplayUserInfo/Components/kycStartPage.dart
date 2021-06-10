@@ -7,6 +7,7 @@ import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/Components/body.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -42,15 +43,12 @@ onBoardingProcess() async {
   var url = Uri.parse('https://multi-channel.signzy.tech/api/channels/' +
       KycStartPage.userId +
       '/onboardings');
-  print(KycStartPage.id);
-  print(KycStartPage.userId);
-  print(url);
 
   var body = jsonEncode({
-    "email": SignForm.email1,
-    "username": KycStartPage.kycTodayUn,
-    "phone": Body.custMobile,
-    "name": SignForm.name,
+    "email": SignForm.email1.toString(),
+    "username": KycStartPage.kycTodayUn.toString(),
+    "phone": Body.custMobile.toString(),
+    "name": SignForm.name.toString(),
     "redirectUrl":
         'https://optymoney.com/mySaveTax/?module_interface=a3ljX29uYm9hcmQ=',
     "channelEmail": "support@optymoney.com"
@@ -62,16 +60,18 @@ onBoardingProcess() async {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': '$KycStartPage.id',
-      //HttpHeaders.authorizationHeader: '$KycStartPage.id'
+      'Authorization': KycStartPage.id.toString(),
     },
     body: body,
     encoding: encoding,
   );
-  print(response.body);
   var parsedJson = json.decode(response.body);
-  print(parsedJson);
-  KycStartPage.test = parsedJson;
+  var mobUrl = (parsedJson['createdObj']['mobileAutoLoginUrl']);
+  if (await canLaunch(mobUrl)) {
+    launch(mobUrl);
+  } else {
+    throw 'Unable to launch $mobUrl';
+  }
 }
 
 class KycStartPage extends StatefulWidget {
@@ -113,10 +113,6 @@ class _KycStartPageState extends State<KycStartPage> {
                 GlobalOutputField(outputValue: Body.custMobile),
                 TitleHeader(text: 'EMail Address'),
                 GlobalOutputField(outputValue: SignForm.email1),
-                Text(
-                  KycStartPage.test1.toString(),
-                  style: TextStyle(color: kPrimaryColor, fontSize: 14),
-                ),
               ],
             ),
             Container(
@@ -146,7 +142,6 @@ class _KycStartPageState extends State<KycStartPage> {
                       Body.custMobile +
                       SignForm.name +
                       'support@optymoney.com';
-                  print(KycStartPage.kycTodayUn);
 
                   await makeOnboardRequest();
                   if (KycStartPage.id != null) {
