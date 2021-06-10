@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/main.dart';
@@ -29,6 +30,7 @@ makeKycRequest() async {
     encoding: encoding,
   );
   var parsedJson = json.decode(response.body);
+  print(response.body);
   SignForm.kycStatus = parsedJson['status'].toString();
   print(SignForm.kycStatus);
 }
@@ -261,36 +263,50 @@ class _BodyState extends State<Body> {
                 child: Column(
                   //mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    if (a == 'Yes')
-                      Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: kPrimaryColor),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Profile Incomplete"),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("To Complete your profile: "),
-                                Text("1. Keep Your documents handy"),
-                                Text(
-                                    "2. Tap on the menu on the top left corner"),
-                                Text("3. Enter details and verify"),
-                                Text("\n\nOr tap on \"complete Now\" below"),
-                                TextButton(
-                                  child: Text("Complete Now"),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, UserInfoScreen.routeName);
-                                  },
-                                ),
-                              ],
+                    if (Body.custPan == 'null')
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Card(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide(color: kPrimaryColor),
                             ),
-                          ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Profile Incomplete\n"),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("To Complete your profile: "),
+                                      Text("1. Keep Your documents handy"),
+                                      Text(
+                                          "2. Tap on the menu on the top left corner"),
+                                      Text("3. Select The Profile Button"),
+                                      Text("4. Enter details and verify"),
+                                      Text(
+                                          "\nOr tap on \"complete Now\" below"),
+                                      Center(
+                                        child: TextButton(
+                                          child: Text("Complete Profile"),
+                                          onPressed: () {
+                                            Navigator.pushNamed(context,
+                                                UserInfoScreen.routeName);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     if (Body.custPan != 'null')
@@ -423,21 +439,58 @@ class _BodyState extends State<Body> {
                             SizedBox(
                               height: 50,
                             ),
-                            Card(
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: BorderSide(color: kPrimaryColor),
+                            if (SignForm.kycStatus != 'SUCCESS')
+                              Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(color: kPrimaryColor),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Please Complete Your KYC\n"),
+                                      Text(
+                                          "You Will be able to invest once you  have completed your KYC\n"),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          'To Complete your KYC,\n1. Tap on the button below\n2. Tap on KYC OnBoarding\n3. Verify Your Info\n4. Click on proceed',
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(context,
+                                              DisplayUserInfoScreen.routeName);
+                                        },
+                                        child: Text('Complete KYC'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Start Your Investments"),
-                                  Text(
-                                      "Content will start appearing once you invest"),
-                                ],
+                            if (SignForm.kycStatus == 'SUCCESS')
+                              Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(color: kPrimaryColor),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Start Your Investments"),
+                                      Text(
+                                          "Content will start appearing once you invest"),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
                             SizedBox(
                               height: 50,
                             ),

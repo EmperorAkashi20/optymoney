@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/DisplayUserInfo/Components/kycStartPage.dart';
+import 'package:optymoney/DisplayUserInfo/DisplayUserInfo.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -361,7 +362,7 @@ class _BodyState extends State<Body> {
                         child: TextButton(
                           onPressed: () async {
                             await makeKycRequest();
-                            if (Body.kycStatus == 'success') {
+                            if (SignForm.kycStatus == 'success') {
                               await checkoutCartItem();
                             } else {
                               showDialog(
@@ -385,13 +386,10 @@ class _BodyState extends State<Body> {
                                         ),
                                         TextButton(
                                           onPressed: () async {
-                                            await getDataFunction();
-                                            await makeOnboardRequest();
-                                            if (KycStartPage.id != null) {
-                                              await onBoardingProcess();
-                                            } else {
-                                              throw 'Something went wrong';
-                                            }
+                                            Navigator.pushNamed(
+                                                context,
+                                                DisplayUserInfoScreen
+                                                    .routeName);
                                           },
                                           child: Text('Continue'),
                                         ),
