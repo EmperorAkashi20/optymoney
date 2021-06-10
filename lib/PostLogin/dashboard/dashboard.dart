@@ -4,8 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optymoney/PostLogin/Tax/tax.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/PostLogin/investments/investments.dart';
-import 'package:optymoney/PostLogin/resources/resources.dart';
-import 'package:optymoney/PostLogin/settings/settings.dart';
+
 import 'package:optymoney/constants.dart';
 
 class DashBoard extends StatefulWidget {

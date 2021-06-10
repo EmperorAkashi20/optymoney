@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:optymoney/UserInfo/UserInfoStartScreen.dart';
 import 'package:optymoney/constants.dart';
+import 'package:optymoney/main.dart';
 import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/size_config.dart';
@@ -210,6 +211,7 @@ class _BodyState extends State<Body> {
         child: FutureBuilder(
           future: _getScheme(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            var a = MyApp.prefs.getString('newSignUp') ?? '0';
             if (snapshot.data == null) {
               return Container(
                 child: Center(
@@ -237,8 +239,7 @@ class _BodyState extends State<Body> {
                 child: Column(
                   //mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //CircularProgressIndicator.adaptive(),
-                    if (Body.custPan == 'null')
+                    if (a == 'Yes')
                       Card(
                         elevation: 0,
                         shape: RoundedRectangleBorder(

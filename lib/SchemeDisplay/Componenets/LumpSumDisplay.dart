@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/body.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -46,6 +48,8 @@ class LumpSumDisplay extends StatefulWidget {
 }
 
 class _LumpSumDisplayState extends State<LumpSumDisplay> {
+  Timer? _timer;
+  late double _progress;
   double miniamt = Body.minAmt;
   @override
   Widget build(BuildContext context) {
@@ -128,7 +132,20 @@ class _LumpSumDisplayState extends State<LumpSumDisplay> {
                             LumpSumDisplay.lumpsumAmount = miniamt;
 
                             await addToCartRequest();
-                            print('done');
+                            _progress = 0;
+                            _timer?.cancel();
+                            _timer =
+                                Timer.periodic(const Duration(milliseconds: 10),
+                                    (Timer timer) async {
+                              await EasyLoading.showProgress(_progress,
+                                  status:
+                                      '${(_progress * 100).toStringAsFixed(0)}%');
+                              _progress += 0.03;
+                              if (_progress >= 1) {
+                                _timer?.cancel();
+                                EasyLoading.dismiss();
+                              }
+                            });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

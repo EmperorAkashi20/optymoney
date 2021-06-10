@@ -16,7 +16,7 @@ makePostRequest() async {
       'https://optymoney.com/ajax-request/ajax_response.php?action=doSignupFromApp&subaction=submit');
   final headers = {'Content-Type': 'application/x-www-form-urlencoded'};
   Map<String, dynamic> body = {
-    'name': CompleteProfileForm.firstName,
+    'name': CompleteProfileForm.fullName,
     'email': SignUpForm.email,
     'mobile': CompleteProfileForm.phoneNumber,
     'otp': OtpForm.otp,

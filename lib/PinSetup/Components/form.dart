@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
 import '../../constants.dart';
+import '../../main.dart';
 import '../../size_config.dart';
 
 makePostRequest() async {
@@ -209,6 +210,7 @@ class _PinFormState extends State<PinForm> {
               PinForm.mpin = a + b + c + d;
               await makePostRequest();
               if (PinForm.responseBody != 1) {
+                await MyApp.prefs.setString('newSignUp', 'Yes');
                 Navigator.pushNamed(context, PostLoginStartsHere.routeName);
               } else {
                 print("error");

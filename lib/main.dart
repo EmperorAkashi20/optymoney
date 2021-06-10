@@ -56,6 +56,7 @@ class MyApp extends StatefulWidget {
   static var name;
   static var pan;
   static var hash;
+  static var newSignUp;
   @override
   _MyAppState createState() => _MyAppState();
 }

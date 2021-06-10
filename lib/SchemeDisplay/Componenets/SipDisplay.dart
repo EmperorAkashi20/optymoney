@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/body.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -44,6 +46,8 @@ class SipDisplay extends StatefulWidget {
 }
 
 class _SipDisplayState extends State<SipDisplay> {
+  Timer? _timer;
+  late double _progress;
   var _options = [
     '1',
     '2',
@@ -252,13 +256,21 @@ class _SipDisplayState extends State<SipDisplay> {
                         child: TextButton(
                           onPressed: () async {
                             SipDisplay.sipAmount = miniamt;
-                            print(SignForm.userIdGlobal);
-                            print(Body.encodedIndex);
-                            print(SipDisplay.sipAmount);
-                            print(SipDisplay.date);
-                            print(Body.idIndex);
                             await addToCartRequest();
-                            print('done');
+                            _progress = 0;
+                            _timer?.cancel();
+                            _timer =
+                                Timer.periodic(const Duration(milliseconds: 10),
+                                    (Timer timer) async {
+                              await EasyLoading.showProgress(_progress,
+                                  status:
+                                      '${(_progress * 100).toStringAsFixed(0)}%');
+                              _progress += 0.03;
+                              if (_progress >= 1) {
+                                _timer?.cancel();
+                                EasyLoading.dismiss();
+                              }
+                            });
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

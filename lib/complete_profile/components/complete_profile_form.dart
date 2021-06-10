@@ -43,7 +43,10 @@ class CompleteProfileForm extends StatefulWidget {
   static String? address;
   static var phoneNumber;
   static String? responseBody;
-  static TextEditingController name = new TextEditingController();
+  static var fullName;
+  static TextEditingController firstNameController =
+      new TextEditingController();
+  static TextEditingController lastNameController = new TextEditingController();
   static TextEditingController phone = new TextEditingController();
 
   @override
@@ -80,7 +83,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPhoneNumberFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          buildAddressFormField(),
+          // buildAddressFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
@@ -88,10 +91,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             press: () async {
               CompleteProfileForm.phoneNumber =
                   (CompleteProfileForm.phone.text);
+              CompleteProfileForm.fullName =
+                  (CompleteProfileForm.firstNameController.text +
+                      ' ' +
+                      CompleteProfileForm.lastNameController.text);
+              //print(CompleteProfileForm.fullName);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 if (CompleteProfileForm.responseBody == 'EMAIL_EXISTS') {
-                  print("ouch");
+                  addError(error: 'Email Already Exists');
                 } else {
                   //_showToast();
                   await sendOtpRequest();
@@ -105,33 +113,33 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     );
   }
 
-  TextFormField buildAddressFormField() {
-    return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.address = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kAddressNullError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kAddressNullError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Address",
-        hintText: "Enter your phone address",
-        // If  you are using latest version of flutter then label text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon:
-            CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
-      ),
-    );
-  }
+  // TextFormField buildAddressFormField() {
+  //   return TextFormField(
+  //     onSaved: (newValue) => CompleteProfileForm.address = newValue,
+  //     onChanged: (value) {
+  //       if (value.isNotEmpty) {
+  //         removeError(error: kAddressNullError);
+  //       }
+  //       return null;
+  //     },
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         addError(error: kAddressNullError);
+  //         return "";
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       labelText: "Address",
+  //       hintText: "Enter your phone address",
+  //       // If  you are using latest version of flutter then label text and hint text shown like this
+  //       // if you r using flutter less then 1.20.* then maybe this is not working properly
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon:
+  //           CustomSurffixIcon(svgIcon: "assets/icons/Location point.svg"),
+  //     ),
+  //   );
+  // }
 
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
@@ -164,7 +172,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.lastName = newValue,
+      controller: CompleteProfileForm.lastNameController,
+      keyboardType: TextInputType.text,
+      onSaved: (newValue) =>
+          CompleteProfileForm.lastNameController, //= newValue,
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -178,7 +189,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => CompleteProfileForm.firstName = newValue,
+      controller: CompleteProfileForm.firstNameController,
+      keyboardType: TextInputType.text,
+      onSaved: (newValue) =>
+          CompleteProfileForm.firstNameController, //= newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
