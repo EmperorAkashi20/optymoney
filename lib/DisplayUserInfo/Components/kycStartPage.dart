@@ -74,6 +74,28 @@ onBoardingProcess() async {
   }
 }
 
+getDataFunction() {
+  var now = DateTime.now();
+
+  KycStartPage.kycTodayDateTime = (now.day.toString() +
+      now.month.toString() +
+      now.year.toString() +
+      now.hour.toString() +
+      now.minute.toString() +
+      now.second.toString());
+  KycStartPage.kycTodayUn = "opty_" +
+      SignForm.name.replaceAll(new RegExp(r"\s+\b|\b\s"), "").toLowerCase() +
+      "_" +
+      KycStartPage.kycTodayDateTime.toString();
+  KycStartPage.kycData = SignForm.email1 +
+      KycStartPage.kycTodayUn +
+      Body.custMobile +
+      SignForm.name +
+      'support@optymoney.com';
+  print(KycStartPage.kycTodayUn);
+  print(KycStartPage.kycData);
+}
+
 class KycStartPage extends StatefulWidget {
   static String routeName = '\kyc';
   static var id;
@@ -92,6 +114,7 @@ class KycStartPage extends StatefulWidget {
 }
 
 class _KycStartPageState extends State<KycStartPage> {
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,35 +146,13 @@ class _KycStartPageState extends State<KycStartPage> {
               width: double.infinity,
               child: TextButton(
                 onPressed: () async {
-                  var now = DateTime.now();
-
-                  KycStartPage.kycTodayDateTime = (now.day.toString() +
-                      now.month.toString() +
-                      now.year.toString() +
-                      now.hour.toString() +
-                      now.minute.toString() +
-                      now.second.toString());
-                  KycStartPage.kycTodayUn = "opty_" +
-                      SignForm.name
-                          .replaceAll(new RegExp(r"\s+\b|\b\s"), "")
-                          .toLowerCase() +
-                      "_" +
-                      KycStartPage.kycTodayDateTime.toString();
-                  KycStartPage.kycData = SignForm.email1 +
-                      KycStartPage.kycTodayUn +
-                      Body.custMobile +
-                      SignForm.name +
-                      'support@optymoney.com';
-
+                  await getDataFunction();
                   await makeOnboardRequest();
                   if (KycStartPage.id != null) {
                     await onBoardingProcess();
                   } else {
                     throw 'Something went wrong';
                   }
-                  setState(() {
-                    KycStartPage.test1 = KycStartPage.test;
-                  });
                 },
                 child: Center(
                   child: Text(

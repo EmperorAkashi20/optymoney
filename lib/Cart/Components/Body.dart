@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:optymoney/DisplayUserInfo/Components/kycStartPage.dart';
 import 'package:optymoney/PostLogin/dashboard/dashboarddata.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -94,6 +95,10 @@ class Body extends StatefulWidget {
   static var responseBody;
   static var parsed;
   static var kycStatus;
+  static var id;
+  static var ttl;
+  static var created;
+  static var userId;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -373,13 +378,21 @@ class _BodyState extends State<Body> {
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             Navigator.pop(context);
                                           },
                                           child: Text('Cancle'),
                                         ),
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            await getDataFunction();
+                                            await makeOnboardRequest();
+                                            if (KycStartPage.id != null) {
+                                              await onBoardingProcess();
+                                            } else {
+                                              throw 'Something went wrong';
+                                            }
+                                          },
                                           child: Text('Continue'),
                                         ),
                                       ],

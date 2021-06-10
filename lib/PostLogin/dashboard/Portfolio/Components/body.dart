@@ -12,6 +12,27 @@ import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 import 'package:optymoney/size_config.dart';
 
+makeKycRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=kyccheck_api&subaction=submit');
+  final headers = {'Content-Type': 'application/json'};
+  var body = jsonEncode({
+    'pan': SignForm.pan,
+  });
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  Response response = await post(
+    url,
+    headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+  var parsedJson = json.decode(response.body);
+  SignForm.kycStatus = parsedJson['status'].toString();
+  print(SignForm.kycStatus);
+}
+
 redeemScheme(var a, b) async {
   var url = Uri.parse(
       'https://optymoney.com/__lib.ajax/mutual_fund.php?action=p_to_redeem_api&subaction=submit');
@@ -201,6 +222,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     makeUserRequest();
+    makeKycRequest();
     //makePortfolioRequest();
   }
 
