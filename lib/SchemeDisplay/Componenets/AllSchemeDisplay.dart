@@ -37,7 +37,7 @@ Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a, List b) async {
   var body = jsonEncode({
     "amc_code": AmcFilters.selecteCategorys,
     "schm_type": "",
-    "Offer_id": 5,
+    "Offer_id": 32,
   });
 
   Response response = await post(
@@ -47,6 +47,8 @@ Future<List<AllSchemeWithFilters>> getSchemeListRequest(List a, List b) async {
   );
   var dataBody = response.body;
   var jsonData = json.decode(dataBody);
+  print(body);
+  print(jsonData);
   List<AllSchemeWithFilters> allSchemeWithFilterss = [];
 
   for (var sch in jsonData) {

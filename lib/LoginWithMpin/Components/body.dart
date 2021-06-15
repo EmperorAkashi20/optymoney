@@ -33,7 +33,7 @@ class Body extends StatelessWidget {
               // SizedBox(height: SizeConfig.screenHeight * 0.09),
 
               PinForm(),
-              SizedBox(height: SizeConfig.screenHeight * 0.1),
+              //SizedBox(height: SizeConfig.screenHeight * 0.1),
               // GestureDetector(
               //   onTap: () {
               //     Navigator.pushNamed(context, PostLoginStartsHere.routeName);

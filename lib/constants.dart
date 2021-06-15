@@ -51,16 +51,12 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
   fillColor: Colors.grey.shade400,
   focusColor: Colors.grey,
+  errorStyle: TextStyle(color: Colors.red),
 );
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(getProportionateScreenWidth(10)),
-    borderSide: BorderSide(color: kTextColor),
+    borderSide: BorderSide(color: Colors.grey.shade300),
   );
-}
-
-class StringUrl {
-  static String testUrl =
-      "http://newsapi.org/v2/everything?domains=wsj.com&apiKey=API_KEY=52718bd9f5b94c5c9a0be48e44169e18";
 }

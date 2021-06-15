@@ -519,504 +519,505 @@ class _BodyState extends State<Body> {
                       left: 5.0,
                       right: 5.0,
                     ),
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: BorderSide(color: kPrimaryColor),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Text(
-                                    snapshot.data[index].fr_scheme_name,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Card(
+                        shadowColor: kPrimaryColor,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: kPrimaryColor),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 8,
+                                    child: Text(
+                                      snapshot.data[index].fr_scheme_name,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      textAlign: TextAlign.left,
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.grey.shade200,
-                                    radius: 20,
-                                    child: IconButton(
-                                        icon: Icon(
-                                          Icons.add_chart,
-                                          color: Colors.blueGrey,
-                                        ),
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            //expand: false,
-                                            enableDrag: true,
-                                            isDismissible: true,
-                                            //duration: Duration(milliseconds: 400),
-                                            context: context,
-                                            //isScrollControlled: true,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                              ),
-                                            ),
-                                            builder: (context) => Scaffold(
-                                              body: Container(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: <Widget>[
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: <Widget>[
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: Icon(
-                                                            Icons
-                                                                .analytics_sharp,
-                                                            size: 35,
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 7,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                              vertical: 8.0,
-                                                              horizontal: 8.0,
-                                                            ),
-                                                            child: Text(
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .fr_scheme_name,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: CloseButton(),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: <Widget>[
-                                                        DataDisplayScheme(
-                                                          data1: "ISIN",
-                                                          data2: snapshot
-                                                              .data[index].isin,
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1: "Scheme Code",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .bse_scheme_code
-                                                              .toString(),
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1: "Scheme Type",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .scheme_type
-                                                              .toString(),
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1:
-                                                              "Purchase Price",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .purchase_price
-                                                              .toString(),
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1: "Total Units",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .all_units
-                                                              .toString(),
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1:
-                                                              "Current Amount",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .sch_amount
-                                                              .toString(),
-                                                        ),
-                                                        DataDisplayScheme(
-                                                          data1: "Nav Amount",
-                                                          data2: snapshot
-                                                              .data[index]
-                                                              .nav_price
-                                                              .toString(),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      //Buying and Selling Buttons
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: <Widget>[
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Colors
-                                                                  .blueAccent,
-                                                            ),
-                                                            height:
-                                                                getProportionateScreenHeight(
-                                                                    40),
-                                                            width:
-                                                                getProportionateScreenWidth(
-                                                                    140),
-                                                            child: TextButton(
-                                                              onPressed: () {},
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .swap_vert_circle_sharp,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                  Text(
-                                                                    "BUY",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  kPrimaryColor,
-                                                            ),
-                                                            height:
-                                                                getProportionateScreenHeight(
-                                                                    40),
-                                                            width:
-                                                                getProportionateScreenWidth(
-                                                                    140),
-                                                            child: TextButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                                showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (context) {
-                                                                    return AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        snapshot
-                                                                            .data[index]
-                                                                            .fr_scheme_name,
-                                                                        style: TextStyle(
-                                                                            color: Colors
-                                                                                .black,
-                                                                            fontSize:
-                                                                                14,
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
-                                                                      ),
-                                                                      content:
-                                                                          Container(
-                                                                        height:
-                                                                            getProportionateScreenHeight(250),
-                                                                        child:
-                                                                            Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Expanded(
-                                                                              child: Text(
-                                                                                'Total Redeemable Amount (As Per Latest NAV) : ₹' + Body.presentValIndi.toStringAsFixed(2),
-                                                                                textAlign: TextAlign.left,
-                                                                              ),
-                                                                            ),
-                                                                            Expanded(
-                                                                              child: Column(
-                                                                                children: [
-                                                                                  TitleHeaderForPopUp(text: 'Redeem Amount*'),
-                                                                                  FormFieldGlobalForPopUp(
-                                                                                    dataController: redeemAmt,
-                                                                                    hintText: 'Please Enter The Amount',
-                                                                                    keyboardTypeGlobal: TextInputType.number,
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () async {
-                                                                            Body.redeemAmount =
-                                                                                redeemAmt.text;
-                                                                            double
-                                                                                a =
-                                                                                double.parse(Body.redeemAmount);
-                                                                            double
-                                                                                b =
-                                                                                Body.presentValIndi;
-
-                                                                            if (a >
-                                                                                b) {
-                                                                              EasyLoading.showError('Wrong Input', dismissOnTap: true, maskType: EasyLoadingMaskType.black);
-                                                                            } else {
-                                                                              await redeemScheme(
-                                                                                snapshot.data[index].folio,
-                                                                                snapshot.data[index].bse_scheme_code,
-                                                                              );
-
-                                                                              _progress = 0;
-                                                                              _timer?.cancel();
-                                                                              _timer = Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
-                                                                                await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
-                                                                                _progress += 0.03;
-                                                                                if (_progress >= 1) {
-                                                                                  _timer?.cancel();
-                                                                                  EasyLoading.dismiss();
-                                                                                }
-                                                                              });
-                                                                              Navigator.pop(context);
-                                                                            }
-                                                                          },
-                                                                          child:
-                                                                              Text('Continue'),
-                                                                        ),
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            Navigator.pop(context);
-                                                                            setState(() {});
-                                                                          },
-                                                                          child:
-                                                                              Text('Cancel'),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                              },
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .swap_vertical_circle_sharp,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                  Text(
-                                                                    "SELL",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                  Expanded(
+                                    flex: 1,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.grey.shade200,
+                                      radius: 20,
+                                      child: IconButton(
+                                          icon: Icon(
+                                            Icons.add_chart,
+                                            color: Colors.blueGrey,
+                                          ),
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              //expand: false,
+                                              enableDrag: true,
+                                              isDismissible: true,
+                                              //duration: Duration(milliseconds: 400),
+                                              context: context,
+                                              //isScrollControlled: true,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "Purchase Price",
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Text(
-                                      "₹" +
-                                          snapshot.data[index].purchase_price
-                                              .toString(),
-                                      style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "Investment",
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Text(
-                                      "₹" +
-                                          snapshot.data[index].sch_amount
-                                              .toDouble()
-                                              .toStringAsFixed(2),
-                                      style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      "Present Value",
-                                      style: TextStyle(
-                                        color: Colors.blueAccent,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "₹" +
-                                              snapshot.data[index].presentVal
-                                                  .toString(),
-                                          style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        if ((snapshot.data[index].sch_amount
-                                                .toDouble()
-                                                .round()) <
-                                            (snapshot.data[index].presentVal
-                                                .toDouble()
-                                                .round()))
-                                          Icon(
-                                            Icons.arrow_upward_sharp,
-                                            size: 16,
-                                          ),
-                                        if (snapshot.data[index].sch_amount
-                                                .toDouble()
-                                                .round() >
-                                            snapshot.data[index].presentVal
-                                                .toDouble()
-                                                .round())
-                                          Icon(
-                                            Icons.arrow_downward_sharp,
-                                            size: 16,
-                                          ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                              builder: (context) => Scaffold(
+                                                body: Container(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Icon(
+                                                              Icons
+                                                                  .analytics_sharp,
+                                                              size: 35,
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 7,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                vertical: 8.0,
+                                                                horizontal: 8.0,
+                                                              ),
+                                                              child: Text(
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .fr_scheme_name,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child:
+                                                                CloseButton(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          DataDisplayScheme(
+                                                            data1: "ISIN",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .isin,
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1:
+                                                                "Scheme Code",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .bse_scheme_code
+                                                                .toString(),
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1:
+                                                                "Scheme Type",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .scheme_type
+                                                                .toString(),
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1:
+                                                                "Purchase Price",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .purchase_price
+                                                                .toString(),
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1:
+                                                                "Total Units",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .all_units
+                                                                .toString(),
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1:
+                                                                "Current Amount",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .sch_amount
+                                                                .toString(),
+                                                          ),
+                                                          DataDisplayScheme(
+                                                            data1: "Nav Amount",
+                                                            data2: snapshot
+                                                                .data[index]
+                                                                .nav_price
+                                                                .toString(),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        //Buying and Selling Buttons
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .blueAccent,
+                                                              ),
+                                                              height:
+                                                                  getProportionateScreenHeight(
+                                                                      40),
+                                                              width:
+                                                                  getProportionateScreenWidth(
+                                                                      140),
+                                                              child: TextButton(
+                                                                onPressed:
+                                                                    () {},
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .swap_vert_circle_sharp,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    Text(
+                                                                      "BUY",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    kPrimaryColor,
+                                                              ),
+                                                              height:
+                                                                  getProportionateScreenHeight(
+                                                                      40),
+                                                              width:
+                                                                  getProportionateScreenWidth(
+                                                                      140),
+                                                              child: TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return AlertDialog(
+                                                                        title:
+                                                                            Text(
+                                                                          snapshot
+                                                                              .data[index]
+                                                                              .fr_scheme_name,
+                                                                          style: TextStyle(
+                                                                              color: Colors.black,
+                                                                              fontSize: 14,
+                                                                              fontWeight: FontWeight.w600),
+                                                                        ),
+                                                                        content:
+                                                                            Container(
+                                                                          height:
+                                                                              getProportionateScreenHeight(250),
+                                                                          child:
+                                                                              Column(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  'Total Redeemable Amount (As Per Latest NAV) : ₹' + Body.presentValIndi.toStringAsFixed(2),
+                                                                                  textAlign: TextAlign.left,
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    TitleHeaderForPopUp(text: 'Redeem Amount*'),
+                                                                                    FormFieldGlobalForPopUp(
+                                                                                      dataController: redeemAmt,
+                                                                                      hintText: 'Please Enter The Amount',
+                                                                                      keyboardTypeGlobal: TextInputType.number,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed:
+                                                                                () async {
+                                                                              Body.redeemAmount = redeemAmt.text;
+                                                                              double a = double.parse(Body.redeemAmount);
+                                                                              double b = Body.presentValIndi;
 
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     Expanded(
-                            //         child:
-                            //             Text(snapshot.data[index].scheme_type)),
-                            //     Expanded(
-                            //         child: Text(snapshot.data[index].all_units
-                            //             .toString())),
-                            //     Expanded(
-                            //       child: Text(snapshot.data[index].sch_amount
-                            //           .toString()),
-                            //     ),
-                            //     Expanded(
-                            //       child: Text(snapshot
-                            //           .data[index].purchase_price
-                            //           .toString()),
-                            //     ),
-                            //   ],
-                            // ),
-                          ],
+                                                                              if (a > b) {
+                                                                                EasyLoading.showError('Wrong Input', dismissOnTap: true, maskType: EasyLoadingMaskType.black);
+                                                                              } else {
+                                                                                await redeemScheme(
+                                                                                  snapshot.data[index].folio,
+                                                                                  snapshot.data[index].bse_scheme_code,
+                                                                                );
+
+                                                                                _progress = 0;
+                                                                                _timer?.cancel();
+                                                                                _timer = Timer.periodic(const Duration(milliseconds: 10), (Timer timer) async {
+                                                                                  await EasyLoading.showProgress(_progress, status: '${(_progress * 100).toStringAsFixed(0)}%');
+                                                                                  _progress += 0.03;
+                                                                                  if (_progress >= 1) {
+                                                                                    _timer?.cancel();
+                                                                                    EasyLoading.dismiss();
+                                                                                  }
+                                                                                });
+                                                                                Navigator.pop(context);
+                                                                              }
+                                                                            },
+                                                                            child:
+                                                                                Text('Continue'),
+                                                                          ),
+                                                                          TextButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context);
+                                                                              setState(() {});
+                                                                            },
+                                                                            child:
+                                                                                Text('Cancel'),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  );
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .swap_vertical_circle_sharp,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    Text(
+                                                                      "SELL",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Purchase Price",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        "₹" +
+                                            snapshot.data[index].purchase_price
+                                                .toString(),
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Investment",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Text(
+                                        "₹" +
+                                            snapshot.data[index].sch_amount
+                                                .toDouble()
+                                                .toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        "Present Value",
+                                        style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "₹" +
+                                                snapshot.data[index].presentVal
+                                                    .toString(),
+                                            style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          if ((snapshot.data[index].sch_amount
+                                                  .toDouble()
+                                                  .round()) <
+                                              (snapshot.data[index].presentVal
+                                                  .toDouble()
+                                                  .round()))
+                                            Icon(
+                                              Icons.arrow_upward_sharp,
+                                              size: 16,
+                                            ),
+                                          if (snapshot.data[index].sch_amount
+                                                  .toDouble()
+                                                  .round() >
+                                              snapshot.data[index].presentVal
+                                                  .toDouble()
+                                                  .round())
+                                            Icon(
+                                              Icons.arrow_downward_sharp,
+                                              size: 16,
+                                            ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Expanded(
+                              //         child:
+                              //             Text(snapshot.data[index].scheme_type)),
+                              //     Expanded(
+                              //         child: Text(snapshot.data[index].all_units
+                              //             .toString())),
+                              //     Expanded(
+                              //       child: Text(snapshot.data[index].sch_amount
+                              //           .toString()),
+                              //     ),
+                              //     Expanded(
+                              //       child: Text(snapshot
+                              //           .data[index].purchase_price
+                              //           .toString()),
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
