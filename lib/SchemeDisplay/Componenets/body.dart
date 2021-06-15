@@ -129,6 +129,9 @@ class _BodyState extends State<Body> {
     if (Body.lumpSumMin == Body.lumpSumMax) {
       Body.lumpSumMin = 0.0;
       Body.lumpSumMax = 99999999.0;
+    } else if (Body.lumpSumMin > Body.lumpSumMax) {
+      Body.lumpSumMin = Body.lumpSumMin;
+      Body.lumpSumMax = Body.lumpSumMin * 200;
     }
     if (Body.minAmt == Body.maxAmt) {
       Body.minAmt = 0.0;

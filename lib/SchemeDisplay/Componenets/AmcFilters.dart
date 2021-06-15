@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:loading_animations/loading_animations.dart';
+import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/AllSchemeDisplay.dart';
 import 'package:optymoney/SchemeDisplay/Componenets/CategoriesDisplay.dart';
 import 'package:optymoney/SchemeDisplay/schemedisplay.dart';
@@ -119,11 +120,17 @@ class _AmcFiltersState extends State<AmcFilters> {
                     color: kPrimaryColor,
                     child: TextButton(
                       onPressed: () async {
-                        Navigator.pop(context);
+                        //Navigator.pop(context);
                         print(AmcFilters.selecteCategorys);
                         await getSchemeListRequest(AmcFilters.selecteCategorys,
                             CategoriesDsiplay.selectedCategories);
-                        Navigator.pushNamed(context, SchemeDisplay.routeName);
+                        Navigator.pushNamed(
+                            context, PostLoginStartsHere.routeName);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => AllSchemeDisplay.routeName()),
+                        // );
                       },
                       child: Text(
                         'Apply',

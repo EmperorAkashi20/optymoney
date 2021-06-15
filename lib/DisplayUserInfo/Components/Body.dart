@@ -35,10 +35,6 @@ class _BodyState extends State<Body> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          SignForm.name,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Text(
                           SignForm.email1,
                           style: TextStyle(color: Colors.black),
                         ),
@@ -72,6 +68,13 @@ class _BodyState extends State<Body> {
                     ),
                   ],
                 ),
+              ),
+              TitleHeader(text: "NAME"),
+              FormFieldDisplayProfile(
+                enabledOrNot: enableNow,
+                hintText: SignForm.name,
+                keyboardTypeGlobal: TextInputType.text,
+                stringColor: disabledColor,
               ),
               TitleHeader(text: "D.O.B"),
               FormFieldDisplayProfile(
@@ -127,6 +130,34 @@ class _BodyState extends State<Body> {
               FormFieldDisplayProfile(
                 enabledOrNot: enableNow,
                 hintText: SignForm.userMobile,
+                keyboardTypeGlobal: TextInputType.text,
+                stringColor: disabledColor,
+              ),
+              TitleHeader(text: "PAN"),
+              FormFieldDisplayProfile(
+                enabledOrNot: enableNow,
+                hintText: SignForm.pan,
+                keyboardTypeGlobal: TextInputType.text,
+                stringColor: disabledColor,
+              ),
+              TitleHeader(text: "AADHAR"),
+              FormFieldDisplayProfile(
+                enabledOrNot: enableNow,
+                hintText: SignForm.aadhar,
+                keyboardTypeGlobal: TextInputType.text,
+                stringColor: disabledColor,
+              ),
+              TitleHeader(text: "Nominee Name"),
+              FormFieldDisplayProfile(
+                enabledOrNot: enableNow,
+                hintText: SignForm.nomineeName,
+                keyboardTypeGlobal: TextInputType.text,
+                stringColor: disabledColor,
+              ),
+              TitleHeader(text: "Relation with Nominee"),
+              FormFieldDisplayProfile(
+                enabledOrNot: enableNow,
+                hintText: SignForm.nomineeRelation,
                 keyboardTypeGlobal: TextInputType.text,
                 stringColor: disabledColor,
               ),

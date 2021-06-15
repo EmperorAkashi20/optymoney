@@ -155,6 +155,9 @@ class SignForm extends StatefulWidget {
   static var pindecodedjsonmessage;
   static var digest;
   static var kycStatus;
+  static var nomineeName;
+  static var nomineeRelation;
+  static var aadhar;
 
   @override
   _SignFormState createState() => _SignFormState();

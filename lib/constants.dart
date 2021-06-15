@@ -49,11 +49,13 @@ final otpInputDecoration = InputDecoration(
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
+  fillColor: Colors.grey.shade400,
+  focusColor: Colors.grey,
 );
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
+    borderRadius: BorderRadius.circular(getProportionateScreenWidth(10)),
     borderSide: BorderSide(color: kTextColor),
   );
 }

@@ -97,6 +97,9 @@ makeUserRequest() async {
   Body.custCity = parsedJson['city'].toString();
   Body.custPinCode = parsedJson['pincode'].toString();
   Body.custCountry = parsedJson['country'].toString();
+  Body.nomineeName = parsedJson['nominee_name'].toString();
+  Body.nomineeRelation = parsedJson['r_of_nominee_w_app'].toString();
+  Body.aadhar = parsedJson['aadhaar_no'].toString();
   SignForm.email1 = Body.emailId;
   SignForm.name = Body.custName;
   SignForm.letter = Body.custLetter;
@@ -109,6 +112,9 @@ makeUserRequest() async {
   SignForm.userCity = Body.custCity;
   SignForm.userPinCode = Body.custPinCode;
   SignForm.userCountry = Body.custCountry;
+  SignForm.nomineeName = Body.nomineeName;
+  SignForm.nomineeRelation = Body.nomineeRelation;
+  SignForm.aadhar = Body.aadhar;
 }
 
 class Body extends StatefulWidget {
@@ -139,6 +145,10 @@ class Body extends StatefulWidget {
   static var presentValIndi;
   static var flag = 0;
   static var redeemAmount;
+  static var nomineeName;
+  static var nomineeRelation;
+  static var aadhar;
+  static var pan;
 
   @override
   _BodyState createState() => _BodyState();

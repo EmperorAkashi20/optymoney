@@ -99,6 +99,7 @@ class FormFieldDisplayProfile extends StatelessWidget {
     this.dataController,
     this.enabledOrNot,
     this.stringColor,
+    this.change,
   }) : super(key: key);
 
   final TextInputType? keyboardTypeGlobal;
@@ -106,6 +107,7 @@ class FormFieldDisplayProfile extends StatelessWidget {
   final TextEditingController? dataController;
   final bool? enabledOrNot;
   final Color? stringColor;
+  final String? change;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +116,7 @@ class FormFieldDisplayProfile extends StatelessWidget {
       child: Container(
         height: getProportionateScreenHeight(50),
         child: TextFormField(
+          onChanged: (value) => change,
           enabled: enabledOrNot,
           controller: dataController,
           keyboardType: keyboardTypeGlobal,

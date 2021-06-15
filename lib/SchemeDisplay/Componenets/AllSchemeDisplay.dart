@@ -12,8 +12,6 @@ import 'package:optymoney/SchemeDisplay/Componenets/SipDisplayFilters.dart';
 import '../../constants.dart';
 import '../../size_config.dart';
 
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 class AllSchemeDisplay extends StatefulWidget {
   static String routeName = '\allScheme';
   static var test;
@@ -119,9 +117,8 @@ makeSipRequestFilters(pknavid) async {
 
 class _AllSchemeDisplayState extends State<AllSchemeDisplay> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainContext) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         flexibleSpace: Padding(
@@ -255,7 +252,7 @@ class _AllSchemeDisplayState extends State<AllSchemeDisplay> {
                                         showModalBottomSheet(
                                           isDismissible: true,
                                           enableDrag: true,
-                                          context: _scaffoldKey.currentContext!,
+                                          context: context,
                                           builder: (modalContext) =>
                                               DefaultTabController(
                                             length: 2,
