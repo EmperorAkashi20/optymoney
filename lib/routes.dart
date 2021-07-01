@@ -8,6 +8,7 @@ import 'package:optymoney/OtherDetails/OtherDetails.dart';
 import 'package:optymoney/PasswordReset/passwordresetscreen.dart';
 import 'package:optymoney/PinSetup/Components/finalscreen.dart';
 import 'package:optymoney/PinSetup/pinsetupscreen.dart';
+import 'package:optymoney/PostLogin/Tax/Components/filepicker.dart';
 import 'package:optymoney/PostLogin/dashboard/Portfolio/portfolio.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:optymoney/ResetMpin/resetmpin.dart';
@@ -48,4 +49,5 @@ final Map<String, WidgetBuilder> routes = {
   AllSchemeDisplay.routeName: (context) => AllSchemeDisplay(),
   Cart.routeName: (context) => Cart(),
   KycStartPage.routeName: (context) => KycStartPage(),
+  FilePickerDemo.routeName: (context) => FilePickerDemo(),
 };
