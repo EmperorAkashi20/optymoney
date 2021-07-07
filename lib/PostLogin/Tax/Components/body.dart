@@ -1,11 +1,65 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:optymoney/Components/outlinebtn.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/models.dart';
 
+makePostRequest(String filename, String url) async {
+  var request = http.MultipartRequest('POST', Uri.parse(url));
+  request.files.add(http.MultipartFile('picture',
+      File(filename).readAsBytes().asStream(), File(filename).lengthSync(),
+      filename: filename.split("/").last));
+  var res = await request.send();
+}
+
+makeItrRequest() async {
+  var url = Uri.parse(
+      'https://optymoney.com/ajax-request/ajax_response.php?action=itrRegistration&subaction=submit');
+  //final headers = {'Content-Type': 'application/form-data'};
+  Map<String, dynamic> body = {
+    'itr_e': 'itr',
+    'fname': 'Sai Krishna Porala',
+    'mobile': '9606796516',
+    'pan': 'AXFPP0304C',
+    'dobofusr': '1998-02-12',
+    'address':
+        'No 38/b 3rd cross prakruthi nagar kogilu main road yelahanka bangalore KA',
+    'father_name': 'P Krishna Murthy',
+    'email': 'saikrishnaporala@gmail.com',
+    'aadhaar': '543554326543',
+    'description': '',
+    'bank': 'ICICI',
+    'acno': '004001568263',
+    'ifsc': 'icic0000040',
+    'c_acnt_c': '0',
+    'c_acnt': '',
+    'f_travel_c': '0',
+    'f_travel_val': '',
+    'e_bill_c': '0',
+    'e_bill': '',
+    'fileitr[]': Body.filesitr,
+  };
+  print(body);
+  //String jsonBody = json.encode(body);
+  final encoding = Encoding.getByName('utf-8');
+
+  http.Response response = await http.post(
+    url,
+    //headers: headers,
+    body: body,
+    encoding: encoding,
+  );
+
+  print(response.body);
+}
+
 class Body extends StatefulWidget {
+  static var filesitr;
   const Body({Key? key}) : super(key: key);
 
   @override
@@ -332,8 +386,8 @@ class _BodyState extends State<Body> {
                                     ? Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 10.0),
-                                        child:
-                                            const CircularProgressIndicator(),
+                                        child: const CircularProgressIndicator
+                                            .adaptive(),
                                       )
                                     : _directoryPathform16 != null
                                         ? ListTile(
@@ -384,16 +438,19 @@ class _BodyState extends State<Body> {
                                                                   index]
                                                               : _fileNameform16 ??
                                                                   '...');
-                                                      final path = _pathsform16!
-                                                          .map((e) => e.path)
-                                                          .toList()[index]
-                                                          .toString();
+                                                      Body.filesitr =
+                                                          _pathsform16!
+                                                              .map(
+                                                                  (e) => e.path)
+                                                              .toList()[index]
+                                                              .toString();
 
                                                       return ListTile(
                                                         title: Text(
                                                           name,
                                                         ),
-                                                        subtitle: Text(path),
+                                                        subtitle:
+                                                            Text(Body.filesitr),
                                                       );
                                                     },
                                                     separatorBuilder:
@@ -886,8 +943,8 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: GestureDetector(
-                onTap: () {
-                  print('object');
+                onTap: () async {
+                  await makeItrRequest();
                 },
                 child: OutlineBtn(btnText: "Proceed"),
               ),
