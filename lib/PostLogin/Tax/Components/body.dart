@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:optymoney/Components/outlinebtn.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/models.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
 
-Future<http.StreamedResponse> makeItrRequest(filename) async {
+Future<http.StreamedResponse> makeItrRequest() async {
   var request = http.MultipartRequest(
     'POST',
     Uri.parse(
@@ -29,7 +29,7 @@ Future<http.StreamedResponse> makeItrRequest(filename) async {
   request.fields['email'] = 'saikrishnaporala@gmail.com';
   request.fields['aadhaar'] = '543554326543';
   request.fields['description'] = '';
-  request.fields['bank'] = 'ICICI';
+  request.fields['bank'] = Body.bank;
   request.fields['acno'] = '004001568263';
   request.fields['ifsc'] = 'icic0000040';
   request.fields['c_acnt_c'] = '0';
@@ -38,15 +38,66 @@ Future<http.StreamedResponse> makeItrRequest(filename) async {
   request.fields['f_travel_val'] = '';
   request.fields['e_bill_c'] = '0';
   request.fields['e_bill'] = '';
-  request.files.add(http.MultipartFile('path',
-      File(filename).readAsBytes().asStream(), File(filename).lengthSync(),
-      filename: filename.split("/").last));
+  request.fields['uid'] = SignForm.userIdGlobal;
+  if (Body.filesitr != null) {
+    request.files.add(
+      http.MultipartFile(
+          'fileitr',
+          File(Body.filesitr[0]).readAsBytes().asStream(),
+          File(Body.filesitr[0]).lengthSync(),
+          filename: Body.filesitr[0].split("/").last),
+    );
+  }
+  if (Body.addfileitr != null) {
+    request.files.add(
+      http.MultipartFile(
+          'addfileitr',
+          File(Body.addfileitr[0]).readAsBytes().asStream(),
+          File(Body.addfileitr[0]).lengthSync(),
+          filename: Body.addfileitr[0].split("/").last),
+    );
+  }
+  if (Body.noticecopy != null) {
+    request.files.add(
+      http.MultipartFile(
+          'noticecopy',
+          File(Body.noticecopy[0]).readAsBytes().asStream(),
+          File(Body.noticecopy[0]).lengthSync(),
+          filename: Body.noticecopy[0].split("/").last),
+    );
+  }
+  if (Body.itrfiledcopy != null) {
+    request.files.add(
+      http.MultipartFile(
+          'itrfiledcopy',
+          File(Body.itrfiledcopy[0]).readAsBytes().asStream(),
+          File(Body.itrfiledcopy[0]).lengthSync(),
+          filename: Body.itrfiledcopy[0].split("/").last),
+    );
+  }
+  if (Body.addeassest != null) {
+    request.files.add(
+      http.MultipartFile(
+          'addeassest',
+          File(Body.addeassest[0]).readAsBytes().asStream(),
+          File(Body.addeassest[0]).lengthSync(),
+          filename: Body.addeassest[0].split("/").last),
+    );
+  }
   var res = await request.send();
+  var response = await res.stream.bytesToString();
+  print(response);
   return res;
 }
 
 class Body extends StatefulWidget {
   static var filesitr;
+  static var addfileitr;
+  static var noticecopy;
+  static var itrfiledcopy;
+  static var addeassest;
+
+  static var bank;
   const Body({Key? key}) : super(key: key);
 
   @override
@@ -58,6 +109,7 @@ class _BodyState extends State<Body> {
   bool _ebill = false;
   bool _deposit = false;
   bool _foreignTravel = false;
+  TextEditingController bankName = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +133,7 @@ class _BodyState extends State<Body> {
             TitleHeader(text: 'Bank Name'),
             FormFieldGlobal(
               hintText: "Enter Your Bank Name",
+              dataController: bankName,
             ),
             TitleHeader(text: 'Account Number'),
             FormFieldGlobal(
@@ -157,22 +210,13 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              var result =
+                              FilePickerResult? result =
                                   await FilePicker.platform.pickFiles();
-                              if (result != null) {
-                                var fileresponse =
-                                    await makeItrRequest(result.paths);
 
-                                if (fileresponse.statusCode == 200) {
-                                  print('object');
-                                }
-                              } else {
-                                // User canceled the picker
+                              if (result != null) {
+                                // print('\nfile:' + result.paths.toString());
+                                Body.filesitr = result.paths;
                               }
-                              setState(() {
-                                String state = result.toString();
-                                print(state);
-                              });
                             },
                             child: Text(
                               "Form 16/16A",
@@ -202,9 +246,17 @@ class _BodyState extends State<Body> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+
+                              if (result != null) {
+                                // print('\nfile:' + result.paths.toString());
+                                Body.addfileitr = result.paths;
+                              }
+                            },
                             child: Text(
-                              "Other Attachments",
+                              "Other Attachment",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -239,7 +291,15 @@ class _BodyState extends State<Body> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+
+                              if (result != null) {
+                                // print('\nfile:' + result.paths.toString());
+                                Body.noticecopy = result.paths;
+                              }
+                            },
                             child: Text(
                               "Notice Copy",
                               style: TextStyle(color: Colors.black),
@@ -268,7 +328,15 @@ class _BodyState extends State<Body> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+
+                              if (result != null) {
+                                // print('\nfile:' + result.paths.toString());
+                                Body.itrfiledcopy = result.paths;
+                              }
+                            },
                             child: Text(
                               "Last ITR Filed",
                               style: TextStyle(color: Colors.black),
@@ -297,9 +365,17 @@ class _BodyState extends State<Body> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              FilePickerResult? result =
+                                  await FilePicker.platform.pickFiles();
+
+                              if (result != null) {
+                                // print('\nfile:' + result.paths.toString());
+                                Body.addeassest = result.paths;
+                              }
+                            },
                             child: Text(
-                              "Other Attachments",
+                              "Other Attachment",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -354,7 +430,8 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: GestureDetector(
                 onTap: () async {
-                  await makeItrRequest(Body.filesitr);
+                  Body.bank = bankName.toString();
+                  await makeItrRequest();
                 },
                 child: OutlineBtn(btnText: "Proceed"),
               ),
