@@ -3,7 +3,6 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/OtherDetails/OtherDetails.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -205,15 +204,6 @@ class _UserInfoFormState extends State<UserInfoForm> {
   //     ),
   //   );
   // }
-
-  late FToast fToast;
-
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
-  }
 
   // _showToast() {
   //   Widget toast = Container(

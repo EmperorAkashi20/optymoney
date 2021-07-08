@@ -7,7 +7,6 @@ import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/otp/otp_screen.dart';
 import 'package:optymoney/sign_up_screen/components/sign_up_form.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants.dart';
 import '../../size_config.dart';
@@ -215,15 +214,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
       ),
     );
-  }
-
-  late FToast fToast;
-
-  @override
-  void initState() {
-    super.initState();
-    fToast = FToast();
-    fToast.init(context);
   }
 
   // _showToast() {
