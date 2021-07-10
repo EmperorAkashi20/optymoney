@@ -45,11 +45,12 @@ dependencies:
   url_launcher: ^6.0.4
   syncfusion_flutter_sliders: ^19.1.64-beta
   cupertino_icons: ^1.0.0
-  dio: ^4.0.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

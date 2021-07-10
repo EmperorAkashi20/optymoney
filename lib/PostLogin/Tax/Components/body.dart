@@ -430,7 +430,7 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: GestureDetector(
                 onTap: () async {
-                  Body.bank = bankName.toString();
+                  Body.bank = bankName.text.toString();
                   await makeItrRequest();
                 },
                 child: OutlineBtn(btnText: "Proceed"),
