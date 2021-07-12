@@ -82,10 +82,10 @@ checkoutCartItem() async {
   print(response.body);
   final payUrl = Uri.encodeFull(response.body);
   var len = payUrl.length;
-  final payUrl1 = payUrl.substring(3, len);
+  final payUrl1 = payUrl.substring(len);
   print(payUrl1);
-  if (await canLaunch(payUrl1)) {
-    await launch(payUrl1, forceWebView: true, enableJavaScript: true);
+  if (await canLaunch(payUrl)) {
+    await launch(payUrl, forceWebView: true, enableJavaScript: true);
   } else {
     throw 'Could not launch $payUrl1';
   }
