@@ -6,6 +6,7 @@ import 'package:optymoney/Components/default_button.dart';
 import 'package:optymoney/Components/form_error.dart';
 import 'package:optymoney/Components/suffix_icon.dart';
 import 'package:optymoney/PasswordReset/passwordresetscreen.dart';
+import 'package:optymoney/PinSetup/pinsetupscreen.dart';
 import 'package:optymoney/PostLogin/postloginstartshere.dart';
 import 'package:crypto/crypto.dart';
 
@@ -31,7 +32,7 @@ makePostRequest() async {
 
   SignForm.statusCode = response.statusCode;
   SignForm.responseBody = response.body;
-  //print(SignForm.responseBody);
+  print(SignForm.responseBody);
   var jsonData = SignForm.responseBody;
 
   var parsedJson = json.decode(jsonData);
@@ -78,6 +79,7 @@ checkUserPinSet() async {
 
   SignForm.pinBody = response.body;
   SignForm.pinStatusCode = response.statusCode;
+  print(response.body);
 
   SignForm.pindecodedjson = json.decode(SignForm.pinBody);
   SignForm.pindecodedjsonmessage =
@@ -252,7 +254,9 @@ class _SignFormState extends State<SignForm> {
                   _formKey.currentState!.reset();
                   if (SignForm.pindecodedjsonmessage == 'MPIN_SET') {
                     Navigator.pushNamed(context, PostLoginStartsHere.routeName);
-                  } else {}
+                  } else {
+                    Navigator.pushNamed(context, PinSetupScreen.routeName);
+                  }
                 } else if (SignForm.status == '0') {
                   setState(() {
                     addError(error: kNoUserError1);
