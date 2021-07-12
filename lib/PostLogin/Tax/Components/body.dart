@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:optymoney/Components/outlinebtn.dart';
+import 'package:optymoney/PostLogin/Tax/Components/filedisplay.dart';
 import 'package:optymoney/constants.dart';
 import 'package:optymoney/models.dart';
 import 'package:optymoney/sign_in_screen/components/sign_in_form.dart';
@@ -19,74 +23,92 @@ Future<http.StreamedResponse> makeItrRequest() async {
     "content-type": "multipart/form-data",
   });
   request.fields['itr_e'] = 'itr';
-  request.fields['fname'] = 'Sai Krishna Porala';
-  request.fields['mobile'] = '9606796516';
-  request.fields['pan'] = 'AXFPP0304C';
-  request.fields['dobofusr'] = '1998-02-12';
-  request.fields['address'] =
-      'No 38/b 3rd cross prakruthi nagar kogilu main road yelahanka bangalore KA';
-  request.fields['father_name'] = 'P Krishna Murthy';
-  request.fields['email'] = 'saikrishnaporala@gmail.com';
-  request.fields['aadhaar'] = '543554326543';
+  request.fields['fname'] = SignForm.name;
+  request.fields['mobile'] = SignForm.userMobile;
+  request.fields['pan'] = SignForm.pan;
+  request.fields['dobofusr'] = SignForm.userBday;
+  request.fields['address'] = SignForm.userAddress1 +
+      SignForm.userAddress2 +
+      SignForm.userAddress3 +
+      " " +
+      SignForm.userCity +
+      " " +
+      SignForm.userState +
+      " " +
+      SignForm.userPinCode +
+      " " +
+      SignForm.userCountry;
+  request.fields['father_name'] = SignForm.nomineeName;
+  request.fields['email'] = SignForm.email1;
+  request.fields['aadhaar'] = SignForm.aadhar;
   request.fields['description'] = '';
   request.fields['bank'] = Body.bank;
-  request.fields['acno'] = '004001568263';
-  request.fields['ifsc'] = 'icic0000040';
-  request.fields['c_acnt_c'] = '0';
-  request.fields['c_acnt'] = '';
-  request.fields['f_travel_c'] = '0';
-  request.fields['f_travel_val'] = '';
-  request.fields['e_bill_c'] = '0';
-  request.fields['e_bill'] = '';
+  request.fields['acno'] = Body.accno1;
+  request.fields['ifsc'] = Body.ifsc1;
   request.fields['uid'] = SignForm.userIdGlobal;
   if (Body.filesitr != null) {
-    request.files.add(
-      http.MultipartFile(
-          'fileitr',
-          File(Body.filesitr[0]).readAsBytes().asStream(),
-          File(Body.filesitr[0]).lengthSync(),
-          filename: Body.filesitr[0].split("/").last),
-    );
+    for (int i = 0; i < Body.filesitr.length; i++) {
+      request.files.add(
+        http.MultipartFile(
+            'fileitr[]',
+            File(Body.filesitr[i]).readAsBytes().asStream(),
+            File(Body.filesitr[i]).lengthSync(),
+            filename: Body.filesitr[i].split("/").last),
+      );
+    }
   }
   if (Body.addfileitr != null) {
-    request.files.add(
-      http.MultipartFile(
-          'addfileitr',
-          File(Body.addfileitr[0]).readAsBytes().asStream(),
-          File(Body.addfileitr[0]).lengthSync(),
-          filename: Body.addfileitr[0].split("/").last),
-    );
+    for (int i = 0; i < Body.addfileitr.length; i++) {
+      request.files.add(
+        http.MultipartFile(
+            'addfileitr[]',
+            File(Body.addfileitr[i]).readAsBytes().asStream(),
+            File(Body.addfileitr[i]).lengthSync(),
+            filename: Body.addfileitr[i].split("/").last),
+      );
+    }
   }
   if (Body.noticecopy != null) {
-    request.files.add(
-      http.MultipartFile(
-          'noticecopy',
-          File(Body.noticecopy[0]).readAsBytes().asStream(),
-          File(Body.noticecopy[0]).lengthSync(),
-          filename: Body.noticecopy[0].split("/").last),
-    );
+    for (int i = 0; i < Body.noticecopy.length; i++) {
+      request.files.add(
+        http.MultipartFile(
+            'noticecopy',
+            File(Body.noticecopy[i]).readAsBytes().asStream(),
+            File(Body.noticecopy[i]).lengthSync(),
+            filename: Body.noticecopy[i].split("/").last),
+      );
+    }
   }
   if (Body.itrfiledcopy != null) {
-    request.files.add(
-      http.MultipartFile(
-          'itrfiledcopy',
-          File(Body.itrfiledcopy[0]).readAsBytes().asStream(),
-          File(Body.itrfiledcopy[0]).lengthSync(),
-          filename: Body.itrfiledcopy[0].split("/").last),
-    );
+    for (int i = 0; i < Body.itrfiledcopy.length; i++) {
+      request.files.add(
+        http.MultipartFile(
+            'itrfiledcopy',
+            File(Body.itrfiledcopy[i]).readAsBytes().asStream(),
+            File(Body.itrfiledcopy[i]).lengthSync(),
+            filename: Body.itrfiledcopy[i].split("/").last),
+      );
+    }
   }
   if (Body.addeassest != null) {
-    request.files.add(
-      http.MultipartFile(
-          'addeassest',
-          File(Body.addeassest[0]).readAsBytes().asStream(),
-          File(Body.addeassest[0]).lengthSync(),
-          filename: Body.addeassest[0].split("/").last),
-    );
+    for (int i = 0; i < Body.addeassest.length; i++) {
+      request.files.add(
+        http.MultipartFile(
+            'addeassest[]',
+            File(Body.addeassest[i]).readAsBytes().asStream(),
+            File(Body.addeassest[i]).lengthSync(),
+            filename: Body.addeassest[i].split("/").last),
+      );
+    }
   }
+  print(request.fields.entries);
+  print(
+      request.fields.keys.toString() + ': ' + request.fields.values.toString());
   var res = await request.send();
   var response = await res.stream.bytesToString();
-  print(response);
+  var parsedJson = jsonDecode(response);
+  print(parsedJson['msg']);
+  Body.message = parsedJson['msg'];
   return res;
 }
 
@@ -96,8 +118,12 @@ class Body extends StatefulWidget {
   static var noticecopy;
   static var itrfiledcopy;
   static var addeassest;
+  static var message;
 
   static var bank;
+  static var accno1;
+  static var ifsc1;
+
   const Body({Key? key}) : super(key: key);
 
   @override
@@ -105,15 +131,23 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool _loadingPath = false;
   bool _itr = false;
-  bool _ebill = false;
-  bool _deposit = false;
-  bool _foreignTravel = false;
+  var concatenate = StringBuffer();
+  var a = ['nodata'];
+  var b = ['nodata'];
+  var c = ['nodata'];
+  var d = ['nodata'];
+  var e = ['nodata'];
   TextEditingController bankName = new TextEditingController();
+  TextEditingController accno = new TextEditingController();
+  TextEditingController ifsc = new TextEditingController();
+  var refreshkey = GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {
     double windowWidth = MediaQuery.of(context).size.width;
+    double windowHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -139,10 +173,12 @@ class _BodyState extends State<Body> {
             FormFieldGlobal(
               hintText: "Enter your Account Number",
               keyboardTypeGlobal: TextInputType.number,
+              dataController: accno,
             ),
             TitleHeader(text: 'IFSC'),
             FormFieldGlobal(
               hintText: "Enter Your IFSC Code",
+              dataController: ifsc,
             ),
             SizedBox(
               height: 10,
@@ -177,14 +213,11 @@ class _BodyState extends State<Body> {
                   SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "E-Assessment",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                  Text(
+                    "E-Assessment",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
                   ),
                 ],
@@ -210,12 +243,17 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
+                              setState(() {
+                                _loadingPath = true;
+                              });
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: true);
 
                               if (result != null) {
                                 // print('\nfile:' + result.paths.toString());
                                 Body.filesitr = result.paths;
+                                a = Body.filesitr.toList();
                               }
                             },
                             child: Text(
@@ -232,6 +270,42 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Card(
                           elevation: 1,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: windowHeight * 0.25,
+                                child: Scrollbar(
+                                  child: RefreshIndicator(
+                                    onRefresh: callList,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          Divider(
+                                        color: Colors.black,
+                                        thickness: 1,
+                                      ),
+                                      itemCount: a.isNotEmpty ? a.length : 1,
+                                      itemBuilder: (context, index) {
+                                        if (Body.filesitr == null) {
+                                          return Center(
+                                              child: Text(
+                                                  'After selecting files, please pull down here to refresh'));
+                                        } else if (Body.filesitr.length == 0) {
+                                          return Text('okay');
+                                        } else {
+                                          return ListTile(
+                                            title: Text('File ' +
+                                                (index + 1).toString() +
+                                                ': ' +
+                                                Body.filesitr.toString()),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -247,16 +321,18 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: true);
 
                               if (result != null) {
                                 // print('\nfile:' + result.paths.toString());
                                 Body.addfileitr = result.paths;
+                                b = Body.addfileitr.toList();
                               }
                             },
                             child: Text(
-                              "Other Attachment",
+                              "Other Attachments",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -269,6 +345,43 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Card(
                           elevation: 1,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: windowHeight * 0.25,
+                                child: Scrollbar(
+                                  child: RefreshIndicator(
+                                    onRefresh: callList,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          Divider(
+                                        color: Colors.black,
+                                        thickness: 1,
+                                      ),
+                                      itemCount: b.isNotEmpty ? b.length : 1,
+                                      itemBuilder: (context, index) {
+                                        if (Body.addfileitr == null) {
+                                          return Center(
+                                              child: Text(
+                                                  'After selecting files, please pull down here to refresh'));
+                                        } else if (Body.addfileitr.length ==
+                                            0) {
+                                          return Text('okay');
+                                        } else {
+                                          return ListTile(
+                                            title: Text('File ' +
+                                                (index + 1).toString() +
+                                                ': ' +
+                                                Body.addfileitr.toString()),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -292,12 +405,14 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: true);
 
                               if (result != null) {
                                 // print('\nfile:' + result.paths.toString());
                                 Body.noticecopy = result.paths;
+                                c = Body.noticecopy.toList();
                               }
                             },
                             child: Text(
@@ -314,6 +429,43 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Card(
                           elevation: 1,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: windowHeight * 0.25,
+                                child: Scrollbar(
+                                  child: RefreshIndicator(
+                                    onRefresh: callList,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          Divider(
+                                        color: Colors.black,
+                                        thickness: 1,
+                                      ),
+                                      itemCount: c.isNotEmpty ? c.length : 1,
+                                      itemBuilder: (context, index) {
+                                        if (Body.noticecopy == null) {
+                                          return Center(
+                                              child: Text(
+                                                  'After selecting files, please pull down here to refresh'));
+                                        } else if (Body.noticecopy.length ==
+                                            0) {
+                                          return Text('okay');
+                                        } else {
+                                          return ListTile(
+                                            title: Text('File ' +
+                                                (index + 1).toString() +
+                                                ': ' +
+                                                Body.noticecopy.toString()),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -329,12 +481,14 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: true);
 
                               if (result != null) {
                                 // print('\nfile:' + result.paths.toString());
                                 Body.itrfiledcopy = result.paths;
+                                d = Body.itrfiledcopy.toList();
                               }
                             },
                             child: Text(
@@ -351,6 +505,43 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Card(
                           elevation: 1,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: windowHeight * 0.25,
+                                child: Scrollbar(
+                                  child: RefreshIndicator(
+                                    onRefresh: callList,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          Divider(
+                                        color: Colors.black,
+                                        thickness: 1,
+                                      ),
+                                      itemCount: d.isNotEmpty ? d.length : 1,
+                                      itemBuilder: (context, index) {
+                                        if (Body.itrfiledcopy == null) {
+                                          return Center(
+                                              child: Text(
+                                                  'After selecting files, please pull down here to refresh'));
+                                        } else if (Body.itrfiledcopy.length ==
+                                            0) {
+                                          return Text('okay');
+                                        } else {
+                                          return ListTile(
+                                            title: Text('File ' +
+                                                (index + 1).toString() +
+                                                ': ' +
+                                                Body.itrfiledcopy.toString()),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -366,12 +557,14 @@ class _BodyState extends State<Body> {
                           ),
                           child: TextButton(
                             onPressed: () async {
-                              FilePickerResult? result =
-                                  await FilePicker.platform.pickFiles();
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(allowMultiple: true);
 
                               if (result != null) {
                                 // print('\nfile:' + result.paths.toString());
                                 Body.addeassest = result.paths;
+                                e = Body.addeassest.toList();
                               }
                             },
                             child: Text(
@@ -388,50 +581,59 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: Card(
                           elevation: 1,
+                          child: Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: windowHeight * 0.25,
+                                child: Scrollbar(
+                                  child: RefreshIndicator(
+                                    onRefresh: callList,
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          Divider(
+                                        color: Colors.black,
+                                        thickness: 1,
+                                      ),
+                                      itemCount: e.isNotEmpty ? e.length : 1,
+                                      itemBuilder: (context, index) {
+                                        if (Body.addeassest == null) {
+                                          return Center(
+                                              child: Text(
+                                                  'After selecting files, please pull down here to refresh'));
+                                        } else if (Body.addeassest.length ==
+                                            0) {
+                                          return Text('okay');
+                                        } else {
+                                          return ListTile(
+                                            title: Text('File ' +
+                                                (index + 1).toString() +
+                                                ': ' +
+                                                Body.addeassest.toString()),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            SwitchListTile.adaptive(
-              title: Text("Does your total deposists exceed 1Cr?"),
-              value: _deposit,
-              onChanged: (bool value) {
-                setState(() {
-                  _deposit = value;
-                });
-              },
-            ),
-            SwitchListTile.adaptive(
-              title:
-                  Text("Does your total electricity charges exceed Rs. 1Lakh?"),
-              value: _ebill,
-              onChanged: (bool value) {
-                setState(() {
-                  _ebill = value;
-                });
-              },
-            ),
-            SwitchListTile.adaptive(
-              title: Text(
-                  "Foreign Travel expenses for self or other person in family exceeds Rs. 2Lakhs?"),
-              value: _foreignTravel,
-              onChanged: (bool value) {
-                setState(() {
-                  _foreignTravel = value;
-                });
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: GestureDetector(
                 onTap: () async {
                   Body.bank = bankName.text.toString();
+                  Body.ifsc1 = ifsc.text.toString();
+                  Body.accno1 = accno.text.toString();
                   await makeItrRequest();
+                  // Navigator.pushNamed(context, FileDisplay.routeName);
+                  _showSnackBar(Body.message);
                 },
                 child: OutlineBtn(btnText: "Proceed"),
               ),
@@ -440,5 +642,35 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+
+  void _showSnackBar(String text) {
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Container(
+        height: 40.0,
+        color: Colors.transparent,
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 15.0, color: Colors.black),
+          ),
+        ),
+      ),
+      backgroundColor: Colors.white,
+    );
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
+  Future<void> callList() async {
+    var random = Random();
+    var list = List.generate(random.nextInt(10), (i) => " Item $i");
+    refreshkey.currentState?.show(atTop: true);
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      list = List.generate(random.nextInt(10), (i) => " Item $i");
+    });
   }
 }
