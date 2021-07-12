@@ -112,6 +112,8 @@ class _LumpSumDisplayFiltersState extends State<LumpSumDisplayFilters> {
                                 _timer?.cancel();
                                 EasyLoading.dismiss();
                               }
+                              await EasyLoading.showSuccess(
+                                  'Added To Cart Successfully');
                             });
                           },
                           child: Row(

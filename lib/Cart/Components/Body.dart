@@ -79,6 +79,7 @@ checkoutCartItem() async {
   // } else {
   //   print('no');
   // }
+  print(response.body);
   final payUrl = Uri.encodeFull(response.body);
   var len = payUrl.length;
   final payUrl1 = payUrl.substring(3, len);

@@ -231,6 +231,8 @@ class _SipDisplayFiltersState extends State<SipDisplayFilters> {
                                 _timer?.cancel();
                                 EasyLoading.dismiss();
                               }
+                              await EasyLoading.showSuccess(
+                                  'Added To Cart Successfully');
                             });
                           },
                           child: Row(
